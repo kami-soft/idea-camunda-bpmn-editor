@@ -1,7 +1,6 @@
 package dev.camunda.bpmn.editor.settings;
 
 import static com.intellij.openapi.application.ApplicationManager.getApplication;
-import static com.intellij.util.ui.UIUtil.isUnderDarcula;
 
 import com.intellij.openapi.components.PersistentStateComponent;
 import com.intellij.openapi.components.State;
@@ -33,7 +32,7 @@ public final class BpmnEditorSettings implements PersistentStateComponent<BpmnEd
          * The color theme of the BPMN Editor.
          */
         @NotNull
-        private ColorTheme colorTheme = ColorTheme.getDefault();
+        private ColorTheme colorTheme = ColorTheme.DARK;
     }
 
     @NotNull
@@ -62,17 +61,5 @@ public final class BpmnEditorSettings implements PersistentStateComponent<BpmnEd
     /**
      * An enum representing the color theme of the BPMN Editor.
      */
-    public enum ColorTheme {
-
-        LIGHT, DARK;
-
-        /**
-         * Returns the default color theme based on the current UI theme.
-         *
-         * @return The default color theme
-         */
-        public static @NotNull ColorTheme getDefault() {
-            return isUnderDarcula() ? DARK : LIGHT;
-        }
-    }
+    public enum ColorTheme {LIGHT, DARK}
 }

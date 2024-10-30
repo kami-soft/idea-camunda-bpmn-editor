@@ -12,7 +12,7 @@ import dev.camunda.bpmn.editor.browser.jsquery.impl.OpenScriptFileJSQuery;
 import dev.camunda.bpmn.editor.browser.jsquery.impl.SaveBpmnJSQuery;
 import dev.camunda.bpmn.editor.browser.jsquery.impl.SetClipboardJSQuery;
 import dev.camunda.bpmn.editor.browser.jsquery.impl.SetFocusScriptFileJSQuery;
-import dev.camunda.bpmn.editor.scratch.ScriptFileManager;
+import dev.camunda.bpmn.editor.script.ScriptFileManager;
 import dev.camunda.bpmn.editor.server.BpmnEditorUIServer;
 import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
 import dev.camunda.bpmn.editor.util.HashComparator;

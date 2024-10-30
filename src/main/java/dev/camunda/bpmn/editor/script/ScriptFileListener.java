@@ -1,4 +1,4 @@
-package dev.camunda.bpmn.editor.scratch;
+package dev.camunda.bpmn.editor.script;
 
 import static com.intellij.openapi.application.ApplicationManager.getApplication;
 import static java.util.Objects.nonNull;

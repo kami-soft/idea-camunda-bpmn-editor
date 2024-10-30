@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.camunda.bpmn"
-version = "0.0.6"
+version = "0.0.9"
 
 repositories {
     mavenCentral()
@@ -15,7 +15,7 @@ repositories {
 intellij {
     version.set("2023.2.6")
     type.set("IC")
-    plugins.set(listOf("com.intellij.platform.images", "org.intellij.groovy"))
+    plugins.set(listOf("com.intellij.platform.images", "org.intellij.groovy", "com.intellij.java"))
 }
 
 node {

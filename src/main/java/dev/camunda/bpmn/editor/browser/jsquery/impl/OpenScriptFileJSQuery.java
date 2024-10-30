@@ -4,7 +4,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.ui.jcef.JBCefBrowser;
 import com.intellij.ui.jcef.JBCefJSQuery;
 import dev.camunda.bpmn.editor.browser.jsquery.HandledJSQuery;
-import dev.camunda.bpmn.editor.scratch.ScriptFileManager;
+import dev.camunda.bpmn.editor.script.ScriptFileManager;
 import org.jetbrains.annotations.NotNull;
 
 /**

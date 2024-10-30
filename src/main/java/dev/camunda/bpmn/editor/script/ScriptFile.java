@@ -1,9 +1,9 @@
-package dev.camunda.bpmn.editor.scratch;
+package dev.camunda.bpmn.editor.script;
 
 import static com.intellij.openapi.application.ApplicationManager.getApplication;
 import static java.util.Objects.isNull;
 import static java.util.UUID.randomUUID;
-import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import com.intellij.ide.scratch.ScratchRootType;
 import com.intellij.lang.Language;

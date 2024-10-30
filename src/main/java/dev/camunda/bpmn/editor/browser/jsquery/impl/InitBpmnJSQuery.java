@@ -1,7 +1,7 @@
 package dev.camunda.bpmn.editor.browser.jsquery.impl;
 
 import static java.util.Base64.getEncoder;
-import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import com.intellij.ui.jcef.JBCefBrowser;
 import dev.camunda.bpmn.editor.browser.jsquery.SimpleJSQuery;

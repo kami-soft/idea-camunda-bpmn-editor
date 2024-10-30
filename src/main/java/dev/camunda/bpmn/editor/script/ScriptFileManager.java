@@ -1,4 +1,4 @@
-package dev.camunda.bpmn.editor.scratch;
+package dev.camunda.bpmn.editor.script;
 
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.project.Project;

@@ -1,6 +1,6 @@
 package dev.camunda.bpmn.editor.util;
 
-import static org.apache.commons.lang.StringUtils.isBlank;
+import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import com.intellij.util.concurrency.annotations.RequiresWriteLock;
 import java.security.MessageDigest;
