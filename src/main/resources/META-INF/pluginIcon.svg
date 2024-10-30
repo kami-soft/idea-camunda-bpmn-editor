@@ -1,0 +1,39 @@
+<svg width="40" height="40" viewBox="0 0 40 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <!-- Background with rounded edges and gradient fill -->
+    <rect x="1" y="1" width="38" height="38" rx="6" ry="6" fill="url(#grad1)" stroke="#333" stroke-width="1"/>
+
+    <!-- BPMN circular nodes with gradient fill -->
+    <circle cx="10" cy="12" r="4" fill="url(#nodeGrad1)" stroke="#333" stroke-width="1"/>
+    <rect x="22" y="8" width="12" height="8"  fill="url(#taskGrad)" stroke="#333" stroke-width="1" rx="1.5" ry="1.5"/>
+    <circle cx="10" cy="28" r="4" fill="url(#nodeGrad3)" stroke="#333" stroke-width="1.4"/>
+    <rect x="22" y="24" width="12" height="8"  fill="url(#taskGrad)" stroke="#333" stroke-width="1" rx="1.5" ry="1.5"/>
+
+    <!-- Arrows for flow direction -->
+    <path d="M14 12H18" stroke="#333" stroke-width="0.7" marker-end="url(#arrowhead)"/>
+    <path d="M22 28H18" stroke="#333" stroke-width="0.7" marker-end="url(#arrowhead)"/>
+    <path d="M28 16V20" stroke="#333" stroke-width="0.7" marker-end="url(#arrowhead)"/>
+
+    <!-- Gradient definitions -->
+    <defs>
+        <linearGradient id="grad1" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+            <stop offset="0.1" stop-color="#3BEA62"/>
+            <stop offset="0.5" stop-color="#3C99CC"/>
+            <stop offset="0.9" stop-color="#6B57FF"/>
+        </linearGradient>
+        <radialGradient id="nodeGrad1" cx="0.5" cy="0.5" r="0.8">
+            <stop offset="0%" stop-color="#3BEA62"/>
+            <stop offset="100%" stop-color="#28a745"/>
+        </radialGradient>
+        <radialGradient id="nodeGrad3" cx="0.5" cy="0.5" r="0.8">
+            <stop offset="0%" stop-color="#6B57FF"/>
+            <stop offset="100%" stop-color="#483D8B"/>
+        </radialGradient>
+        <radialGradient id="taskGrad" cx="0.5" cy="0.5" r="0.8">
+            <stop offset="0%" stop-color="#3C99CC"/>
+            <stop offset="100%" stop-color="#1e90ff"/>
+        </radialGradient>
+        <marker id="arrowhead" markerWidth="6" markerHeight="4" refX="0" refY="2" orient="auto">
+            <polygon points="0 0, 6 2, 0 4" fill="#333"/>
+        </marker>
+    </defs>
+</svg>

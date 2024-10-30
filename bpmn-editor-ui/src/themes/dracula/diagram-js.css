@@ -1,0 +1,823 @@
+/**
+ * color definitions
+ */
+.dracula .djs-container {
+    --color-grey-225-10-15: hsl(225, 10%, 15%);
+    --color-grey-225-10-35: hsl(225, 10%, 35%);
+    --color-grey-225-10-55: hsl(225, 10%, 55%);
+    --color-grey-225-10-75: hsl(225, 10%, 75%);
+    --color-grey-225-10-80: hsl(225, 10%, 80%);
+    --color-grey-225-10-85: hsl(225, 10%, 85%);
+    --color-grey-225-10-90: hsl(225, 10%, 90%);
+    --color-grey-225-10-95: hsl(225, 10%, 95%);
+    --color-grey-225-10-97: hsl(225, 10%, 97%);
+
+    --color-blue-205-100-45: hsl(205, 100%, 45%);
+    --color-blue-205-100-45-opacity-30: hsla(205, 100%, 45%, 30%);
+    --color-blue-205-100-50: hsl(205, 100%, 50%);
+    --color-blue-205-100-50-opacity-15: hsla(205, 100%, 50%, 15%);
+    --color-blue-205-100-70: hsl(205, 100%, 75%);
+    --color-blue-205-100-95: hsl(205, 100%, 95%);
+
+    --color-green-150-86-44: hsl(150, 86%, 44%);
+
+    --color-red-360-100-40: hsl(360, 100%, 40%);
+    --color-red-360-100-45: hsl(360, 100%, 45%);
+    --color-red-360-100-92: hsl(360, 100%, 92%);
+    --color-red-360-100-97: hsl(360, 100%, 97%);
+
+    --color-white: hsl(0, 0%, 100%);
+    --color-black: hsl(0, 0%, 0%);
+    --color-black-opacity-10: hsla(0, 0%, 0%, 10%);
+
+    --canvas-fill-color: var(--color-white);
+
+    --bendpoint-fill-color: var(--color-blue-205-100-45);
+    --bendpoint-stroke-color: var(--canvas-fill-color);
+
+    --context-pad-entry-background-color: var(--color-white);
+    --context-pad-entry-hover-background-color: var(--color-grey-225-10-95);
+
+    --element-dragger-color: var(--color-blue-205-100-50);
+    --element-hover-outline-fill-color: var(--color-blue-205-100-45);
+    --element-selected-outline-stroke-color: var(--color-blue-205-100-50);
+    --element-selected-outline-secondary-stroke-color: var(--color-blue-205-100-70);
+
+    --lasso-fill-color: var(--color-blue-205-100-50-opacity-15);
+    --lasso-stroke-color: var(--element-selected-outline-stroke-color);
+
+    --palette-entry-color: var(--color-grey-225-10-15);
+    --palette-entry-hover-color: var(--color-blue-205-100-45);
+    --palette-entry-selected-color: var(--color-blue-205-100-50);
+    --palette-separator-color: var(--color-grey-225-10-75);
+    --palette-toggle-hover-background-color: var(--color-grey-225-10-55);
+    --palette-background-color: rgba(43,45,48,255);
+    --palette-border-color: var(--color-grey-225-10-75);
+
+    --popup-body-background-color: var(--color-white);
+    --popup-header-entry-selected-color: var(--color-blue-205-100-50);
+    --popup-header-entry-selected-background-color: var(--color-black-opacity-10);
+    --popup-header-separator-color: var(--color-grey-225-10-75);
+    --popup-background-color: var(--color-grey-225-10-97);
+    --popup-border-color: var(--color-grey-225-10-75);
+
+    --resizer-fill-color: var(--color-blue-205-100-45);
+    --resizer-stroke-color: var(--canvas-fill-color);
+
+    --search-container-background-color: var(--color-grey-225-10-97);
+    --search-container-border-color: var(--color-blue-205-100-50);
+    --search-container-box-shadow-color: var(--color-blue-205-100-95);
+    --search-container-box-shadow-inset-color: var(--color-grey-225-10-80);
+    --search-input-border-color: var(--color-grey-225-10-75);
+    --search-result-border-color: var(--color-grey-225-10-75);
+    --search-result-highlight-color: var(--color-black);
+    --search-result-selected-color: var(--color-blue-205-100-45-opacity-30);
+
+    --shape-attach-allowed-stroke-color: var(--color-blue-205-100-50);
+    --shape-connect-allowed-fill-color: var(--color-grey-225-10-97);
+    --shape-drop-allowed-fill-color: var(--color-grey-225-10-97);
+    --shape-drop-not-allowed-fill-color: var(--color-red-360-100-97);
+    --shape-resize-preview-stroke-color: var(--color-blue-205-100-50);
+
+    --snap-line-stroke-color: var(--color-blue-205-100-45-opacity-30);
+
+    --space-tool-crosshair-stroke-color: var(--color-black);
+
+    --tooltip-error-background-color: var(--color-red-360-100-97);
+    --tooltip-error-border-color: var(--color-red-360-100-45);
+    --tooltip-error-color: var(--color-red-360-100-45);
+}
+
+/**
+ * outline styles
+ */
+
+.dracula .djs-outline,
+.dracula .djs-selection-outline {
+    fill: none;
+    shape-rendering: geometricPrecision;
+    stroke-width: 2px;
+}
+
+.dracula .djs-outline {
+    visibility: hidden;
+}
+
+.dracula .djs-selection-outline {
+    stroke: var(--element-selected-outline-stroke-color);
+}
+
+.dracula .djs-element.selected .djs-outline {
+    visibility: visible;
+
+    stroke: var(--element-selected-outline-stroke-color);
+}
+
+.dracula .djs-multi-select .djs-element.selected .dracula .djs-outline {
+    stroke: var(--element-selected-outline-secondary-stroke-color);
+}
+
+.dracula .djs-shape.connect-ok .djs-visual > :nth-child(1) {
+    fill: var(--shape-connect-allowed-fill-color) !important;
+}
+
+.dracula .djs-shape.connect-not-ok .djs-visual > :nth-child(1),
+.dracula .djs-shape.drop-not-ok .djs-visual > :nth-child(1) {
+    fill: var(--shape-drop-not-allowed-fill-color) !important;
+}
+
+.dracula .djs-shape.new-parent .djs-visual > :nth-child(1) {
+    fill: var(--shape-drop-allowed-fill-color) !important;
+}
+
+.dracula svg.drop-not-ok {
+    background: var(--shape-drop-not-allowed-fill-color) !important;
+}
+
+.dracula svg.new-parent {
+    background: var(--shape-drop-allowed-fill-color) !important;
+}
+
+/* Override move cursor during drop and connect */
+.dracula .drop-not-ok,
+.dracula .connect-not-ok,
+.dracula .drop-not-ok *,
+.dracula .connect-not-ok * {
+    cursor: not-allowed !important;
+}
+
+.dracula .drop-ok,
+.dracula .connect-ok,
+.dracula .drop-ok *,
+.dracula .connect-ok * {
+    cursor: default !important;
+}
+
+.dracula .djs-element.attach-ok .djs-visual > :nth-child(1) {
+    stroke-width: 5px !important;
+    stroke: var(--shape-attach-allowed-stroke-color) !important;
+}
+
+.dracula .djs-frame.connect-not-ok .djs-visual > :nth-child(1),
+.dracula .djs-frame.drop-not-ok .djs-visual > :nth-child(1) {
+    stroke-width: 3px !important;
+    stroke: var(--shape-drop-not-allowed-fill-color) !important;
+    fill: none !important;
+}
+
+/**
+* Selection box style
+*
+*/
+.dracula .djs-lasso-overlay {
+    fill: var(--lasso-fill-color);
+    stroke: var(--lasso-stroke-color);
+    stroke-width: 2px;
+    shape-rendering: geometricPrecision;
+    pointer-events: none;
+}
+
+/**
+ * Resize styles
+ */
+.dracula .djs-resize-overlay {
+    fill: none;
+
+    stroke-dasharray: 5 1 3 1;
+    stroke: var(--shape-resize-preview-stroke-color);
+
+    pointer-events: none;
+}
+
+.dracula .djs-resizer-hit {
+    fill: none;
+    pointer-events: all;
+}
+
+.dracula .djs-resizer-visual {
+    fill: var(--resizer-fill-color);
+    stroke-width: 1px;
+    stroke: var(--resizer-stroke-color);
+    shape-rendering: geometricPrecision;
+}
+
+.dracula .djs-resizer:hover .djs-resizer-visual {
+    stroke: var(--resizer-stroke-color);
+    stroke-opacity: 1;
+}
+
+.dracula .djs-cursor-resize-ns,
+.dracula .djs-resizer-n,
+.dracula .djs-resizer-s {
+    cursor: ns-resize;
+}
+
+.dracula .djs-cursor-resize-ew,
+.dracula .djs-resizer-e,
+.dracula .djs-resizer-w {
+    cursor: ew-resize;
+}
+
+.dracula .djs-cursor-resize-nwse,
+.dracula .djs-resizer-nw,
+.dracula .djs-resizer-se {
+    cursor: nwse-resize;
+}
+
+.dracula .djs-cursor-resize-nesw,
+.dracula .djs-resizer-ne,
+.dracula .djs-resizer-sw {
+    cursor: nesw-resize;
+}
+
+.dracula .djs-shape.djs-resizing > .dracula .djs-outline {
+    visibility: hidden !important;
+}
+
+.dracula .djs-shape.djs-resizing > .djs-resizer {
+    visibility: hidden;
+}
+
+.dracula .djs-dragger > .djs-resizer {
+    visibility: hidden;
+}
+
+/**
+ * drag styles
+ */
+.dracula .djs-dragger * {
+    fill: none !important;
+    stroke: var(--element-dragger-color) !important;
+}
+
+.dracula .djs-dragger tspan,
+.dracula .djs-dragger text {
+    fill: var(--element-dragger-color) !important;
+    stroke: none !important;
+}
+
+.dracula marker .djs-dragger circle,
+.dracula marker .djs-dragger path,
+.dracula marker .djs-dragger polygon,
+.dracula marker .djs-dragger polyline,
+.dracula marker .djs-dragger rect {
+    fill: var(--element-dragger-color) !important;
+    stroke: none !important;
+}
+
+.dracula marker .djs-dragger text,
+.dracula marker .djs-dragger tspan {
+    fill: none !important;
+    stroke: var(--element-dragger-color) !important;
+}
+
+.dracula .djs-dragging {
+    opacity: 0.3;
+}
+
+.dracula .djs-dragging,
+.dracula .djs-dragging > * {
+    pointer-events: none !important;
+}
+
+.dracula .djs-dragging .djs-context-pad,
+.dracula .djs-dragging .djs-outline {
+    display: none !important;
+}
+
+/**
+ * no pointer events for visual
+ */
+.dracula .djs-visual,
+.dracula .djs-outline {
+    pointer-events: none;
+}
+
+.dracula .djs-element.attach-ok .djs-hit {
+    stroke-width: 60px !important;
+}
+
+/**
+ * all pointer events for hit shape
+ */
+.dracula .djs-element > .djs-hit-all,
+.dracula .djs-element > .djs-hit-no-move {
+    pointer-events: all;
+}
+
+.dracula .djs-element > .djs-hit-stroke,
+.dracula .djs-element > .djs-hit-click-stroke {
+    pointer-events: stroke;
+}
+
+/**
+ * shape / connection basic styles
+ */
+.dracula .djs-connection .djs-visual {
+    stroke-width: 2px;
+    fill: none;
+}
+
+.dracula .djs-cursor-grab {
+    cursor: -webkit-grab;
+    cursor: -moz-grab;
+    cursor: grab;
+}
+
+.dracula .djs-cursor-grabbing {
+    cursor: -webkit-grabbing;
+    cursor: -moz-grabbing;
+    cursor: grabbing;
+}
+
+.dracula .djs-cursor-crosshair {
+    cursor: crosshair;
+}
+
+.dracula .djs-cursor-move {
+    cursor: move;
+}
+
+.dracula .djs-cursor-resize-ns {
+    cursor: ns-resize;
+}
+
+.dracula .djs-cursor-resize-ew {
+    cursor: ew-resize;
+}
+
+/**
+ * snapping
+ */
+.dracula .djs-snap-line {
+    stroke: var(--snap-line-stroke-color);
+    stroke-linecap: round;
+    stroke-width: 2px;
+    pointer-events: none;
+}
+
+/**
+ * snapping
+ */
+.dracula .djs-crosshair {
+    stroke: var(--space-tool-crosshair-stroke-color);
+    stroke-linecap: round;
+    stroke-width: 1px;
+    pointer-events: none;
+    shape-rendering: geometricPrecision;
+    stroke-dasharray: 5, 5;
+}
+
+/**
+ * palette
+ */
+
+/*.dracula .djs-palette {
+    position: absolute;
+    left: 20px;
+    top: 20px;
+
+    box-sizing: border-box;
+    width: 48px;
+    background: var(--dracula--properties-panel);
+}*/
+
+.dracula .djs-palette .separator {
+    margin: 5px;
+    padding-top: 5px;
+
+    border: none;
+    border-bottom: solid 1px var(--palette-separator-color);
+
+    clear: both;
+}
+
+.dracula .djs-palette .entry:before {
+    vertical-align: initial;
+}
+
+.dracula .djs-palette .djs-palette-toggle {
+    cursor: pointer;
+}
+
+.dracula .djs-palette .entry,
+.dracula .djs-palette .djs-palette-toggle {
+    color: var(--palette-entry-color);
+    font-size: 30px;
+
+    text-align: center;
+}
+
+.dracula .djs-palette .entry {
+    float: left;
+}
+
+.dracula .djs-palette .entry img {
+    max-width: 100%;
+}
+
+.dracula .djs-palette .djs-palette-entries:after {
+    content: '';
+    display: table;
+    clear: both;
+}
+
+.dracula .djs-palette .djs-palette-toggle:hover {
+    background: var(--palette-toggle-hover-background-color);
+}
+
+.dracula .djs-palette .entry:hover {
+    color: var(--palette-entry-hover-color);
+}
+
+.dracula .djs-palette .highlighted-entry {
+    color: var(--palette-entry-selected-color) !important;
+}
+
+.dracula .djs-palette .entry,
+.dracula .djs-palette .djs-palette-toggle {
+    width: 46px;
+    height: 46px;
+    line-height: 46px;
+    cursor: default;
+}
+
+/**
+ * Palette open / two-column layout is controlled via
+ * classes on the palette. Events to hook into palette
+ * changed life-cycle are available in addition.
+ */
+.dracula .djs-palette.two-column.open {
+    width: 94px;
+}
+
+.dracula .djs-palette:not(.open) .djs-palette-entries {
+    display: none;
+}
+
+.dracula .djs-palette:not(.open) {
+    overflow: hidden;
+}
+
+.dracula .djs-palette.open .djs-palette-toggle {
+    display: none;
+}
+
+/**
+ * context-pad
+ */
+.dracula .djs-overlay-context-pad {
+    width: 72px;
+    z-index: 100;
+}
+
+.dracula .djs-context-pad {
+    position: absolute;
+    display: none;
+    pointer-events: none;
+    line-height: 1;
+}
+
+.dracula .djs-context-pad .entry {
+    width: 22px;
+    height: 22px;
+    text-align: center;
+    display: inline-block;
+    font-size: 22px;
+    margin: 0 2px 2px 0;
+
+    border-radius: 3px;
+
+    cursor: default;
+
+    background-color: var(--context-pad-entry-background-color);
+    box-shadow: 0 0 2px 1px var(--context-pad-entry-background-color);
+    pointer-events: all;
+    vertical-align: middle;
+}
+
+.dracula .djs-context-pad .entry:hover {
+    background: var(--context-pad-entry-hover-background-color);
+}
+
+.dracula .djs-context-pad.open {
+    display: block;
+}
+
+/**
+ * popup styles
+ */
+.dracula .djs-popup .entry {
+    line-height: 20px;
+    white-space: nowrap;
+    cursor: default;
+}
+
+/* larger font for prefixed icons */
+.dracula .djs-popup .entry:before {
+    vertical-align: middle;
+    font-size: 20px;
+}
+
+.dracula .djs-popup .entry > span {
+    vertical-align: middle;
+    font-size: 14px;
+}
+
+.dracula .djs-popup .entry:hover,
+.dracula .djs-popup .entry.active:hover {
+    background: var(--popup-header-entry-selected-background-color);
+}
+
+.dracula .djs-popup .entry.disabled {
+    background: inherit;
+}
+
+.dracula .djs-popup .djs-popup-header .entry {
+    display: inline-block;
+    padding: 2px 3px 2px 3px;
+
+    border: solid 1px transparent;
+    border-radius: 3px;
+}
+
+.dracula .djs-popup .djs-popup-header .entry.active {
+    color: var(--popup-header-entry-selected-color);
+    border: solid 1px var(--popup-header-entry-selected-color);
+    background-color: var(--popup-header-entry-selected-background-color);
+}
+
+.dracula .djs-popup-body .entry {
+    padding: 4px 5px;
+}
+
+.dracula .djs-popup-body .entry > span {
+    margin-left: 5px;
+}
+
+.dracula .djs-popup-body {
+    background-color: var(--popup-body-background-color);
+}
+
+.dracula .djs-popup-header {
+    border-bottom: 1px solid var(--popup-header-separator-color);
+}
+
+.dracula .djs-popup-header .entry {
+    margin: 1px 1px 1px 3px;
+}
+
+.dracula .djs-popup-header .entry:last-child {
+    margin-right: 3px;
+}
+
+/**
+ * popup / palette styles
+ */
+.dracula .djs-palette {
+    background: var(--dracula--properties-panel);
+    border: solid 1px var(--palette-border-color);
+    border-radius: 2px;
+}
+
+.dracula .djs-popup {
+    background: var(--dracula--properties-panel);
+    border: solid 1px var(--popup-border-color);
+    border-radius: 2px;
+}
+
+/**
+ * touch
+ */
+
+.dracula .djs-shape,
+.dracula .djs-connection {
+    touch-action: none;
+}
+
+.dracula .djs-segment-dragger,
+.dracula .djs-bendpoint {
+    display: none;
+}
+
+/**
+ * bendpoints
+ */
+.dracula .djs-segment-dragger .djs-visual {
+    display: none;
+
+    fill: var(--bendpoint-fill-color);
+    stroke: var(--bendpoint-stroke-color);
+    stroke-width: 1px;
+    stroke-opacity: 1;
+}
+
+.dracula .djs-segment-dragger:hover .djs-visual {
+    display: block;
+}
+
+.dracula .djs-bendpoint .djs-visual {
+    fill: var(--bendpoint-fill-color);
+    stroke: var(--bendpoint-stroke-color);
+    stroke-width: 1px;
+}
+
+.dracula .djs-segment-dragger:hover,
+.dracula .djs-bendpoints.hover .djs-segment-dragger,
+.dracula .djs-bendpoints.selected .djs-segment-dragger,
+.dracula .djs-bendpoint:hover,
+.dracula .djs-bendpoints.hover .djs-bendpoint,
+.dracula .djs-bendpoints.selected .djs-bendpoint {
+    display: block;
+}
+
+.dracula .djs-drag-active .djs-bendpoints * {
+    display: none;
+}
+
+.dracula .djs-bendpoints:not(.hover) .floating {
+    display: none;
+}
+
+.dracula .djs-segment-dragger:hover .djs-visual,
+.dracula .djs-segment-dragger.djs-dragging .djs-visual,
+.dracula .djs-bendpoint:hover .djs-visual,
+.dracula .djs-bendpoint.floating .djs-visual {
+    fill: var(--bendpoint-fill-color);
+    stroke: var(--bendpoint-stroke-color);
+    stroke-opacity: 1;
+}
+
+.dracula .djs-bendpoint.floating .djs-hit {
+    pointer-events: none;
+}
+
+.dracula .djs-segment-dragger .djs-hit,
+.dracula .djs-bendpoint .djs-hit {
+    fill: none;
+    pointer-events: all;
+}
+
+.dracula .djs-segment-dragger.horizontal .djs-hit {
+    cursor: ns-resize;
+}
+
+.dracula .djs-segment-dragger.vertical .djs-hit {
+    cursor: ew-resize;
+}
+
+.dracula .djs-segment-dragger.djs-dragging .djs-hit {
+    pointer-events: none;
+}
+
+.dracula .djs-updating,
+.dracula .djs-updating > * {
+    pointer-events: none !important;
+}
+
+.dracula .djs-updating .djs-context-pad,
+.dracula .djs-updating .djs-outline,
+.dracula .djs-updating .djs-bendpoint,
+.dracula .djs-multi-select .djs-bendpoint,
+.dracula .djs-multi-select .djs-segment-dragger,
+.dracula .connect-ok .djs-bendpoint,
+.dracula .connect-not-ok .djs-bendpoint,
+.dracula .drop-ok .djs-bendpoint,
+.dracula .drop-not-ok .djs-bendpoint {
+    display: none !important;
+}
+
+.dracula .djs-segment-dragger .djs-dragging,
+.dracula .djs-bendpoint .djs-dragging {
+    display: block;
+    opacity: 1.0;
+}
+
+/**
+ * tooltips
+ */
+.dracula .djs-tooltip-error {
+    width: 160px;
+    padding: 6px;
+
+    background: var(--tooltip-error-background-color);
+    border: solid 1px var(--tooltip-error-border-color);
+    border-radius: 2px;
+    color: var(--tooltip-error-color);
+    font-size: 12px;
+    line-height: 16px;
+
+    opacity: 0.75;
+}
+
+.dracula .djs-tooltip-error:hover {
+    opacity: 1;
+}
+
+/**
+ * search pad
+ */
+.dracula .djs-search-container {
+    position: absolute;
+    top: 20px;
+    left: 0;
+    right: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    width: 25%;
+    min-width: 300px;
+    max-width: 400px;
+    z-index: 10;
+
+    font-size: 1.05em;
+    opacity: 0.9;
+    background: var(--search-container-background-color);
+    border: solid 1px var(--search-container-border-color);
+    border-radius: 2px;
+    box-shadow: 0 0 0 2px var(--search-container-box-shadow-color), 0 0 0 1px var(--search-container-box-shadow-inset-color) inset;
+}
+
+.dracula .djs-search-container:not(.open) {
+    display: none;
+}
+
+.dracula .djs-popup-search input,
+.dracula .djs-search-input input {
+    font-size: 1.05em;
+    width: 100%;
+    padding: 6px 10px;
+    border: 1px solid var(--search-input-border-color) !important;
+    box-sizing: border-box;
+    background-color: var(--search-container-background-color) !important;
+}
+
+.dracula .djs-popup-search input:focus,
+.dracula .djs-search-input input:focus {
+    outline: none;
+    border-color: var(--search-input-border-color) !important;
+    background-color: var(--search-container-background-color) !important;
+}
+
+.dracula .djs-search-results {
+    position: relative;
+    overflow-y: auto;
+    max-height: 200px;
+}
+
+.dracula .djs-search-results:hover {
+    cursor: pointer;
+}
+
+.dracula .djs-search-result {
+    width: 100%;
+    padding: 6px 10px;
+    background: white;
+    border-bottom: solid 1px var(--search-result-border-color);
+    border-radius: 1px;
+}
+
+.dracula .djs-search-highlight {
+    color: var(--search-result-highlight-color);
+}
+
+.dracula .djs-search-result-primary {
+    margin: 0 0 10px;
+}
+
+.dracula .djs-search-result-secondary {
+    font-family: monospace;
+    margin: 0;
+}
+
+.dracula .djs-search-result:hover {
+    background: var(--search-result-selected-color);
+}
+
+.dracula .djs-search-result-selected {
+    background: var(--search-result-selected-color);
+}
+
+.dracula .djs-search-result-selected:hover {
+    background: var(--search-result-selected-color);
+}
+
+.dracula .djs-search-overlay {
+    background: var(--search-result-selected-color);
+}
+
+/**
+ * hidden styles
+ */
+.dracula .djs-element-hidden,
+.dracula .djs-element-hidden .djs-hit,
+.dracula .djs-element-hidden .djs-outline,
+.dracula .djs-label-hidden .djs-label {
+    display: none !important;
+}
+
+.dracula .djs-element .djs-hit-stroke,
+.dracula .djs-element .djs-hit-click-stroke,
+.dracula .djs-element .djs-hit-all {
+    cursor: move;
+}

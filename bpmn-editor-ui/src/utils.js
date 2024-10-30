@@ -1,0 +1,1 @@
+export const isDraculaMode = new URLSearchParams(window.location.search).get('colorTheme') === 'DARK';
