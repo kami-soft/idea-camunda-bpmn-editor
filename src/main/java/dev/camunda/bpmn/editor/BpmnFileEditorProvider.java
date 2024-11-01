@@ -3,9 +3,12 @@ package dev.camunda.bpmn.editor;
 import static com.intellij.openapi.fileEditor.FileEditorPolicy.PLACE_BEFORE_DEFAULT_EDITOR;
 import static java.util.Objects.nonNull;
 
-import com.intellij.openapi.fileEditor.*;
+import com.intellij.openapi.fileEditor.FileEditor;
+import com.intellij.openapi.fileEditor.FileEditorPolicy;
+import com.intellij.openapi.fileEditor.FileEditorProvider;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.vfs.VirtualFile;
+import java.util.List;
 import org.jetbrains.annotations.NotNull;
 
 /**
@@ -16,8 +19,8 @@ import org.jetbrains.annotations.NotNull;
  */
 public class BpmnFileEditorProvider implements FileEditorProvider {
 
-    private static final String BPMN = "bpmn";
     private static final String BPMN_EDITOR = "bpmn-editor";
+    private static final List<String> SUPPORTED_EXTENSIONS = List.of(".bpmn", ".bpmn20.xml");
 
     /**
      * Determines whether the given file can be opened with a BPMN editor.
@@ -28,7 +31,8 @@ public class BpmnFileEditorProvider implements FileEditorProvider {
      */
     @Override
     public boolean accept(@NotNull Project project, @NotNull VirtualFile file) {
-        return nonNull(file.getExtension()) && file.getExtension().equalsIgnoreCase(BPMN);
+        return nonNull(file.getExtension())
+                && SUPPORTED_EXTENSIONS.stream().anyMatch(extension -> file.getName().endsWith(extension));
     }
 
     /**
