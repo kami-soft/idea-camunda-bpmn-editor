@@ -5,7 +5,6 @@ import {setupObserver} from './observers';
 import './styles';
 import {isDraculaMode} from './utils';
 import {handlePasteAsync} from "./copyPaste";
-import {isPaste} from "diagram-js/lib/features/keyboard/KeyboardUtil";
 
 if (isDraculaMode) {
     document.body.classList.add('dracula');
@@ -45,10 +44,5 @@ bpmnModeler.on('copyPaste.elementsCopied', event => {
 })
 
 bpmnModeler.get('keyboard').addListener(3000, event => {
-    const {keyEvent} = event;
-    if (!isPaste(keyEvent)) {
-        return;
-    }
-
-    handlePasteAsync(bpmnModeler);
+    handlePasteAsync(event, bpmnModeler);
 });

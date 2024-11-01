@@ -1,4 +1,11 @@
-export async function handlePasteAsync(bpmnModeler) {
+import {isPaste} from "diagram-js/lib/features/keyboard/KeyboardUtil";
+
+export async function handlePasteAsync(event, bpmnModeler) {
+    const {keyEvent} = event;
+    if (!isPaste(keyEvent)) {
+        return;
+    }
+
     const serializedCopy = await window.getBpmnClipboard('bpmnClipboard');
     if (!serializedCopy) {
         return;
@@ -7,7 +14,6 @@ export async function handlePasteAsync(bpmnModeler) {
     const reviver = createReviver(bpmnModeler.get('moddle'));
     const parsedCopy = JSON.parse(serializedCopy, reviver);
 
-    bpmnModeler.get('clipboard').clear();
     bpmnModeler.get('clipboard').set(parsedCopy);
 }
 

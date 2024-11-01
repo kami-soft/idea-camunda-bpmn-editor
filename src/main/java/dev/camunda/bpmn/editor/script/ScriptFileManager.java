@@ -3,6 +3,7 @@ package dev.camunda.bpmn.editor.script;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.project.Project;
 import com.intellij.ui.jcef.JBCefBrowser;
+import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
 import org.jetbrains.annotations.NotNull;
@@ -16,7 +17,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class ScriptFileManager implements Disposable {
 
-    private final ConcurrentHashMap<String, ScriptFile> scriptFiles = new ConcurrentHashMap<>();
+    private final Map<String, ScriptFile> scriptFiles = new ConcurrentHashMap<>();
 
     /**
      * Creates a new script scratch file.

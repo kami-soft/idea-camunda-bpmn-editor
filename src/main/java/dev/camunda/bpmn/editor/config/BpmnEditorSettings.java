@@ -1,4 +1,4 @@
-package dev.camunda.bpmn.editor.settings;
+package dev.camunda.bpmn.editor.config;
 
 import static com.intellij.openapi.application.ApplicationManager.getApplication;
 
@@ -7,7 +7,9 @@ import com.intellij.openapi.components.State;
 import com.intellij.openapi.components.Storage;
 import com.intellij.serviceContainer.NonInjectable;
 import java.util.Optional;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.jetbrains.annotations.NotNull;
 
@@ -33,6 +35,9 @@ public final class BpmnEditorSettings implements PersistentStateComponent<BpmnEd
          */
         @NotNull
         private ColorTheme colorTheme = ColorTheme.DARK;
+
+        @NotNull
+        private ScriptType scriptType = ScriptType.NONE;
     }
 
     @NotNull
@@ -62,4 +67,14 @@ public final class BpmnEditorSettings implements PersistentStateComponent<BpmnEd
      * An enum representing the color theme of the BPMN Editor.
      */
     public enum ColorTheme {LIGHT, DARK}
+
+    @Getter
+    @AllArgsConstructor
+    public enum ScriptType {
+        NONE(""),
+        GROOVY("groovy"),
+        JAVASCRIPT("javascript");
+
+        private final String value;
+    }
 }

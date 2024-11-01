@@ -1,11 +1,9 @@
-/* @import url(diagram-js.css);
-@import url(colors.css);  */
 @import url(codemirror-dracula.css);
 
 .dracula {
-    --dracula-background: rgba(30,32,34,255);
-    --dracula-current-line: rgba(30,32,34,255);
-    --dracula--properties-panel: rgba(43,45,48,255);
+    --dracula-background: rgba(30, 32, 34, 255);
+    --dracula-current-line: rgba(30, 32, 34, 255);
+    --dracula--properties-panel: rgba(43, 45, 48, 255);
     --dracula-foreground: #BCBEC4;
     --dracula-comment: #6071a4;
     --dracula-cyan: #8be8fd;
@@ -15,7 +13,7 @@
     --dracula-purple: #bf95f9;
     --dracula-red: #ff5757;
     --dracula-yellow: #f1fa89;
-    --palette-background-color: rgba(43,45,48,255);
+    --palette-background-color: rgba(43, 45, 48, 255);
 
     --color-white: var(--dracula-background);
     --color-black: var(--dracula-foreground);
@@ -192,6 +190,10 @@
     --feel-indicator-background-color: var(--color-grey-225-10-90);
 }
 
+.dracula .properties-panel-parent {
+    border-left: 1px solid var(--dracula-background);
+}
+
 .dracula .align-elements img,
 .dracula .djs-context-pad img {
     filter: invert(1) !important;
@@ -334,7 +336,9 @@
     stroke: none;
 }
 
-.dracula  @keyframes dash {
+.dracula
+
+@keyframes dash {
     to {
         stroke-dashoffset: 0;
     }

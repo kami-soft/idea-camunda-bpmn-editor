@@ -1,8 +1,8 @@
-package dev.camunda.bpmn.editor.settings.ui;
+package dev.camunda.bpmn.editor.ui;
 
 import com.intellij.openapi.options.Configurable;
-import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
-import dev.camunda.bpmn.editor.settings.ui.component.JBpmnEditorComponent;
+import dev.camunda.bpmn.editor.config.BpmnEditorSettings;
+import dev.camunda.bpmn.editor.ui.component.JBpmnEditorComponent;
 import java.util.Optional;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -20,7 +20,7 @@ import org.jetbrains.annotations.NotNull;
  */
 public class BpmnEditorConfigurable implements Configurable {
 
-    private static final String BPMN_EDITOR_SETTINGS = "BPMN Editor Settings";
+    private static final String BPMN_EDITOR_SETTINGS = "Camunda BPMN Editor Settings";
 
     private JBpmnEditorComponent bpmnEditorComponent;
 
@@ -55,7 +55,7 @@ public class BpmnEditorConfigurable implements Configurable {
     @Override
     public @NotNull JComponent createComponent() {
         bpmnEditorComponent = new JBpmnEditorComponent();
-        return bpmnEditorComponent.getPanel();
+        return bpmnEditorComponent;
     }
 
     /**
@@ -67,8 +67,8 @@ public class BpmnEditorConfigurable implements Configurable {
     public boolean isModified() {
         var state = BpmnEditorSettings.getInstance().getState();
         return Optional.ofNullable(bpmnEditorComponent)
-                .map(JBpmnEditorComponent::getColorThemeValue)
-                .map(colorThemeValue -> colorThemeValue != state.getColorTheme())
+                .map(component -> component.getColorThemeValue() != state.getColorTheme()
+                        || component.getScriptTypeValue() != state.getScriptType())
                 .orElse(false);
     }
 
@@ -78,9 +78,10 @@ public class BpmnEditorConfigurable implements Configurable {
     @Override
     public void apply() {
         var state = BpmnEditorSettings.getInstance().getState();
-        Optional.ofNullable(bpmnEditorComponent)
-                .map(JBpmnEditorComponent::getColorThemeValue)
-                .ifPresent(state::setColorTheme);
+        Optional.ofNullable(bpmnEditorComponent).ifPresent(component -> {
+            state.setColorTheme(component.getColorThemeValue());
+            state.setScriptType(component.getScriptTypeValue());
+        });
     }
 
     /**
@@ -89,8 +90,10 @@ public class BpmnEditorConfigurable implements Configurable {
     @Override
     public void reset() {
         var state = BpmnEditorSettings.getInstance().getState();
-        Optional.ofNullable(bpmnEditorComponent)
-                .ifPresent(component -> component.setColorThemeValue(state.getColorTheme()));
+        Optional.ofNullable(bpmnEditorComponent).ifPresent(component -> {
+            component.setColorThemeValue(state.getColorTheme());
+            component.setScriptTypeValue(state.getScriptType());
+        });
     }
 
     /**

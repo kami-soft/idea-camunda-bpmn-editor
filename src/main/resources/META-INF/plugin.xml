@@ -31,13 +31,13 @@
     </extensions>
     <extensions defaultExtensionNs="com.intellij">
         <applicationService
-                serviceImplementation="dev.camunda.bpmn.editor.settings.BpmnEditorSettings"/>
+                serviceImplementation="dev.camunda.bpmn.editor.config.BpmnEditorSettings"/>
     </extensions>
     <extensions defaultExtensionNs="com.intellij">
         <applicationConfigurable
                 parentId="tools"
-                instance="dev.camunda.bpmn.editor.settings.ui.BpmnEditorConfigurable"
-                id="dev.camunda.bpmn.editor.settings.ui.BpmnEditorConfigurable"
+                instance="dev.camunda.bpmn.editor.ui.BpmnEditorConfigurable"
+                id="dev.camunda.bpmn.editor.ui.BpmnEditorConfigurable"
                 displayName="BPMN Editor Settings"/>
     </extensions>
 </idea-plugin>

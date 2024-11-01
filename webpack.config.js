@@ -4,9 +4,9 @@ const path = require('path');
 
 module.exports = {
     mode: 'development',
-    entry: './src/main.js',
+    entry: './src/main/javascript/main.js',
     output: {
-        path: path.resolve(__dirname, 'public'),
+        path: path.resolve(__dirname, 'build/public/bpmn-editor-ui'),
         filename: 'main.js'
     },
     module: {
@@ -38,7 +38,7 @@ module.exports = {
     plugins: [
         new CopyWebpackPlugin({
             patterns: [
-                {from: 'src/bpmn-editor.html', to: '.'}
+                {from: 'src/main/resources/ui/bpmn-editor.html', to: '.'}
             ]
         })
     ],

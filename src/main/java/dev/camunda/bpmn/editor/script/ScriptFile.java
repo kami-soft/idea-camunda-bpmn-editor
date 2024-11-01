@@ -50,7 +50,7 @@ public class ScriptFile implements Disposable {
      * Enum representing supported file extensions.
      */
     private enum Extension {
-        GROOVY, JAVA, OTHER, TXT
+        GROOVY, JAVA, OTHER, TXT, JS
     }
 
     static {

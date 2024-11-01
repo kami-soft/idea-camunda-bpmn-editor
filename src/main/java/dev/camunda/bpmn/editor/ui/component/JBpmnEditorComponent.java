@@ -1,12 +1,13 @@
-package dev.camunda.bpmn.editor.settings.ui.component;
+package dev.camunda.bpmn.editor.ui.component;
 
 import static java.awt.FlowLayout.LEFT;
 
 import com.intellij.openapi.ui.ComboBox;
+import com.intellij.ui.TitledSeparator;
 import com.intellij.ui.components.JBLabel;
-import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
+import com.intellij.ui.components.panels.VerticalLayout;
+import dev.camunda.bpmn.editor.config.BpmnEditorSettings;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import javax.swing.JComboBox;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -21,9 +22,9 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Oleksandr Havrysh
  */
-public class JBpmnEditorComponent {
+public class JBpmnEditorComponent extends JPanel {
 
-    private final JPanel mainPanel;
+    private final JComboBox<BpmnEditorSettings.ScriptType> scriptTypeComboBox;
     private final JComboBox<BpmnEditorSettings.ColorTheme> colorThemeComboBox;
 
     /**
@@ -31,23 +32,22 @@ public class JBpmnEditorComponent {
      * Initializes the combo box with the available color themes and builds the form.
      */
     public JBpmnEditorComponent() {
-        colorThemeComboBox = new ComboBox<>(BpmnEditorSettings.ColorTheme.values());
+        super(new VerticalLayout(2));
 
+        colorThemeComboBox = new ComboBox<>(BpmnEditorSettings.ColorTheme.values());
         var colorThemePanel = new JPanel(new FlowLayout(LEFT));
-        colorThemePanel.add(new JBLabel("Color theme:"));
+        colorThemePanel.add(new JBLabel("   Color theme:"));
         colorThemePanel.add(colorThemeComboBox);
 
-        mainPanel = new JPanel(new GridLayout(1, 1));
-        mainPanel.add(colorThemePanel);
-    }
+        scriptTypeComboBox = new ComboBox<>(BpmnEditorSettings.ScriptType.values());
+        var scriptTypePanel = new JPanel(new FlowLayout(LEFT));
+        scriptTypePanel.add(new JBLabel("   Default script type:"));
+        scriptTypePanel.add(scriptTypeComboBox);
 
-    /**
-     * Returns the main panel of the component.
-     *
-     * @return The main panel of the component
-     */
-    public @NotNull JPanel getPanel() {
-        return mainPanel;
+        add(new TitledSeparator("Theme Settings", colorThemePanel));
+        add(colorThemePanel);
+        add(new TitledSeparator("Script Settings", colorThemePanel));
+        add(scriptTypePanel);
     }
 
     /**
@@ -75,5 +75,23 @@ public class JBpmnEditorComponent {
      */
     public void setColorThemeValue(BpmnEditorSettings.ColorTheme colorTheme) {
         colorThemeComboBox.setSelectedItem(colorTheme);
+    }
+
+    /**
+     * Returns the currently selected script type.
+     *
+     * @return The currently selected script type
+     */
+    public BpmnEditorSettings.ScriptType getScriptTypeValue() {
+        return (BpmnEditorSettings.ScriptType) scriptTypeComboBox.getSelectedItem();
+    }
+
+    /**
+     * Sets the selected script type in the combo box.
+     *
+     * @param scriptType The script type to be selected
+     */
+    public void setScriptTypeValue(BpmnEditorSettings.ScriptType scriptType) {
+        scriptTypeComboBox.setSelectedItem(scriptType);
     }
 }

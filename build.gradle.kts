@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.camunda.bpmn"
-version = "0.1.0"
+version = "0.1.1"
 
 repositories {
     mavenCentral()
@@ -28,6 +28,7 @@ tasks {
         sourceCompatibility = "17"
         targetCompatibility = "17"
     }
+
     withType<org.jetbrains.kotlin.gradle.tasks.KotlinCompile> {
         kotlinOptions.jvmTarget = "17"
     }
@@ -39,24 +40,19 @@ tasks {
 
     val buildNpm = register<com.github.gradle.node.npm.task.NpmTask>("buildNpm") {
         args.set(listOf("run", "build"))
-        workingDir.set(file("${project.projectDir}/bpmn-editor-ui"))
-    }
-
-    val copyNpmBuild = register<Copy>("copyNpmBuild") {
-        from("${project.projectDir}/bpmn-editor-ui/public")
-        into("${project.projectDir}/src/main/resources/bpmn-editor-ui")
+        workingDir.set(file("${project.projectDir}"))
     }
 
     buildPlugin {
         dependsOn(buildNpm)
-        finalizedBy(copyNpmBuild)
     }
+}
 
-    clean {
-        delete(
-            "${project.projectDir}/bpmn-editor-ui/public",
-            "${project.projectDir}/src/main/resources/bpmn-editor-ui",
-        )
+sourceSets {
+    main {
+        resources {
+            srcDir("${project.projectDir}/build/public")
+        }
     }
 }
 
