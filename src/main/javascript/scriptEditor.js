@@ -1,5 +1,5 @@
 import CodeMirror from 'codemirror';
-import {isDraculaMode} from './utils';
+import {isDraculaMode, scriptFormat} from './utils';
 import './styles';
 import 'codemirror/addon/display/autorefresh.js';
 
@@ -38,25 +38,30 @@ export function processScriptEditor(textarea) {
         const editButton = document.createElement('button');
         editButton.textContent = 'Edit in new tab';
         editButton.className = 'edit-script-external-file-button';
-        buttonContainer.appendChild(editButton);
-
         editButton.addEventListener('click', () => {
             if (editorContainer.getAttribute('virtual-file-id')) {
                 window.setFocusVirtualFile(editorContainer.getAttribute('virtual-file-id'));
             } else {
-                window.openScriptExternalFile(textarea.value).then(virtualFileId => {
+                const format = getScriptFormatValue(editorContainer);
+                window.openScriptExternalFile(btoa(textarea.value) + '@' + format).then(virtualFileId => {
                     editorContainer.setAttribute('virtual-file-id', virtualFileId);
                 });
             }
 
             editor.setOption("readOnly", true);
         });
+        buttonContainer.appendChild(editButton);
     }
+}
+
+function getScriptFormatValue(editorContainer) {
+    const scriptFormat = getScriptFormat(editorContainer.parentNode.parentNode.parentNode);
+    return !scriptFormat || scriptFormat.value.length === 0 ? 'txt' : scriptFormat.value;
 }
 
 export function processScriptFormat(input) {
     if (input && input.value.trim() === '') {
-        input.value = 'groovy';
+        input.value = scriptFormat;
         input.dispatchEvent(new Event('input', {bubbles: true}));
     }
 }
@@ -66,7 +71,13 @@ export function processAllScriptEditors(node) {
 }
 
 export function processAllScriptFormats(node) {
-    node.querySelectorAll('input[id*="scriptFormat"], input[id*="ScriptLanguage"]').forEach(processScriptFormat);
+    if(scriptFormat && scriptFormat.length > 0) {
+        node.querySelectorAll('input[id*="scriptFormat"], input[id*="ScriptLanguage"]').forEach(processScriptFormat);
+    }
+}
+
+function getScriptFormat(node) {
+    return node.querySelector('input[id*="scriptFormat"], input[id*="ScriptLanguage"]')
 }
 
 export function closeVirtualFile(node) {

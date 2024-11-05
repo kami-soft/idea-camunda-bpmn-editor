@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.camunda.bpmn"
-version = "0.1.1"
+version = "1.0.0"
 
 repositories {
     mavenCentral()
@@ -59,4 +59,5 @@ sourceSets {
 dependencies {
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
+    implementation("org.springframework:spring-context:6.1.14")
 }

@@ -3,6 +3,7 @@ import {
     processAllScriptEditors,
     processAllScriptFormats
 } from './scriptEditor';
+import {scriptFormat} from './utils'
 
 function isChangedFullScriptBlock(node) {
     return (node.dataset && node.dataset.groupId && node.dataset.groupId.includes('group-CamundaPlatform__Script'))
@@ -13,6 +14,10 @@ function isChangedFullScriptBlock(node) {
 }
 
 function isChangedScriptFormat(node) {
+    if (!scriptFormat && scriptFormat.length === 0) {
+        return false;
+    }
+
     return (node.dataset && node.dataset.entryId &&
         (node.dataset.entryId.includes('scriptFormat') || node.dataset.entryId.includes('ScriptLanguage')));
 }

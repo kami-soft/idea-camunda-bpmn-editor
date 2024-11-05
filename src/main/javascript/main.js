@@ -22,7 +22,7 @@ window.initApp = async function () {
 
 document.addEventListener('DOMContentLoaded', () => {
     enableResizing();
-    createNewDiagram(bpmnModeler).then(r => setupObserver());
+    initApp().then(r => setupObserver());
 });
 
 bpmnModeler.on('commandStack.changed', async () => {
@@ -41,7 +41,7 @@ bpmnModeler.on('copyPaste.elementsCopied', event => {
     } catch (err) {
         console.error('Error while copyBpmnClipboard:', err);
     }
-})
+});
 
 bpmnModeler.get('keyboard').addListener(3000, event => {
     handlePasteAsync(event, bpmnModeler);

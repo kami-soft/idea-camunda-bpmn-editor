@@ -1,8 +1,10 @@
 package dev.camunda.bpmn.editor.ui;
 
+import static java.util.Objects.nonNull;
+
 import com.intellij.openapi.options.Configurable;
-import dev.camunda.bpmn.editor.config.BpmnEditorSettings;
-import dev.camunda.bpmn.editor.ui.component.JBpmnEditorComponent;
+import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
+import dev.camunda.bpmn.editor.ui.component.BpmnEditorSettingsComponent;
 import java.util.Optional;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
@@ -22,7 +24,7 @@ public class BpmnEditorConfigurable implements Configurable {
 
     private static final String BPMN_EDITOR_SETTINGS = "Camunda BPMN Editor Settings";
 
-    private JBpmnEditorComponent bpmnEditorComponent;
+    private BpmnEditorSettingsComponent bpmnEditorSettingsComponent;
 
     /**
      * Returns the display name of the settings panel.
@@ -42,8 +44,8 @@ public class BpmnEditorConfigurable implements Configurable {
      */
     @Override
     public @NotNull JComponent getPreferredFocusedComponent() {
-        return Optional.ofNullable(bpmnEditorComponent)
-                .map(JBpmnEditorComponent::getPreferredFocusedComponent)
+        return Optional.ofNullable(bpmnEditorSettingsComponent)
+                .map(BpmnEditorSettingsComponent::getPreferredFocusedComponent)
                 .orElse(new JPanel());
     }
 
@@ -54,8 +56,7 @@ public class BpmnEditorConfigurable implements Configurable {
      */
     @Override
     public @NotNull JComponent createComponent() {
-        bpmnEditorComponent = new JBpmnEditorComponent();
-        return bpmnEditorComponent;
+        return this.bpmnEditorSettingsComponent = new BpmnEditorSettingsComponent();
     }
 
     /**
@@ -66,9 +67,11 @@ public class BpmnEditorConfigurable implements Configurable {
     @Override
     public boolean isModified() {
         var state = BpmnEditorSettings.getInstance().getState();
-        return Optional.ofNullable(bpmnEditorComponent)
+        return Optional.ofNullable(bpmnEditorSettingsComponent)
                 .map(component -> component.getColorThemeValue() != state.getColorTheme()
-                        || component.getScriptTypeValue() != state.getScriptType())
+                        || component.getScriptTypeValue() != state.getScriptType()
+                        || component.getEngineValue() != state.getEngine()
+                        || !component.getFileSettings().equals(state.getFileSettings()))
                 .orElse(false);
     }
 
@@ -78,9 +81,11 @@ public class BpmnEditorConfigurable implements Configurable {
     @Override
     public void apply() {
         var state = BpmnEditorSettings.getInstance().getState();
-        Optional.ofNullable(bpmnEditorComponent).ifPresent(component -> {
+        Optional.ofNullable(bpmnEditorSettingsComponent).ifPresent(component -> {
             state.setColorTheme(component.getColorThemeValue());
             state.setScriptType(component.getScriptTypeValue());
+            state.setEngine(component.getEngineValue());
+            state.setFileSettings(component.getFileSettings());
         });
     }
 
@@ -90,9 +95,11 @@ public class BpmnEditorConfigurable implements Configurable {
     @Override
     public void reset() {
         var state = BpmnEditorSettings.getInstance().getState();
-        Optional.ofNullable(bpmnEditorComponent).ifPresent(component -> {
+        Optional.ofNullable(bpmnEditorSettingsComponent).ifPresent(component -> {
             component.setColorThemeValue(state.getColorTheme());
             component.setScriptTypeValue(state.getScriptType());
+            component.setEngineValue(state.getEngine());
+            component.setFileSettings(state.getFileSettings());
         });
     }
 
@@ -101,6 +108,9 @@ public class BpmnEditorConfigurable implements Configurable {
      */
     @Override
     public void disposeUIResources() {
-        bpmnEditorComponent = null;
+        if (nonNull(bpmnEditorSettingsComponent)) {
+            bpmnEditorSettingsComponent.dispose();
+            bpmnEditorSettingsComponent = null;
+        }
     }
 }

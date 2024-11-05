@@ -1,5 +1,7 @@
 package dev.camunda.bpmn.editor.util;
 
+import static dev.camunda.bpmn.editor.util.Constants.EMPTY;
+import static dev.camunda.bpmn.editor.util.Constants.SHA_256;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import com.intellij.util.concurrency.annotations.RequiresWriteLock;
@@ -10,29 +12,25 @@ import org.jetbrains.annotations.Nullable;
 
 /**
  * A thread-safe utility class for comparing hashes of strings.
- * This class uses SHA-256 algorithm to generate and compare hashes.
+ * This class uses the SHA-256 algorithm to generate and compare hashes.
  *
  * @author Oleksandr Havrysh
  */
 public class HashComparator {
 
-    private static final String EMPTY_TEXT = "";
-    private static final String SHA_256 = "SHA-256";
-
-    private volatile byte[] actualHash;
-
     private final byte[] originHash;
+    private volatile byte[] actualHash;
     private final MessageDigest messageDigest;
 
     /**
-     * Constructs a new HashComparator with the given origin string.
+     * Constructs a new HashComparator with the given originBpmn string.
      *
-     * @param origin The original string to compare against.
+     * @param originBpmn The original string to compare against.
      * @throws RuntimeException if the SHA-256 algorithm is not available.
      */
-    public HashComparator(@Nullable String origin) {
+    public HashComparator(@Nullable String originBpmn) {
         this.messageDigest = getMessageDigest();
-        this.originHash = messageDigest.digest((isBlank(origin) ? EMPTY_TEXT : origin).getBytes());
+        this.originHash = messageDigest.digest((isBlank(originBpmn) ? EMPTY : originBpmn).getBytes());
         this.actualHash = originHash;
     }
 
@@ -51,9 +49,9 @@ public class HashComparator {
     }
 
     /**
-     * Updates the actual hash with a new string.
+     * Updates the actual hash with a new byte array.
      *
-     * @param actual The new string to generate a hash for.
+     * @param actual The new byte array to generate a hash for.
      */
     @RequiresWriteLock
     public void updateHash(byte[] actual) {

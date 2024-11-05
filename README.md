@@ -4,14 +4,15 @@ This project is a BPMN Editor plugin for IntelliJ IDEA. It provides a custom edi
 
 ## Features
 
-- Custom BPMN file editor
-- Syntax highlighting for BPMN files
+- Custom BPMN file editor (Classic BPMN Modeler, Camunda 7 and Camunda 8)
 - Integration with system clipboard
-- Customizable color themes
+- For Camunda 7 added working with 'inline script' in external script editor
+- Supported *.bpmn and *.bpmn20.xml files
+- Color themes
 
 ## Requirements
 
-- IntelliJ IDEA 2021.1 or later
+- IntelliJ IDEA 2023.2.6 or later
 - JDK 17 or later
 
 ## Getting Started
@@ -75,7 +76,7 @@ Once the plugin is installed, you can use it to open and edit BPMN files:
 2. **Configure the editor settings:**
 
     - Go to `File > Settings...` (or `IntelliJ IDEA > Preferences...` on macOS).
-    - Select `Tools > BPMN Editor Settings` from the left-hand menu.
+    - Select `Tools > Camunda BPMN Editor Settings` from the left-hand menu.
     - Configure the color theme and other settings as desired.
 
 ## Contributing

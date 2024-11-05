@@ -1,16 +1,18 @@
 package dev.camunda.bpmn.editor;
 
-import static com.intellij.openapi.vfs.VirtualFileUtil.readText;
-
 import com.intellij.openapi.fileEditor.FileEditor;
 import com.intellij.openapi.fileEditor.FileEditorState;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vfs.VirtualFile;
-import dev.camunda.bpmn.editor.browser.BpmnEditorBrowser;
+import dev.camunda.bpmn.editor.context.BpmnEditorApplicationContext;
+import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
+import dev.camunda.bpmn.editor.ui.component.BpmnEditorComponent;
+import dev.camunda.bpmn.editor.ui.component.EngineComponent;
 import dev.camunda.bpmn.editor.util.HashComparator;
 import java.beans.PropertyChangeListener;
 import javax.swing.JComponent;
+import lombok.Getter;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -24,9 +26,13 @@ public class BpmnFileEditor implements FileEditor {
 
     private static final String BPMN_EDITOR = "BPMN Editor";
 
+    @Getter
     private final VirtualFile file;
+
+    @Getter
+    private final BpmnEditorComponent component;
     private final HashComparator hashComparator;
-    private final BpmnEditorBrowser bpmnEditorBrowser;
+    private final BpmnEditorApplicationContext context;
 
     /**
      * Constructs a new BPMN file editor.
@@ -36,20 +42,22 @@ public class BpmnFileEditor implements FileEditor {
      */
     public BpmnFileEditor(@NotNull Project project, @NotNull VirtualFile file) {
         this.file = file;
+        this.context = new BpmnEditorApplicationContext(project, file);
+        this.hashComparator = context.getHashComparator();
 
-        var bpmnXml = readText(file);
-        this.hashComparator = new HashComparator(bpmnXml);
-        this.bpmnEditorBrowser = new BpmnEditorBrowser(project, file, bpmnXml, hashComparator);
-    }
+        var jbCefBrowserService = context.getJBCefBrowserService();
+        component = new BpmnEditorComponent();
 
-    /**
-     * Returns the main component of the BPMN editor.
-     *
-     * @return The main component of the BPMN editor
-     */
-    @Override
-    public @NotNull JComponent getComponent() {
-        return bpmnEditorBrowser.getComponent();
+        var state = BpmnEditorSettings.getInstance().getState();
+        if (state.isEngineSet(file.getPath())) {
+            component.put(jbCefBrowserService.loadBpmn());
+            return;
+        }
+
+        component.put(new EngineComponent(result -> {
+            state.addFileSettings(file.getPath(), result);
+            component.set(jbCefBrowserService.loadBpmn());
+        }));
     }
 
     /**
@@ -59,7 +67,7 @@ public class BpmnFileEditor implements FileEditor {
      */
     @Override
     public @Nullable JComponent getPreferredFocusedComponent() {
-        return bpmnEditorBrowser.getComponent();
+        return component;
     }
 
     /**
@@ -124,17 +132,8 @@ public class BpmnFileEditor implements FileEditor {
      */
     @Override
     public void dispose() {
-        bpmnEditorBrowser.dispose();
-    }
-
-    /**
-     * Returns the file being edited.
-     *
-     * @return The file being edited
-     */
-    @Override
-    public @NotNull VirtualFile getFile() {
-        return file;
+        component.dispose();
+        context.close();
     }
 
     /**
