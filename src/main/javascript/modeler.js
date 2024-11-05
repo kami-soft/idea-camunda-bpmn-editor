@@ -3,7 +3,7 @@ import BpmnModeler8 from "camunda-bpmn-js/lib/camunda-cloud/Modeler";
 import BpmnModeler from 'bpmn-js/lib/Modeler';
 import {CreateAppendElementTemplatesModule} from "bpmn-js-create-append-anything";
 import ElementTemplateChooserModule from "@bpmn-io/element-template-chooser";
-import TokenSimulationModule from "bpmn-js-token-simulation";
+import TokenSimulationModule from 'bpmn-js-token-simulation';
 import {isDraculaMode, engine} from './utils';
 import $ from "jquery";
 import './styles';
@@ -75,6 +75,7 @@ export function initModeler() {
                     tolerance: 50,
                 },
                 additionalModules: [
+                    TokenSimulationModule,
                     BpmnPropertiesPanelModule,
                     BpmnPropertiesProviderModule
                 ],

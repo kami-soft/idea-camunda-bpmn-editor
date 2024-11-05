@@ -231,7 +231,7 @@
 
     --popup-border-color: var(--dracula-comment);
 
-    --context-pad-entry-background-color: var(--color-white);
+    --context-pad-entry-background-color: var(--dracula--properties-panel);
     --context-pad-entry-hover-background-color: var(--color-grey-225-10-95);
 
     --element-hover-outline-fill-color: var(--color-blue-205-100-45);
@@ -246,6 +246,8 @@
     --palette-entry-selected-color: var(--dracula-purple);
 
     --lasso-fill-color: rgba(189, 147, 249, .2);
+    --popup-background-color: var(--palette-background-color);
+    --token-simulation-green-base-44: #09512e;
 }
 
 .dracula .modal-dialog,
@@ -255,21 +257,6 @@
 
 .dracula .controls button {
     color: var(--dracula-foreground);
-}
-
-.dracula .bts-toggle-mode {
-    cursor: pointer;
-    position: absolute;
-    top: 20px;
-    left: 20px;
-    background-color: var(--dracula-current-line);
-    border: 1px solid var(--dracula-foreground);
-    border-radius: 2px !important;
-    padding: 6px;
-    font-size: 16px;
-    color: var(--dracula-foreground);
-    user-select: none;
-    display: inline-flex;
 }
 
 .dracula .djs-container .djs-minimap {
@@ -293,7 +280,7 @@
     display: none;
     pointer-events: none;
     line-height: 1;
-    background-color: var(--dracula-background);
+    background-color: var(--dracula--properties-panel);
     border: 1px solid var(--dracula-comment);
     padding: 5px;
     width: 42px !important;
@@ -376,4 +363,31 @@
 .dracula .edit-script-external-file-button {
     border-color: var(--dracula-background);
     background-color: var(--dracula-background);
+}
+
+.dracula .bjs-breadcrumbs li:not(:first-child)::before {
+    content: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"17\" height=\"17\" viewBox=\"0 0 24 24\"><path d=\"M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\" fill=\"%23BCBEC4\"/><path d=\"M0 0h24v24H0z\" fill=\"none\" /></svg>");
+}
+
+.dracula .djs-popup-search-icon path {
+    fill: var(--dracula-foreground);
+}
+
+.dracula .bts-log .bts-entry {
+    background: var(--dracula--properties-panel);
+}
+
+.dracula .bjs-container.simulation .djs-visual circle,
+.dracula .bjs-container.simulation .djs-visual rect,
+.dracula .bjs-container.simulation .djs-visual path {
+    fill: var(--dracula--properties-panel) !important;
+    stroke: var(--dracula-foreground) !important;
+}
+
+.dracula .bjs-container.simulation .djs-visual text {
+    fill: var(--dracula-foreground) !important;
+}
+
+.dracula .bjs-container .djs-drag-active.hover.drop-not-ok {
+    background: #510e09 !important;
 }

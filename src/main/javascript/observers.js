@@ -14,7 +14,7 @@ function isChangedFullScriptBlock(node) {
 }
 
 function isChangedScriptFormat(node) {
-    if (!scriptFormat && scriptFormat.length === 0) {
+    if (!scriptFormat || scriptFormat.length === 0) {
         return false;
     }
 

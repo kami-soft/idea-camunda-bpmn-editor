@@ -58,7 +58,7 @@
     --popup-header-entry-selected-color: var(--color-blue-205-100-50);
     --popup-header-entry-selected-background-color: var(--color-black-opacity-10);
     --popup-header-separator-color: var(--color-grey-225-10-75);
-    --popup-background-color: var(--color-grey-225-10-97);
+    --popup-background-color: var(--palette-background-color);
     --popup-border-color: var(--color-grey-225-10-75);
 
     --resizer-fill-color: var(--color-blue-205-100-45);
@@ -742,6 +742,10 @@
     display: none;
 }
 
+.dracula .djs-popup-search {
+    background: var(--palette-background-color) !important;
+}
+
 .dracula .djs-popup-search input,
 .dracula .djs-search-input input {
     font-size: 1.05em;
@@ -749,14 +753,14 @@
     padding: 6px 10px;
     border: 1px solid var(--search-input-border-color) !important;
     box-sizing: border-box;
-    background-color: var(--search-container-background-color) !important;
+    background-color: var(--palette-background-color) !important;
 }
 
 .dracula .djs-popup-search input:focus,
 .dracula .djs-search-input input:focus {
     outline: none;
     border-color: var(--search-input-border-color) !important;
-    background-color: var(--search-container-background-color) !important;
+    background-color: var(--palette-background-color) !important;
 }
 
 .dracula .djs-search-results {

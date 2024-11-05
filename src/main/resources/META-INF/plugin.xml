@@ -44,4 +44,14 @@
                 id="dev.camunda.bpmn.editor.ui.BpmnEditorConfigurable"
                 displayName="Camunda BPMN Editor Settings"/>
     </extensions>
+
+    <change-notes>
+        <![CDATA[
+          <p>
+            <b>1.1.0</b>
+            <ul>
+              <li>Added support token simulation</li>
+              <li>Some fixes styles on Dark theme</li
+           ]]>
+    </change-notes>
 </idea-plugin>
