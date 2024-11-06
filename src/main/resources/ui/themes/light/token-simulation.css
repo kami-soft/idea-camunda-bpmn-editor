@@ -249,6 +249,7 @@
 .bjs-container.simulation .djs-outline,
 .bjs-container.simulation .djs-palette,
 .bjs-container.simulation .djs-resizer,
+.bjs-container.simulation .djs-context-pad,
 .bjs-container.simulation .djs-segment-dragger {
     display: none !important;
 }

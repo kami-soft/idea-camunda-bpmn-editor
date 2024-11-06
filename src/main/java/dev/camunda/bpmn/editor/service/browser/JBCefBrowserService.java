@@ -2,9 +2,9 @@ package dev.camunda.bpmn.editor.service.browser;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.ui.jcef.JBCefBrowser;
-import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
 import dev.camunda.bpmn.editor.service.jsquery.InitJSQueryManager;
 import dev.camunda.bpmn.editor.service.server.ServerService;
+import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.swing.JComponent;

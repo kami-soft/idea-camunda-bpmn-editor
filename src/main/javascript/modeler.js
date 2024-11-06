@@ -4,10 +4,10 @@ import BpmnModeler from 'bpmn-js/lib/Modeler';
 import {CreateAppendElementTemplatesModule} from "bpmn-js-create-append-anything";
 import ElementTemplateChooserModule from "@bpmn-io/element-template-chooser";
 import TokenSimulationModule from 'bpmn-js-token-simulation';
-import {isDraculaMode, engine} from './utils';
+import {engine, isDarkMode} from './utils';
 import $ from "jquery";
 import './styles';
-import { BpmnPropertiesPanelModule, BpmnPropertiesProviderModule } from 'bpmn-js-properties-panel';
+import {BpmnPropertiesPanelModule, BpmnPropertiesProviderModule} from 'bpmn-js-properties-panel';
 
 export function initModeler() {
     const commonModules = [TokenSimulationModule, ElementTemplateChooserModule];
@@ -27,7 +27,7 @@ export function initModeler() {
                     ...commonModules,
                     CreateAppendElementTemplatesModule
                 ],
-                ...(isDraculaMode ? {
+                ...(isDarkMode ? {
                     bpmnRenderer: {
                         defaultFillColor: 'rgba(43,45,48,255)',
                         defaultStrokeColor: '#BCBEC4'
@@ -51,7 +51,7 @@ export function initModeler() {
                     tolerance: 50,
                 },
                 additionalModules: [...commonModules],
-                ...(isDraculaMode ? {
+                ...(isDarkMode ? {
                     bpmnRenderer: {
                         defaultFillColor: 'rgba(43,45,48,255)',
                         defaultStrokeColor: '#BCBEC4'
@@ -79,7 +79,7 @@ export function initModeler() {
                     BpmnPropertiesPanelModule,
                     BpmnPropertiesProviderModule
                 ],
-                ...(isDraculaMode ? {
+                ...(isDarkMode ? {
                     bpmnRenderer: {
                         defaultFillColor: 'rgba(43,45,48,255)',
                         defaultStrokeColor: '#BCBEC4'

@@ -7,8 +7,6 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 import com.intellij.util.concurrency.annotations.RequiresWriteLock;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * A thread-safe utility class for comparing hashes of strings.
@@ -28,7 +26,7 @@ public class HashComparator {
      * @param originBpmn The original string to compare against.
      * @throws RuntimeException if the SHA-256 algorithm is not available.
      */
-    public HashComparator(@Nullable String originBpmn) {
+    public HashComparator(String originBpmn) {
         this.messageDigest = getMessageDigest();
         this.originHash = messageDigest.digest((isBlank(originBpmn) ? EMPTY : originBpmn).getBytes());
         this.actualHash = originHash;
@@ -40,7 +38,7 @@ public class HashComparator {
      * @return A MessageDigest instance for SHA-256.
      * @throws RuntimeException if the SHA-256 algorithm is not available.
      */
-    private static @NotNull MessageDigest getMessageDigest() {
+    private static MessageDigest getMessageDigest() {
         try {
             return MessageDigest.getInstance(SHA_256);
         } catch (NoSuchAlgorithmException e) {

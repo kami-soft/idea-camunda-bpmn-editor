@@ -1,0 +1,337 @@
+@import url(colors.css);
+@import url(codemirror.css);
+@import url(diagram-js.css);
+
+.dark {
+    --dark-current-line: var(--dark-current-line);
+    --color-white: var(--dark-background);
+    --color-black: var(--dark-foreground);
+    --color-grey-225-10-97: var(--dark-properties-panel);
+
+    --overlay-border-color: var(--color-grey-225-10-85);
+    --overlay-background-color: var(--color-white);
+    --overlay-font-color: var(--color-grey-225-10-15);
+    --overlay-title-color: var(--color-grey-225-10-15);
+    --overlay-link-color: var(--color-blue-205-100-50);
+    --overlay-max-height: auto;
+    --overlay-max-width: auto;
+    --overlay-min-height: auto;
+    --overlay-min-width: auto;
+
+    --log-button-background-color: var(--dark-current-line);
+    --log-color: var(--dark-foreground);
+}
+
+.dark .bts-toggle-mode,
+.dark .bts-palette,
+.dark .bts-set-animation-speed,
+.dark .bts-notifications {
+    --token-simulation-silver-darken-94: var(--dark-properties-panel);
+    --token-simulation-grey-darken-30: var(--dark-foreground);
+    border: solid 1px var(--dark-background);
+}
+
+.dark .bts-log {
+    background-color: var(--dark-properties-panel);
+}
+
+.dark .bts-log .bts-entry {
+    background: var(--dark-background);
+}
+
+.dark .bts-animation-speed-buttons button {
+    background-color: var(--dark-current-line);
+    color: var(--dark-foreground);
+}
+
+.dark .bts-animation-speed-buttons path,
+.dark .bts-notifications .bts-notification {
+    color: var(--dark-foreground) !important;
+}
+
+.dark .bio-properties-panel-group-header,
+.dark .form-group label {
+    color: var(--dark-foreground);
+}
+
+.dark input,
+.dark textarea,
+.dark select,
+.dark body,
+.dark .djs-direct-editing-content,
+.dark .djs-direct-editing-parent{
+    color: var(--dark-foreground) !important;
+    background-color: var(--dark-background) !important;
+}
+
+.dark .welcome-card,
+.dark .bio-properties-panel-input:focus,
+.dark .bio-properties-panel-input:focus-within{
+    background-color: var(--dark-current-line) !important;
+    color: var(--dark-foreground) !important;
+    border: solid 1px var(--dark-foreground);
+}
+
+.dark .bio-properties-panel {
+    --color-grey-225-10-97: var(--dark-properties-panel);
+
+    --color-white: var(--dark-properties-panel);
+    --color-black: var(--dark-foreground);
+
+    --text-base-color: var(--dark-foreground) !important;
+    --text-error-color: var(--dark-red);
+    --link-color: var(--dark-cyan);
+
+    --description-color: hsla(var(--dark-foreground), .1);
+    --description-code-background-color: var(--color-grey-225-10-97);
+    --description-code-border-color: var(--color-grey-225-10-85);
+    --description-list-item-color: var(--color-grey-225-10-35);
+
+    --placeholder-color: var(--color-grey-225-10-35);
+    --placeholder-background-color: var(--color-grey-225-10-95);
+
+    --header-background-color: var(--color-grey-225-10-97);
+    --header-icon-fill-color: var(--color-grey-225-10-15);
+    --header-bottom-border-color: var(--color-grey-225-10-75);
+
+    --group-background-color: var(--color-white);
+    --group-bottom-border-color: var(--color-grey-225-10-75);
+
+    --sticky-group-background-color: var(--color-grey-225-10-95);
+    --sticky-group-bottom-border-color: var(--color-grey-225-10-75);
+
+    --add-entry-fill-color: var(--color-grey-225-10-35);
+    --add-entry-hover-fill-color: var(--color-white);
+    --add-entry-hover-background-color: var(--color-blue-205-100-50);
+    --add-entry-label-color: var(--color-white);
+
+    --remove-entry-fill-color: var(--color-red-360-100-45);
+    --remove-entry-hover-background-color: var(--color-red-360-100-92);
+
+    --arrow-fill-color: var(--color-grey-225-10-35);
+    --arrow-hover-background-color: var(--color-grey-225-10-95);
+
+    --dot-color: var(--color-grey-225-10-35);
+
+    --list-badge-color: var(--color-white);
+    --list-badge-background-color: var(--color-grey-225-10-35);
+
+    --input-background-color: var(--dark-current-line);
+    --input-border-color: var(--color-grey-225-10-75);
+
+    --input-focus-background-color: var(--color-blue-205-100-95);
+    --input-focus-border-color: var(--color-blue-205-100-50);
+
+    --input-error-background-color: var(--color-red-360-100-97);
+    --input-error-border-color: var(--color-red-360-100-45);
+    --input-error-focus-border-color: var(--color-red-360-100-45);
+
+    --input-disabled-color: var(--color-grey-225-10-55);
+    --input-disabled-background-color: var(--color-grey-225-10-97);
+    --input-disabled-border-color: var(--color-grey-225-10-90);
+
+    --toggle-switch-on-background-color: var(--color-blue-205-100-50);
+    --toggle-switch-off-background-color: var(--color-grey-225-10-75);
+    --toggle-switch-switcher-background-color: var(--color-white);
+
+    --side-line-background-color: var(--color-grey-225-10-35);
+    --side-line-extension-background-color: var(--color-grey-225-10-35);
+
+    --list-entry-dot-background-color: var(--color-grey-225-10-35);
+    --list-entry-header-button-fill-color: var(--color-grey-225-10-35);
+    --list-entry-add-entry-empty-background-color: var(--color-blue-205-100-50);
+    --list-entry-add-entry-empty-hover-background-color: var(--color-blue-205-100-45);
+    --list-entry-add-entry-label-color: var(--color-white);
+    --list-entry-add-entry-background-color: var(--color-blue-205-100-50);
+    --list-entry-add-entry-fill-color: var(--color-white);
+
+    --dropdown-item-background-color: var(--color-white);
+    --dropdown-item-hover-background-color: var(--color-grey-225-10-95);
+    --dropdown-separator-background-color: var(--color-grey-225-10-75);
+
+    --feel-active-color: var(--color-blue-205-100-35);
+    --feel-inactive-color: var(--color-grey-225-10-35);
+
+    --feel-indicator-background-color: var(--color-grey-225-10-90);
+}
+
+.dark .bio-properties-panel {
+    border-bottom: solid 1px var(--group-bottom-border-color);
+}
+
+.dark .properties-panel-parent {
+    border-left: 1px solid var(--dark-background);
+}
+
+.dark .align-elements img,
+.dark .djs-context-pad img {
+    filter: invert(1) !important;
+}
+
+.dark .djs-container {
+
+    --color-grey-225-10-97: var(--dark-properties-panel);
+
+    --color-white: var(--dark-background);
+    --color-black: var(--dark-foreground);
+    --color-transparent: transparent;
+
+    --popup-border-color: var(--color-transparent);
+
+    --context-pad-entry-background-color: var(--dark-properties-panel);
+    --context-pad-entry-hover-background-color: var(--color-grey-225-10-95);
+
+    --element-hover-outline-fill-color: var(--color-blue-205-100-45);
+    --element-selected-outline-stroke-color: var(--dark-purple);
+    --element-selected-outline-secondary-stroke-color: var(--element-selected-outline-stroke-color);
+    --element-dragger-color: var(--element-selected-outline-stroke-color);
+
+    --palette-entry-hover-color: var(--dark-purple);
+
+    --popup-header-entry-selected-background-color: var(--dark-current-line);
+
+    --palette-entry-selected-color: var(--dark-purple);
+
+    --lasso-fill-color: rgba(189, 147, 249, .2);
+    --popup-background-color: var(--palette-background-color);
+    --token-simulation-green-base-44: #09512e;
+}
+
+.dark .modal-dialog,
+.dark .btn-primary {
+    color: var(--dark-foreground);
+}
+
+.dark .controls button {
+    color: var(--dark-foreground);
+}
+
+.dark .djs-container .djs-minimap {
+    background-color: var(--dark-properties-panel);
+    border: solid 1px var(--dark-background);
+}
+
+.dark .bio-properties-panel-description,
+.dark .bio-properties-panel-description p,
+.dark .bio-properties-panel-description span,
+.dark .bio-properties-panel-description div {
+    color: var(--dark-purple);
+    background-color: var(--dark-properties-panel);
+}
+
+.dark .djs-popup .entry:hover {
+    color: var(--dark-purple);
+}
+
+.dark .djs-context-pad {
+    position: absolute;
+    display: none;
+    pointer-events: none;
+    line-height: 1;
+    background-color: var(--dark-properties-panel);
+    border: 1px solid var(--dark-comment);
+    padding: 5px;
+    width: 42px !important;
+}
+
+.dark .djs-context-pad .group:not(:last-child) {
+    border-bottom: 1px solid var(--dark-comment);
+}
+
+.dark .djs-context-pad .entry {
+    border-radius: 0 !important;
+    padding: 0;
+    background-color: var(--context-pad-entry-background-color);
+    box-shadow: 0 0 0 0 var(--context-pad-entry-background-color) !important;
+    pointer-events: all;
+    vertical-align: middle;
+    width: 30px;
+    height: 22px;
+    margin: 5px 0 5px 0;
+}
+
+.dark .djs-context-pad .entry:hover {
+    background: var(--dark-background);
+    color: var(--dark-purple);
+}
+
+.dark .djs-context-pad.open {
+    display: block;
+}
+
+.dark .djs-element.selected .djs-outline,
+.dark .djs-selection-outline {
+    stroke-dasharray: 2;
+    stroke-dashoffset: 500;
+    animation: dash 80s linear infinite;
+    stroke: var(--element-selected-outline-stroke-color);
+}
+
+.dark .layer-selectionOutline .djs-selection-outline {
+    stroke: none;
+}
+
+.dark
+
+@keyframes dash {
+    to {
+        stroke-dashoffset: 0;
+    }
+}
+
+.dark .tabs .primary {
+    background-color: var(--dark-background) !important;
+    color: var(--dark-foreground) !important;
+}
+
+.dark .tabs .active {
+    background-color: var(--dark-current-line) !important;
+    color: var(--dark-foreground) !important;
+}
+
+.dark .content {
+    background-color: var(--dark-background) !important;
+}
+
+.dark * {
+    color: var(--dark-foreground) !important;
+}
+
+.dark #js-properties-panel {
+    background-color: var(--dark-properties-panel);
+    color: var(--dark-foreground);
+}
+
+.dark .edit-script-external-file-button {
+    border-color: var(--dark-background);
+    background-color: var(--dark-background);
+}
+
+.dark .bjs-breadcrumbs li:not(:first-child)::before {
+    content: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"17\" height=\"17\" viewBox=\"0 0 24 24\"><path d=\"M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\" fill=\"%23BCBEC4\"/><path d=\"M0 0h24v24H0z\" fill=\"none\" /></svg>");
+}
+
+.dark .bjs-container.simulation .djs-visual circle,
+.dark .bjs-container.simulation .djs-visual rect {
+    fill: var(--dark-properties-panel) !important;
+    stroke: var(--dark-foreground) !important;
+}
+
+.dark .bjs-container.simulation .djs-visual path {
+    stroke: var(--dark-foreground) !important;
+}
+
+.dark .bjs-container.simulation .djs-visual text {
+    fill: var(--dark-foreground) !important;
+}
+
+.dark .bjs-container .djs-drag-active.hover.drop-not-ok {
+    background: #510e09 !important;
+}
+
+.dark .bio-properties-panel-scroll-container {
+    scrollbar-color: var(--dark-background) transparent;
+}
+.dark .code-editor-container {
+    scrollbar-color: var(--dark-properties-panel) transparent;
+}

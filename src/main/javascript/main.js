@@ -3,11 +3,11 @@ import {createNewDiagram, openDiagram} from './diagramHandlers';
 import {enableResizing} from './resizer';
 import {setupObserver} from './observers';
 import './styles';
-import {isDraculaMode} from './utils';
+import {isDarkMode} from './utils';
 import {handlePasteAsync} from "./copyPaste";
 
-if (isDraculaMode) {
-    document.body.classList.add('dracula');
+if (isDarkMode) {
+    document.body.classList.add('dark');
 }
 
 const bpmnModeler = initModeler();

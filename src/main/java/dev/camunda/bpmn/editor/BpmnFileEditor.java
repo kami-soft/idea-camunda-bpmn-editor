@@ -5,11 +5,9 @@ import com.intellij.openapi.fileEditor.FileEditorState;
 import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vfs.VirtualFile;
-import dev.camunda.bpmn.editor.context.BpmnEditorApplicationContext;
 import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
 import dev.camunda.bpmn.editor.ui.component.BpmnEditorComponent;
 import dev.camunda.bpmn.editor.ui.component.EngineComponent;
-import dev.camunda.bpmn.editor.util.HashComparator;
 import java.beans.PropertyChangeListener;
 import javax.swing.JComponent;
 import lombok.Getter;
@@ -31,8 +29,7 @@ public class BpmnFileEditor implements FileEditor {
 
     @Getter
     private final BpmnEditorComponent component;
-    private final HashComparator hashComparator;
-    private final BpmnEditorApplicationContext context;
+    private final BpmnFileEditorContext context;
 
     /**
      * Constructs a new BPMN file editor.
@@ -42,21 +39,19 @@ public class BpmnFileEditor implements FileEditor {
      */
     public BpmnFileEditor(@NotNull Project project, @NotNull VirtualFile file) {
         this.file = file;
-        this.context = new BpmnEditorApplicationContext(project, file);
-        this.hashComparator = context.getHashComparator();
+        this.context = new BpmnFileEditorContext(project, file);
+        this.component = new BpmnEditorComponent();
 
-        var jbCefBrowserService = context.getJBCefBrowserService();
-        component = new BpmnEditorComponent();
-
+        var browserService = context.getJBCefBrowserService();
         var state = BpmnEditorSettings.getInstance().getState();
         if (state.isEngineSet(file.getPath())) {
-            component.put(jbCefBrowserService.loadBpmn());
+            component.put(browserService.loadBpmn());
             return;
         }
 
         component.put(new EngineComponent(result -> {
             state.addFileSettings(file.getPath(), result);
-            component.set(jbCefBrowserService.loadBpmn());
+            component.set(browserService.loadBpmn());
         }));
     }
 
@@ -96,7 +91,7 @@ public class BpmnFileEditor implements FileEditor {
      */
     @Override
     public boolean isModified() {
-        return hashComparator.isModified();
+        return context.getHashComparator().isModified();
     }
 
     /**
@@ -133,7 +128,7 @@ public class BpmnFileEditor implements FileEditor {
     @Override
     public void dispose() {
         component.dispose();
-        context.close();
+        context.dispose();
     }
 
     /**

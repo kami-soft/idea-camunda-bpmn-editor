@@ -1,5 +1,5 @@
 import CodeMirror from 'codemirror';
-import {isDraculaMode, scriptFormat} from './utils';
+import {isDarkMode, scriptFormat} from './utils';
 import './styles';
 import 'codemirror/addon/display/autorefresh.js';
 
@@ -15,7 +15,7 @@ export function processScriptEditor(textarea) {
             autoRefresh: true,
             matchBrackets: true,
             mode: 'groovy',
-            theme: isDraculaMode ? 'dracula' : 'default',
+            theme: isDarkMode ? 'dracula' : 'default',
             viewportMargin: Infinity
         });
 

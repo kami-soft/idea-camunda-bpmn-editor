@@ -48,6 +48,13 @@
     <change-notes>
         <![CDATA[
           <p>
+            <b>1.2.0</b>
+            <ul>
+              <li>Migrated from Spring context to PicoContainer</li>
+              <li>Some fixes styles on Dark theme</li>
+            </ul>
+          </p>
+          <p>
             <b>1.1.0</b>
             <ul>
               <li>Added support token simulation</li>
