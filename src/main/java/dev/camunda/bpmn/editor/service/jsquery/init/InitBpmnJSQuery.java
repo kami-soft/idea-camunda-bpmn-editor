@@ -1,9 +1,9 @@
-package dev.camunda.bpmn.editor.service.jsquery.impl;
+package dev.camunda.bpmn.editor.service.jsquery.init;
 
 import static dev.camunda.bpmn.editor.util.Base64Utils.encode;
 
+import dev.camunda.bpmn.editor.service.browser.JBCefBrowserWrapper;
 import dev.camunda.bpmn.editor.service.jsquery.InitJSQuery;
-import org.cef.browser.CefBrowser;
 
 /**
  * A specific implementation of InitJSQuery for initializing BPMN in the browser.
@@ -24,10 +24,10 @@ public class InitBpmnJSQuery extends InitJSQuery {
     /**
      * Constructs a new InitBpmnJSQuery.
      *
-     * @param cefBrowser The CefBrowser instance on which the JavaScript query will be executed.
-     * @param originBpmn The BPMN XML content to be initialized in the cefBrowser.
+     * @param browser The CefBrowser instance on which the JavaScript query will be executed.
+     * @param originBpmn The BPMN XML content to be initialized in the browser.
      */
-    public InitBpmnJSQuery(CefBrowser cefBrowser, String originBpmn) {
-        super(cefBrowser, INIT_BPMN_JS.formatted(encode(originBpmn)));
+    public InitBpmnJSQuery(JBCefBrowserWrapper browser, String originBpmn) {
+        super(INIT_BPMN_JS.formatted(encode(originBpmn)), browser);
     }
 }

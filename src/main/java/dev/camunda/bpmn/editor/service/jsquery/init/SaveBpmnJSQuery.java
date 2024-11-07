@@ -1,12 +1,11 @@
-package dev.camunda.bpmn.editor.service.jsquery.impl;
+package dev.camunda.bpmn.editor.service.jsquery.init;
 
-import static com.intellij.openapi.application.ApplicationManager.getApplication;
 import static com.intellij.openapi.vfs.VirtualFileUtil.writeBytes;
 import static dev.camunda.bpmn.editor.util.Base64Utils.decodeBytes;
 
+import com.intellij.openapi.application.WriteAction;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.ui.jcef.JBCefBrowser;
-import com.intellij.ui.jcef.JBCefJSQuery;
+import dev.camunda.bpmn.editor.service.browser.JBCefBrowserWrapper;
 import dev.camunda.bpmn.editor.service.jsquery.InitJSQuery;
 import dev.camunda.bpmn.editor.util.HashComparator;
 
@@ -33,19 +32,17 @@ public class SaveBpmnJSQuery extends InitJSQuery {
      * Constructs a new SaveBpmnJSQuery.
      *
      * @param file           The VirtualFile representing the file where the BPMN XML will be saved.
-     * @param browser        The JBCefBrowser instance on which the JavaScript query will be executed.
+     * @param browser        The JBCefBrowserWrapper instance on which the JavaScript query will be executed.
      * @param hashComparator The HashComparator used to update the hash of the BPMN XML content.
      */
-    public SaveBpmnJSQuery(VirtualFile file, JBCefBrowser browser, HashComparator hashComparator) {
+    public SaveBpmnJSQuery(VirtualFile file, JBCefBrowserWrapper browser, HashComparator hashComparator) {
         super(browser,
                 jbCefJSQuery -> SAVE_BPMN_JS.formatted(jbCefJSQuery.inject("xml")),
-                encodedXml -> {
+                encodedXml -> WriteAction.run(() -> {
                     var xml = decodeBytes(encodedXml);
-                    getApplication().invokeLater(() -> getApplication().runWriteAction(() -> {
-                        writeBytes(file, xml);
-                        hashComparator.updateHash(xml);
-                    }));
-                    return new JBCefJSQuery.Response(null);
-                });
+                    writeBytes(file, xml);
+                    hashComparator.updateHash(xml);
+                }),
+                500);
     }
 }

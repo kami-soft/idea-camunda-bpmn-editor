@@ -6,6 +6,7 @@ import static dev.camunda.bpmn.editor.util.Constants.ZERO;
 import com.sun.net.httpserver.HttpServer;
 import java.net.InetSocketAddress;
 import javax.annotation.PreDestroy;
+import lombok.Getter;
 
 /**
  * A server class for the BPMN Editor UI.
@@ -17,31 +18,26 @@ public class ServerService {
 
     private final HttpServer server;
 
+    @Getter
+    private final Integer port;
+
     /**
      * Constructs a new ServerService.
      * Creates and starts an HTTP server with default settings.
      *
-     * @param handler The ServerHandler instance to handle HTTP requests
      * @throws RuntimeException if the server creation or start fails
      */
-    public ServerService(ServerHandler handler) {
+    public ServerService(ServerHandler serverHandler) {
         try {
             this.server = HttpServer.create(new InetSocketAddress(ZERO), ZERO);
-            server.createContext(CONTEXT_PATH, handler);
+            server.createContext(CONTEXT_PATH, serverHandler);
             server.setExecutor(null);
             server.start();
+
+            this.port = server.getAddress().getPort();
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-    }
-
-    /**
-     * Gets the port number on which the server is listening.
-     *
-     * @return the port number
-     */
-    public int getPort() {
-        return server.getAddress().getPort();
     }
 
     /**

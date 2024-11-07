@@ -1,31 +1,37 @@
 package dev.camunda.bpmn.editor;
 
+import static com.intellij.openapi.application.ApplicationManager.getApplication;
 import static com.intellij.openapi.vfs.VirtualFileUtil.readText;
+import static java.util.Optional.ofNullable;
 
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.project.Project;
+import com.intellij.openapi.project.ProjectManager;
+import com.intellij.openapi.project.ProjectManagerListener;
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.ui.jcef.JBCefBrowser;
 import dev.camunda.bpmn.editor.service.browser.JBCefBrowserService;
+import dev.camunda.bpmn.editor.service.browser.JBCefBrowserWrapper;
 import dev.camunda.bpmn.editor.service.jsquery.InitJSQueryManager;
 import dev.camunda.bpmn.editor.service.jsquery.JSQueryService;
-import dev.camunda.bpmn.editor.service.jsquery.impl.CloseScriptFileJSQuery;
-import dev.camunda.bpmn.editor.service.jsquery.impl.DeleteVirtualFileIdJSQuery;
-import dev.camunda.bpmn.editor.service.jsquery.impl.GetClipboardJSQuery;
-import dev.camunda.bpmn.editor.service.jsquery.impl.InitBpmnJSQuery;
-import dev.camunda.bpmn.editor.service.jsquery.impl.OpenScriptFileJSQuery;
-import dev.camunda.bpmn.editor.service.jsquery.impl.SaveBpmnJSQuery;
-import dev.camunda.bpmn.editor.service.jsquery.impl.SetClipboardJSQuery;
-import dev.camunda.bpmn.editor.service.jsquery.impl.SetFocusScriptFileJSQuery;
-import dev.camunda.bpmn.editor.service.jsquery.impl.UpdateScriptJSQuery;
+import dev.camunda.bpmn.editor.service.jsquery.init.CloseScriptFileJSQuery;
+import dev.camunda.bpmn.editor.service.jsquery.init.GetClipboardJSQuery;
+import dev.camunda.bpmn.editor.service.jsquery.init.InitBpmnJSQuery;
+import dev.camunda.bpmn.editor.service.jsquery.init.OpenScriptFileJSQuery;
+import dev.camunda.bpmn.editor.service.jsquery.init.SaveBpmnJSQuery;
+import dev.camunda.bpmn.editor.service.jsquery.init.SetClipboardJSQuery;
+import dev.camunda.bpmn.editor.service.jsquery.init.SetFocusScriptFileJSQuery;
 import dev.camunda.bpmn.editor.service.script.ScriptFileService;
 import dev.camunda.bpmn.editor.service.server.ServerHandler;
 import dev.camunda.bpmn.editor.service.server.ServerService;
 import dev.camunda.bpmn.editor.util.HashComparator;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
+import org.jetbrains.annotations.NotNull;
 import org.picocontainer.MutablePicoContainer;
 import org.picocontainer.PicoBuilder;
-import org.picocontainer.lifecycle.JavaEE5LifecycleStrategy;
+import org.picocontainer.PicoContainer;
+import org.picocontainer.containers.EmptyPicoContainer;
 
 /**
  * A class responsible for managing the PicoContainer application context for the BPMN Editor.
@@ -36,7 +42,30 @@ import org.picocontainer.lifecycle.JavaEE5LifecycleStrategy;
  */
 public class BpmnFileEditorContext implements Disposable {
 
+    private static final Map<String, MutablePicoContainer> projectContainerMap = new ConcurrentHashMap<>(1);
+
     private final MutablePicoContainer container;
+
+    static {
+        registerProjectCloseListener();
+    }
+
+    /**
+     * Registers a listener to handle project close events.
+     * When a project is closed, its corresponding PicoContainer is stopped and disposed of.
+     */
+    private static void registerProjectCloseListener() {
+        getApplication().getMessageBus().connect().subscribe(ProjectManager.TOPIC, new ProjectManagerListener() {
+
+            @Override
+            public void projectClosed(@NotNull Project project) {
+                ofNullable(projectContainerMap.remove(project.getLocationHash())).ifPresent(container -> {
+                    container.stop();
+                    container.dispose();
+                });
+            }
+        });
+    }
 
     /**
      * Creates a new BpmnFileEditorContext instance.
@@ -46,23 +75,17 @@ public class BpmnFileEditorContext implements Disposable {
      * @param file    The BPMN file
      */
     public BpmnFileEditorContext(Project project, VirtualFile file) {
-        container = createContainer();
+        var projectContainer = projectContainerMap.computeIfAbsent(project.getLocationHash(),
+                key -> createProjectContainer(project));
+
+        this.container = createContainer(projectContainer);
         // Register default components
-        container.addComponent(project)
-                .addComponent(file)
-                .addComponent(FileEditorManager.getInstance(project))
+        container.addComponent(file)
                 .addComponent("originBpmn", readText(file))
                 .addComponent(HashComparator.class)
-                .addComponent(createJBCefBrowser())
-                .addComponent("cefBrowser", container.getComponent(JBCefBrowser.class).getCefBrowser())
-                // Register server components
-                .addComponent(ServerHandler.class)
-                .addComponent(ServerService.class)
+                .addComponent(new JBCefBrowserWrapper())
                 // Register JS query components
-                .addComponent(UpdateScriptJSQuery.class)
-                .addComponent(DeleteVirtualFileIdJSQuery.class)
                 .addComponent(JSQueryService.class)
-                // Register init JS query components
                 .addComponent(ScriptFileService.class)
                 .addComponent(CloseScriptFileJSQuery.class)
                 .addComponent(GetClipboardJSQuery.class)
@@ -78,27 +101,32 @@ public class BpmnFileEditorContext implements Disposable {
     }
 
     /**
-     * Creates and configures a new PicoContainer instance.
+     * Creates and configures a new PicoContainer instance for the given project.
      *
-     * @return A configured PicoContainer instance
+     * @param project The current project
+     * @return A configured PicoContainer instance for the project
      */
-    private static MutablePicoContainer createContainer() {
-        return new PicoBuilder()
-                .withCaching()
-                .withLifecycle(JavaEE5LifecycleStrategy.class)
-                .build();
+    private static MutablePicoContainer createProjectContainer(Project project) {
+        var projectContainer = createContainer(new EmptyPicoContainer())
+                .addComponent(project)
+                .addComponent(FileEditorManager.getInstance(project))
+                .addComponent(ServerHandler.class)
+                .addComponent(ServerService.class);
+        projectContainer.start();
+
+        return projectContainer;
     }
 
     /**
-     * Creates and configures a new JBCefBrowser instance.
+     * Creates and configures a new PicoContainer instance with the given parent container.
      *
-     * @return A configured JBCefBrowser instance
+     * @param parentContainer The parent PicoContainer
+     * @return A configured PicoContainer instance
      */
-    private static JBCefBrowser createJBCefBrowser() {
-        return JBCefBrowser.createBuilder()
-                .setOffScreenRendering(false)
-                .setMouseWheelEventEnable(true)
-                .setEnableOpenDevToolsMenuItem(true)
+    private static MutablePicoContainer createContainer(PicoContainer parentContainer) {
+        return new PicoBuilder(parentContainer)
+                .withCaching()
+                .withJavaEE5Lifecycle()
                 .build();
     }
 

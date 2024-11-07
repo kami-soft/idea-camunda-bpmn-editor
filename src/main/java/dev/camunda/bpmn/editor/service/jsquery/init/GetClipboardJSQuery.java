@@ -1,4 +1,4 @@
-package dev.camunda.bpmn.editor.service.jsquery.impl;
+package dev.camunda.bpmn.editor.service.jsquery.init;
 
 import static dev.camunda.bpmn.editor.util.Constants.FAILURE_CALLBACK_QUERY;
 import static dev.camunda.bpmn.editor.util.Constants.SUCCESS_CALLBACK_QUERY;
@@ -6,8 +6,7 @@ import static java.awt.Toolkit.getDefaultToolkit;
 import static java.awt.datatransfer.DataFlavor.stringFlavor;
 import static java.util.Objects.isNull;
 
-import com.intellij.ui.jcef.JBCefBrowser;
-import com.intellij.ui.jcef.JBCefJSQuery;
+import dev.camunda.bpmn.editor.service.browser.JBCefBrowserWrapper;
 import dev.camunda.bpmn.editor.service.jsquery.InitJSQuery;
 
 /**
@@ -33,13 +32,13 @@ public class GetClipboardJSQuery extends InitJSQuery {
     /**
      * Constructs a new GetClipboardJSQuery.
      *
-     * @param browser The JBCefBrowser instance on which the JavaScript query will be executed.
+     * @param browser The JBCefBrowserWrapper instance on which the JavaScript query will be executed.
      */
-    public GetClipboardJSQuery(JBCefBrowser browser) {
+    public GetClipboardJSQuery(JBCefBrowserWrapper browser) {
         super(browser,
                 jbCefJSQuery -> GET_CLIPBOARD_JS.formatted(jbCefJSQuery.inject("text",
                         SUCCESS_CALLBACK_QUERY, FAILURE_CALLBACK_QUERY)),
-                text -> new JBCefJSQuery.Response(getClipboardString()));
+                text -> getClipboardString());
     }
 
     /**

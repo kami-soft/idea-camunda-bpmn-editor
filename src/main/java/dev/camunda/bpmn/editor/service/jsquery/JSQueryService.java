@@ -1,7 +1,8 @@
 package dev.camunda.bpmn.editor.service.jsquery;
 
-import dev.camunda.bpmn.editor.service.jsquery.impl.DeleteVirtualFileIdJSQuery;
-import dev.camunda.bpmn.editor.service.jsquery.impl.UpdateScriptJSQuery;
+import static dev.camunda.bpmn.editor.util.Base64Utils.encode;
+
+import dev.camunda.bpmn.editor.service.browser.JBCefBrowserWrapper;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -13,8 +14,10 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class JSQueryService {
 
-    private final UpdateScriptJSQuery updateScriptJSQuery;
-    private final DeleteVirtualFileIdJSQuery deleteVirtualFileIdJSQuery;
+    private static final String UPDATE_SCRIPT_JS = "updateScript('%s', `%s`);";
+    private static final String DELETE_VIRTUAL_FILE_ID_JS = "deleteVirtualFileId('%s');";
+
+    private final JBCefBrowserWrapper browser;
 
     /**
      * Executes the query to delete the virtual file with the specified ID.
@@ -22,7 +25,7 @@ public class JSQueryService {
      * @param virtualFileId the ID of the virtual file to delete
      */
     public void executeQueryDeleteVirtualFileId(String virtualFileId) {
-        deleteVirtualFileIdJSQuery.executeQuery(virtualFileId);
+        browser.executeQuery(DELETE_VIRTUAL_FILE_ID_JS.formatted(virtualFileId));
     }
 
     /**
@@ -32,6 +35,6 @@ public class JSQueryService {
      * @param script        the new script content
      */
     public void executeQueryUpdateScript(String virtualFileId, String script) {
-        updateScriptJSQuery.executeQuery(script, virtualFileId);
+        browser.executeQuery(UPDATE_SCRIPT_JS.formatted(virtualFileId, encode(script)));
     }
 }

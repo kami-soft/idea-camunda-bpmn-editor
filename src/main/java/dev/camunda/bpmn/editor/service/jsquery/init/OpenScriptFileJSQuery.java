@@ -1,10 +1,9 @@
-package dev.camunda.bpmn.editor.service.jsquery.impl;
+package dev.camunda.bpmn.editor.service.jsquery.init;
 
 import static dev.camunda.bpmn.editor.util.Constants.FAILURE_CALLBACK_QUERY;
 import static dev.camunda.bpmn.editor.util.Constants.SUCCESS_CALLBACK_QUERY;
 
-import com.intellij.ui.jcef.JBCefBrowser;
-import com.intellij.ui.jcef.JBCefJSQuery;
+import dev.camunda.bpmn.editor.service.browser.JBCefBrowserWrapper;
 import dev.camunda.bpmn.editor.service.jsquery.InitJSQuery;
 import dev.camunda.bpmn.editor.service.script.ScriptFileService;
 
@@ -31,13 +30,13 @@ public class OpenScriptFileJSQuery extends InitJSQuery {
     /**
      * Constructs a new OpenScriptFileJSQuery.
      *
-     * @param browser           The JBCefBrowser instance on which the JavaScript query will be executed.
+     * @param browser           The JBCefBrowserWrapper instance on which the JavaScript query will be executed.
      * @param scriptFileService The ScriptFileService used to create the script file.
      */
-    public OpenScriptFileJSQuery(JBCefBrowser browser, ScriptFileService scriptFileService) {
+    public OpenScriptFileJSQuery(JBCefBrowserWrapper browser, ScriptFileService scriptFileService) {
         super(browser,
-                jbCefJSQuery -> OPEN_SCRIPT_FILE_JS.formatted(jbCefJSQuery.inject("text", SUCCESS_CALLBACK_QUERY,
-                        FAILURE_CALLBACK_QUERY)),
-                text -> new JBCefJSQuery.Response(scriptFileService.create(text)));
+                jbCefJSQuery -> OPEN_SCRIPT_FILE_JS.formatted(jbCefJSQuery.inject("text",
+                        SUCCESS_CALLBACK_QUERY, FAILURE_CALLBACK_QUERY)),
+                scriptFileService::create);
     }
 }

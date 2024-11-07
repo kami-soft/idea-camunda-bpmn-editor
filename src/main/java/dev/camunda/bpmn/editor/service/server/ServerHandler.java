@@ -5,10 +5,13 @@ import static dev.camunda.bpmn.editor.util.Constants.SUCCESS_CODE;
 import static java.util.Objects.nonNull;
 import static org.apache.commons.io.IOUtils.toByteArray;
 
+import com.github.benmanes.caffeine.cache.Cache;
+import com.github.benmanes.caffeine.cache.Caffeine;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
+import javax.annotation.PreDestroy;
 
 /**
  * Handler for BPMN Editor UI HTTP requests.
@@ -21,6 +24,9 @@ public class ServerHandler implements HttpHandler {
 
     private static final String RESOURCE_PATH = "bpmn-editor-ui/%s";
     private static final String ERROR_MESSAGE = "File not found: %s";
+    private final Cache<String, byte[]> contentCache = Caffeine.newBuilder()
+            .maximumSize(10)
+            .build();
 
     /**
      * Handles incoming HTTP requests.
@@ -34,7 +40,7 @@ public class ServerHandler implements HttpHandler {
     @Override
     public void handle(HttpExchange exchange) throws IOException {
         var path = exchange.getRequestURI().getPath();
-        var fileContent = loadFile(RESOURCE_PATH.formatted(path));
+        var fileContent = contentCache.get(path, this::loadFile);
         if (nonNull(fileContent)) {
             writeBody(exchange, SUCCESS_CODE, fileContent);
         } else {
@@ -45,11 +51,11 @@ public class ServerHandler implements HttpHandler {
     /**
      * Loads a file from the classpath resources.
      *
-     * @param filePath the path of the file to load
+     * @param path the path of the file to load
      * @return the file contents as a byte array, or null if the file is not found
      */
-    private byte[] loadFile(String filePath) {
-        try (var fileStream = ServerHandler.class.getClassLoader().getResourceAsStream(filePath)) {
+    private byte[] loadFile(String path) {
+        try (var fileStream = ServerHandler.class.getClassLoader().getResourceAsStream(RESOURCE_PATH.formatted(path))) {
             return nonNull(fileStream) ? toByteArray(fileStream) : null;
         } catch (IOException e) {
             return null;
@@ -70,5 +76,10 @@ public class ServerHandler implements HttpHandler {
         try (var os = new BufferedOutputStream(exchange.getResponseBody())) {
             os.write(response);
         }
+    }
+
+    @PreDestroy
+    public void close() {
+        contentCache.cleanUp();
     }
 }

@@ -5,6 +5,7 @@ import static com.intellij.openapi.fileEditor.FileEditorManagerListener.FILE_EDI
 
 import com.intellij.openapi.fileEditor.FileEditorManager;
 import com.intellij.openapi.util.Disposer;
+import com.intellij.util.messages.MessageBusConnection;
 import dev.camunda.bpmn.editor.service.jsquery.JSQueryService;
 import java.util.Map;
 import java.util.Optional;
@@ -24,7 +25,8 @@ public class ScriptFileService {
 
     private final JSQueryService jsQueryService;
     private final FileEditorManager fileEditorManager;
-    private final Map<String, ScriptFile> scriptFiles = new ConcurrentHashMap<>();
+    private final Map<String, ScriptFile> scriptFiles = new ConcurrentHashMap<>(1);
+    private final MessageBusConnection messageBusConnection = getApplication().getMessageBus().connect();
 
     /**
      * Creates a new script virtual file.
@@ -37,12 +39,11 @@ public class ScriptFileService {
         var virtualFileId = scriptFile.getVirtualFileId();
         scriptFiles.put(virtualFileId, scriptFile);
 
-        var scriptFileListener = new ScriptFileListener(scriptFile, jsQueryService);
-        scriptFileListener.addCloseFileConsumer(scriptFiles::remove);
-        getApplication().getMessageBus().connect().subscribe(FILE_EDITOR_MANAGER, scriptFileListener);
+        var scriptFileListener = new ScriptFileListener(scriptFile, jsQueryService, scriptFiles::remove);
         Disposer.register(scriptFile, scriptFileListener);
+        messageBusConnection.subscribe(FILE_EDITOR_MANAGER, scriptFileListener);
 
-        setFocus(virtualFileId);
+        scriptFile.setFocus();
 
         return virtualFileId;
     }

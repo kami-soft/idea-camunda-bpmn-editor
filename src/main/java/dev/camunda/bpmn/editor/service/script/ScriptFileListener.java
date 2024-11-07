@@ -10,8 +10,6 @@ import com.intellij.openapi.fileEditor.FileEditorManagerListener;
 import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.util.Alarm;
 import dev.camunda.bpmn.editor.service.jsquery.JSQueryService;
-import java.util.List;
-import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import lombok.RequiredArgsConstructor;
@@ -25,23 +23,14 @@ import org.jetbrains.annotations.NotNull;
  * @author Oleksandr Havrysh
  */
 @RequiredArgsConstructor
-public class ScriptFileListener implements FileEditorManagerListener, DocumentListener, Disposable {
+public class ScriptFileListener implements FileEditorManagerListener, DocumentListener, Disposable.Default {
 
     private final ScriptFile scriptFile;
     private final JSQueryService jsQueryService;
-    private final Alarm updateAlarm = new Alarm(this);
+    private final Consumer<String> closeFileConsumer;
+    private final Alarm alarm = new Alarm(this);
     private final AtomicBoolean isFileClosed = new AtomicBoolean(false);
     private final AtomicBoolean isDocumentListenerRegistered = new AtomicBoolean(false);
-    private final List<Consumer<String>> closeFileConsumers = new CopyOnWriteArrayList<>();
-
-    /**
-     * Adds a consumer to be notified when the file is closed.
-     *
-     * @param consumer The consumer to add
-     */
-    public void addCloseFileConsumer(@NotNull Consumer<String> consumer) {
-        closeFileConsumers.add(consumer);
-    }
 
     /**
      * Handles the file opened event.
@@ -84,7 +73,7 @@ public class ScriptFileListener implements FileEditorManagerListener, DocumentLi
 
         isFileClosed.set(true);
         jsQueryService.executeQueryDeleteVirtualFileId(scriptFile.getVirtualFileId());
-        closeFileConsumers.forEach(closeFileConsumer -> closeFileConsumer.accept(scriptFile.getVirtualFileId()));
+        closeFileConsumer.accept(scriptFile.getVirtualFileId());
     }
 
     /**
@@ -95,18 +84,9 @@ public class ScriptFileListener implements FileEditorManagerListener, DocumentLi
      */
     @Override
     public void documentChanged(@NotNull DocumentEvent event) {
-        updateAlarm.cancelAllRequests();
+        alarm.cancelAllRequests();
         var text = event.getDocument().getText();
-        updateAlarm.addRequest(() ->
-                jsQueryService.executeQueryUpdateScript(scriptFile.getVirtualFileId(), text), 300);
-    }
-
-    /**
-     * Disposes of the script file listener and its associated resources.
-     * This method is called to ensure proper cleanup of resources.
-     */
-    @Override
-    public void dispose() {
-        closeFileConsumers.clear();
+        alarm.addRequest(() ->
+                jsQueryService.executeQueryUpdateScript(scriptFile.getVirtualFileId(), text), 500);
     }
 }

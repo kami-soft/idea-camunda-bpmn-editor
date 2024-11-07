@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.camunda.bpmn"
-version = "1.2.0"
+version = "1.3.0"
 
 repositories {
     mavenCentral()
@@ -15,11 +15,11 @@ repositories {
 intellij {
     version.set("2023.2.6")
     type.set("IC")
-    plugins.set(listOf("com.intellij.platform.images", "org.intellij.groovy", "com.intellij.java"))
+    plugins.set(listOf("com.intellij.java"))
 }
 
 node {
-    version.set("16.14.0")
+    version.set("23.1.0")
     download.set(true)
 }
 
@@ -60,5 +60,4 @@ dependencies {
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
     implementation("org.picocontainer:picocontainer:2.15")
-    implementation("org.yaml:snakeyaml:2.3")
 }

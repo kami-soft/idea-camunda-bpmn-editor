@@ -8,6 +8,7 @@ import com.intellij.openapi.vfs.VirtualFile;
 import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
 import dev.camunda.bpmn.editor.ui.component.BpmnEditorComponent;
 import dev.camunda.bpmn.editor.ui.component.EngineComponent;
+import dev.camunda.bpmn.editor.util.HashComparator;
 import java.beans.PropertyChangeListener;
 import javax.swing.JComponent;
 import lombok.Getter;
@@ -30,6 +31,7 @@ public class BpmnFileEditor implements FileEditor {
     @Getter
     private final BpmnEditorComponent component;
     private final BpmnFileEditorContext context;
+    private final HashComparator hashComparator;
 
     /**
      * Constructs a new BPMN file editor.
@@ -41,6 +43,7 @@ public class BpmnFileEditor implements FileEditor {
         this.file = file;
         this.context = new BpmnFileEditorContext(project, file);
         this.component = new BpmnEditorComponent();
+        this.hashComparator = context.getHashComparator();
 
         var browserService = context.getJBCefBrowserService();
         var state = BpmnEditorSettings.getInstance().getState();
@@ -91,7 +94,7 @@ public class BpmnFileEditor implements FileEditor {
      */
     @Override
     public boolean isModified() {
-        return context.getHashComparator().isModified();
+        return hashComparator.isModified();
     }
 
     /**

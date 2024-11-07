@@ -1,8 +1,7 @@
-package dev.camunda.bpmn.editor.service.jsquery.impl;
+package dev.camunda.bpmn.editor.service.jsquery.init;
 
 import com.intellij.openapi.ide.CopyPasteManager;
-import com.intellij.ui.jcef.JBCefBrowser;
-import com.intellij.ui.jcef.JBCefJSQuery;
+import dev.camunda.bpmn.editor.service.browser.JBCefBrowserWrapper;
 import dev.camunda.bpmn.editor.service.jsquery.InitJSQuery;
 import java.awt.datatransfer.StringSelection;
 
@@ -27,14 +26,12 @@ public class SetClipboardJSQuery extends InitJSQuery {
     /**
      * Constructs a new SetClipboardJSQuery.
      *
-     * @param browser The JBCefBrowser instance on which the JavaScript query will be executed.
+     * @param browser The JBCefBrowserWrapper instance on which the JavaScript query will be executed.
      */
-    public SetClipboardJSQuery(JBCefBrowser browser) {
+    public SetClipboardJSQuery(JBCefBrowserWrapper browser) {
         super(browser,
                 jbCefJSQuery -> SET_CLIPBOARD_JS.formatted(jbCefJSQuery.inject("text")),
-                text -> {
-                    CopyPasteManager.getInstance().setContents(new StringSelection(text));
-                    return new JBCefJSQuery.Response(null);
-                });
+                text -> CopyPasteManager.getInstance().setContents(new StringSelection(text)),
+                10);
     }
 }

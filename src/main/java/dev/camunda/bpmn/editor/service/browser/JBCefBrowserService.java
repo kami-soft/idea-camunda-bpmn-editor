@@ -1,7 +1,6 @@
 package dev.camunda.bpmn.editor.service.browser;
 
 import com.intellij.openapi.vfs.VirtualFile;
-import com.intellij.ui.jcef.JBCefBrowser;
 import dev.camunda.bpmn.editor.service.jsquery.InitJSQueryManager;
 import dev.camunda.bpmn.editor.service.server.ServerService;
 import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
@@ -9,9 +8,6 @@ import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
 import javax.swing.JComponent;
 import lombok.RequiredArgsConstructor;
-import org.cef.browser.CefBrowser;
-import org.cef.browser.CefFrame;
-import org.cef.handler.CefLoadHandlerAdapter;
 
 /**
  * Represents the browser component of the BPMN Editor.
@@ -23,10 +19,10 @@ import org.cef.handler.CefLoadHandlerAdapter;
 @RequiredArgsConstructor
 public class JBCefBrowserService {
 
-    private static final String BPMN_EDITOR_URL = "http://localhost:%s/bpmn-editor.html?colorTheme=%s&engine=%s&scriptFormat=%s";
+    private static final String BPMN_EDITOR_URL = "http://localhost:%s/index.html?colorTheme=%s&engine=%s&scriptFormat=%s";
 
     private final VirtualFile file;
-    private final JBCefBrowser browser;
+    private final JBCefBrowserWrapper browser;
     private final ServerService serverService;
     private final InitJSQueryManager initJsQueryManager;
 
@@ -36,13 +32,7 @@ public class JBCefBrowserService {
      */
     @PostConstruct
     public void init() {
-        browser.getJBCefClient().addLoadHandler(new CefLoadHandlerAdapter() {
-
-            @Override
-            public void onLoadEnd(CefBrowser browser, CefFrame frame, int httpStatusCode) {
-                initJsQueryManager.executeInitQueries();
-            }
-        }, browser.getCefBrowser());
+        browser.onLoadEnd(initJsQueryManager::executeInitQueries);
     }
 
     /**
@@ -59,7 +49,6 @@ public class JBCefBrowserService {
         var scriptType = state.getScriptType(path);
 
         browser.loadURL(BPMN_EDITOR_URL.formatted(serverService.getPort(), colorTheme, engine, scriptType));
-
         return browser.getComponent();
     }
 

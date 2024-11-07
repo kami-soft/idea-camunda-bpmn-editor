@@ -1,13 +1,21 @@
-const CopyWebpackPlugin = require('copy-webpack-plugin');
+const TerserPlugin = require('terser-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 const path = require('path');
 
 module.exports = {
-    mode: 'development',
+    optimization: {
+        splitChunks: {
+            chunks: 'all',
+        },
+        minimize: true,
+        minimizer: [new TerserPlugin()],
+    },
+    mode: 'production',
     entry: './src/main/javascript/main.js',
     output: {
         path: path.resolve(__dirname, 'build/public/bpmn-editor-ui'),
-        filename: 'main.js'
+        filename: '[name].[contenthash].js'
     },
     module: {
         rules: [
@@ -36,10 +44,10 @@ module.exports = {
         ]
     },
     plugins: [
-        new CopyWebpackPlugin({
-            patterns: [
-                {from: 'src/main/resources/ui/bpmn-editor.html', to: '.'}
-            ]
+        new HtmlWebpackPlugin({
+            template: 'src/main/resources/ui/bpmn-editor.html',
+            inject: 'body',
+            chunks: ['main']
         })
     ],
     resolve: {

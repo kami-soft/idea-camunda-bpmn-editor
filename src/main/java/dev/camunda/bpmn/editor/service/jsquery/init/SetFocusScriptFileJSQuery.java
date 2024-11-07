@@ -1,7 +1,6 @@
-package dev.camunda.bpmn.editor.service.jsquery.impl;
+package dev.camunda.bpmn.editor.service.jsquery.init;
 
-import com.intellij.ui.jcef.JBCefBrowser;
-import com.intellij.ui.jcef.JBCefJSQuery;
+import dev.camunda.bpmn.editor.service.browser.JBCefBrowserWrapper;
 import dev.camunda.bpmn.editor.service.jsquery.InitJSQuery;
 import dev.camunda.bpmn.editor.service.script.ScriptFileService;
 
@@ -26,15 +25,13 @@ public class SetFocusScriptFileJSQuery extends InitJSQuery {
     /**
      * Constructs a new SetFocusScriptFileJSQuery.
      *
-     * @param browser           The JBCefBrowser instance on which the JavaScript query will be executed.
+     * @param browser           The JBCefBrowserWrapper instance on which the JavaScript query will be executed.
      * @param scriptFileService The ScriptFileService used to set focus on the script file.
      */
-    public SetFocusScriptFileJSQuery(JBCefBrowser browser, ScriptFileService scriptFileService) {
+    public SetFocusScriptFileJSQuery(JBCefBrowserWrapper browser, ScriptFileService scriptFileService) {
         super(browser,
                 jbCefJSQuery -> SET_FOCUS_SCRIPT_FILE_JS.formatted(jbCefJSQuery.inject("virtualFileId")),
-                virtualFileId -> {
-                    scriptFileService.setFocus(virtualFileId);
-                    return new JBCefJSQuery.Response(null);
-                });
+                scriptFileService::setFocus,
+                0);
     }
 }
