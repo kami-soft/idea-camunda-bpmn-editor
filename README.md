@@ -1,3 +1,8 @@
+[![Marketplace](https://img.shields.io/badge/JETBRAINS-Marketplace-red.svg)](https://plugins.jetbrains.com/plugin/25710-camunda-bpmn-editor)
+[![Donate](https://img.shields.io/badge/Donate-Revolut-black.svg)](https://revolut.me/hvrs)
+[![Donate](https://img.shields.io/badge/Donate-PayPal-blue.svg)](https://www.paypal.com/donate/?hosted_button_id=3WQ7S7VZPCV8G)
+[![Donate](https://img.shields.io/badge/Donate-Monobank-black.svg)](https://send.monobank.ua/jar/AeA9gT2Ynn)
+
 # Camunda BPMN Editor Plugin for IntelliJ IDEA
 
 This project is a BPMN Editor plugin for IntelliJ IDEA. It provides a custom editor for BPMN files with features such as Camunda BPMN Modeler UI, validation, and integration with the system clipboard.
@@ -46,6 +51,12 @@ To build the project, follow these steps:
 
 ### Installing the Plugin
 
+#### Installing the Plugin from Marketplace
+
+To install the plugin from the IntelliJ IDEA Marketplace, follow this link: [Camunda BPMN Editor](https://plugins.jetbrains.com/plugin/25710-camunda-bpmn-editor)
+
+#### Installing the Plugin Manually
+
 To install the plugin in IntelliJ IDEA, follow these steps:
 
 1. **Prepare the plugin .zip file:**
@@ -90,6 +101,14 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 ## Author
 
 Oleksandr Havrysh
+
+## Donations 🫶🏻
+
+If you find this project useful, you can support its development by making a donation via links:
+
+* [Revolut](https://revolut.me/hvrs)
+* [PayPal](https://www.paypal.com/donate/?hosted_button_id=3WQ7S7VZPCV8G)
+* [Monobank](https://send.monobank.ua/jar/AeA9gT2Ynn)
 
 ## Acknowledgements
 
