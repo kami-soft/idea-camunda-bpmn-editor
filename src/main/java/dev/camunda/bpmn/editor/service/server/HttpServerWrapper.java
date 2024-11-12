@@ -14,7 +14,7 @@ import lombok.Getter;
  *
  * @author Oleksandr Havrysh
  */
-public class ServerService {
+public class HttpServerWrapper {
 
     private final HttpServer server;
 
@@ -27,7 +27,7 @@ public class ServerService {
      *
      * @throws RuntimeException if the server creation or start fails
      */
-    public ServerService(ServerHandler serverHandler) {
+    public HttpServerWrapper(ServerHandler serverHandler) {
         try {
             this.server = HttpServer.create(new InetSocketAddress(ZERO), ZERO);
             server.createContext(CONTEXT_PATH, serverHandler);

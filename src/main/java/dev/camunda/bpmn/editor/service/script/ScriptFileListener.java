@@ -83,7 +83,7 @@ public class ScriptFileListener implements FileEditorManagerListener, DocumentLi
      * @param event The DocumentEvent containing change information
      */
     @Override
-    public void documentChanged(@NotNull DocumentEvent event) {
+    public void documentChanged(DocumentEvent event) {
         alarm.cancelAllRequests();
         var text = event.getDocument().getText();
         alarm.addRequest(() ->

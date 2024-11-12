@@ -1,9 +1,10 @@
 package dev.camunda.bpmn.editor.service.script;
 
-import static com.intellij.openapi.application.ApplicationManager.getApplication;
 import static com.intellij.openapi.fileEditor.FileEditorManagerListener.FILE_EDITOR_MANAGER;
 
+import com.intellij.openapi.fileEditor.FileDocumentManager;
 import com.intellij.openapi.fileEditor.FileEditorManager;
+import com.intellij.openapi.fileTypes.FileTypeManager;
 import com.intellij.openapi.util.Disposer;
 import com.intellij.util.messages.MessageBusConnection;
 import dev.camunda.bpmn.editor.service.jsquery.JSQueryService;
@@ -24,9 +25,11 @@ import lombok.RequiredArgsConstructor;
 public class ScriptFileService {
 
     private final JSQueryService jsQueryService;
+    private final FileTypeManager fileTypeManager;
     private final FileEditorManager fileEditorManager;
+    private final FileDocumentManager fileDocumentManager;
+    private final MessageBusConnection messageBusConnection;
     private final Map<String, ScriptFile> scriptFiles = new ConcurrentHashMap<>(1);
-    private final MessageBusConnection messageBusConnection = getApplication().getMessageBus().connect();
 
     /**
      * Creates a new script virtual file.
@@ -35,7 +38,7 @@ public class ScriptFileService {
      * @return The virtual file ID of the created script file
      */
     public String create(String text) {
-        var scriptFile = new ScriptFile(text, fileEditorManager);
+        var scriptFile = new ScriptFile(text, fileEditorManager, fileDocumentManager, fileTypeManager);
         var virtualFileId = scriptFile.getVirtualFileId();
         scriptFiles.put(virtualFileId, scriptFile);
 

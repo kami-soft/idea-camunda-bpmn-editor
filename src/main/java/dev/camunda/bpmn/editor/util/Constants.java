@@ -19,6 +19,7 @@ public interface Constants {
     String CONTEXT_PATH = "/";
     String SHA_256 = "SHA-256";
     String JAVASCRIPT = "javascript";
+    String ORIGIN_BPMN = "originBpmn";
 
     /**
      * JavaScript function for handling successful responses in callback queries.

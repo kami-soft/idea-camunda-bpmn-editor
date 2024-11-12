@@ -30,6 +30,9 @@ import lombok.Getter;
 public class ScriptFile implements Disposable {
 
     @Getter
+    private final Document document;
+
+    @Getter
     private final String virtualFileId;
     private final VirtualFile scriptFile;
     private final FileEditorManager fileEditorManager;
@@ -37,11 +40,16 @@ public class ScriptFile implements Disposable {
     /**
      * Creates a new ScriptFile instance.
      *
-     * @param text              The initial content of the script
-     * @param fileEditorManager The FileEditorManager instance
+     * @param text                The initial content of the script
+     * @param fileEditorManager   The FileEditorManager instance
+     * @param fileDocumentManager The FileDocumentManager instance
+     * @param fileTypeManager     The FileTypeManager instance
      * @throws RuntimeException if the scratch file creation fails
      */
-    public ScriptFile(String text, FileEditorManager fileEditorManager) {
+    public ScriptFile(String text,
+                      FileEditorManager fileEditorManager,
+                      FileDocumentManager fileDocumentManager,
+                      FileTypeManager fileTypeManager) {
         this.virtualFileId = randomUUID().toString();
         this.fileEditorManager = fileEditorManager;
 
@@ -49,8 +57,9 @@ public class ScriptFile implements Disposable {
         var scriptData = text.split("@");
         var extension = formatExtension(scriptData[1]);
         var fileName = join(DOT, virtualFileId, extension);
-        var fileType = FileTypeManager.getInstance().getFileTypeByExtension(extension);
+        var fileType = fileTypeManager.getFileTypeByExtension(extension);
         this.scriptFile = new LightVirtualFile(fileName, fileType, decode(scriptData[0]));
+        this.document = fileDocumentManager.getDocument(scriptFile);
     }
 
     /**
@@ -78,15 +87,6 @@ public class ScriptFile implements Disposable {
      */
     public boolean isNotEquals(VirtualFile file) {
         return !scriptFile.equals(file);
-    }
-
-    /**
-     * Gets the document associated with the script file.
-     *
-     * @return The document associated with the script file
-     */
-    public Document getDocument() {
-        return FileDocumentManager.getInstance().getDocument(scriptFile);
     }
 
     /**

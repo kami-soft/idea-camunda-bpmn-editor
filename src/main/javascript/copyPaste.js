@@ -14,7 +14,13 @@ export async function handlePasteAsync(event, bpmnModeler) {
     const reviver = createReviver(bpmnModeler.get('moddle'));
     const parsedCopy = JSON.parse(serializedCopy, reviver);
 
-    bpmnModeler.get('clipboard').set(parsedCopy);
+    const clipboard = bpmnModeler.get('clipboard');
+    const commandStack = bpmnModeler.get('commandStack');
+
+    clipboard.clear();
+    clipboard.set(parsedCopy);
+    commandStack.undo();
+    bpmnModeler.get('editorActions').trigger('paste');
 }
 
 export function createReviver(moddle) {

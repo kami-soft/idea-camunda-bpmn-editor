@@ -2,7 +2,7 @@ package dev.camunda.bpmn.editor.service.browser;
 
 import com.intellij.openapi.vfs.VirtualFile;
 import dev.camunda.bpmn.editor.service.jsquery.InitJSQueryManager;
-import dev.camunda.bpmn.editor.service.server.ServerService;
+import dev.camunda.bpmn.editor.service.server.HttpServerWrapper;
 import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
 import javax.annotation.PostConstruct;
 import javax.annotation.PreDestroy;
@@ -23,7 +23,7 @@ public class JBCefBrowserService {
 
     private final VirtualFile file;
     private final JBCefBrowserWrapper browser;
-    private final ServerService serverService;
+    private final HttpServerWrapper httpServerWrapper;
     private final InitJSQueryManager initJsQueryManager;
 
     /**
@@ -48,7 +48,7 @@ public class JBCefBrowserService {
         var colorTheme = state.getColorTheme(path);
         var scriptType = state.getScriptType(path);
 
-        browser.loadURL(BPMN_EDITOR_URL.formatted(serverService.getPort(), colorTheme, engine, scriptType));
+        browser.loadURL(BPMN_EDITOR_URL.formatted(httpServerWrapper.getPort(), colorTheme, engine, scriptType));
         return browser.getComponent();
     }
 

@@ -29,7 +29,7 @@ public class BpmnFileEditor implements FileEditor {
     private final VirtualFile file;
 
     @Getter
-    private final BpmnEditorComponent component;
+    private final JComponent component;
     private final BpmnFileEditorContext context;
     private final HashComparator hashComparator;
 
@@ -42,20 +42,21 @@ public class BpmnFileEditor implements FileEditor {
     public BpmnFileEditor(@NotNull Project project, @NotNull VirtualFile file) {
         this.file = file;
         this.context = new BpmnFileEditorContext(project, file);
-        this.component = new BpmnEditorComponent();
-        this.hashComparator = context.getHashComparator();
 
-        var browserService = context.getJBCefBrowserService();
+        this.hashComparator = context.getHashComparator();
+        var browserService = context.getJbCefBrowserService();
         var state = BpmnEditorSettings.getInstance().getState();
         if (state.isEngineSet(file.getPath())) {
-            component.put(browserService.loadBpmn());
+            this.component = browserService.loadBpmn();
             return;
         }
 
-        component.put(new EngineComponent(result -> {
+        var bpmnEditorComponent = new BpmnEditorComponent();
+        bpmnEditorComponent.put(new EngineComponent(result -> {
             state.addFileSettings(file.getPath(), result);
-            component.set(browserService.loadBpmn());
+            bpmnEditorComponent.set(browserService.loadBpmn());
         }));
+        this.component = bpmnEditorComponent;
     }
 
     /**
@@ -130,7 +131,6 @@ public class BpmnFileEditor implements FileEditor {
      */
     @Override
     public void dispose() {
-        component.dispose();
         context.dispose();
     }
 
