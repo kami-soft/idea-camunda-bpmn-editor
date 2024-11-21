@@ -9,6 +9,7 @@ import static java.util.Objects.isNull;
 import static java.util.UUID.randomUUID;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
+import com.intellij.openapi.Disposable;
 import com.intellij.openapi.editor.event.DocumentEvent;
 import com.intellij.openapi.editor.event.DocumentListener;
 import com.intellij.openapi.fileEditor.FileDocumentManager;
@@ -20,7 +21,6 @@ import com.intellij.openapi.vfs.VirtualFile;
 import com.intellij.testFramework.LightVirtualFile;
 import com.intellij.util.Alarm;
 import dev.camunda.bpmn.editor.service.browser.JBCefBrowserWrapper;
-import java.io.Closeable;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 import lombok.Getter;
@@ -33,7 +33,7 @@ import org.jetbrains.annotations.NotNull;
  *
  * @author Oleksandr Havrysh
  */
-public class ScriptFile implements FileEditorManagerListener, DocumentListener, Closeable {
+public class ScriptFile implements FileEditorManagerListener, DocumentListener, Disposable {
 
     private static final String DOT = ".";
     private static final String JS = "js";
@@ -66,7 +66,7 @@ public class ScriptFile implements FileEditorManagerListener, DocumentListener, 
         this.browser = browser;
         this.closeFileConsumer = closeFileConsumer;
         this.virtualFileId = randomUUID().toString();
-        this.scriptChangeAlarm = new Alarm();
+        this.scriptChangeAlarm = new Alarm(this);
         this.isFileClosed = new AtomicBoolean(false);
         this.isDocumentListenerRegistered = new AtomicBoolean(false);
 
@@ -104,8 +104,7 @@ public class ScriptFile implements FileEditorManagerListener, DocumentListener, 
      * This method should be called when the file is no longer needed.
      */
     @Override
-    public void close() {
-        scriptChangeAlarm.dispose();
+    public void dispose() {
         getApplication().invokeLater(() -> FileEditorManager.getInstance(project).closeFile(scriptFile));
     }
 

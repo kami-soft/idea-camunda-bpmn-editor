@@ -41,12 +41,12 @@ public class ScriptFileManager implements Disposable {
      * @param virtualFileId The virtual file ID of the script to close
      */
     public void close(String virtualFileId) {
-        Optional.ofNullable(scriptFiles.remove(virtualFileId)).ifPresent(ScriptFile::close);
+        Optional.ofNullable(scriptFiles.remove(virtualFileId)).ifPresent(ScriptFile::dispose);
     }
 
     @Override
     public void dispose() {
-        scriptFiles.values().forEach(ScriptFile::close);
+        scriptFiles.values().forEach(ScriptFile::dispose);
     }
 
     /**

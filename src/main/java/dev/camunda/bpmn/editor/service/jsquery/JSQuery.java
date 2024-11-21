@@ -88,7 +88,7 @@ public class JSQuery implements Disposable {
                    Consumer<String> handler,
                    int delayMillis) {
         this.browser = browser;
-        this.alarm = new Alarm();
+        this.alarm = new Alarm(this);
         this.jbCefJSQuery = browser.createJBCefJSQuery(response -> {
             alarm.cancelAllRequests();
             alarm.addRequest(() -> handler.accept(response), delayMillis);
@@ -116,10 +116,6 @@ public class JSQuery implements Disposable {
     public void dispose() {
         if (nonNull(jbCefJSQuery)) {
             jbCefJSQuery.dispose();
-        }
-
-        if (nonNull(alarm)) {
-            alarm.dispose();
         }
     }
 }
