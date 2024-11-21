@@ -1,17 +1,11 @@
 package dev.camunda.bpmn.editor.service.script;
 
-import static com.intellij.openapi.fileEditor.FileEditorManagerListener.FILE_EDITOR_MANAGER;
-
-import com.intellij.openapi.fileEditor.FileDocumentManager;
-import com.intellij.openapi.fileEditor.FileEditorManager;
-import com.intellij.openapi.fileTypes.FileTypeManager;
-import com.intellij.openapi.util.Disposer;
-import com.intellij.util.messages.MessageBusConnection;
-import dev.camunda.bpmn.editor.service.jsquery.JSQueryService;
+import com.intellij.openapi.Disposable;
+import com.intellij.openapi.project.Project;
+import dev.camunda.bpmn.editor.service.browser.JBCefBrowserWrapper;
 import java.util.Map;
 import java.util.Optional;
 import java.util.concurrent.ConcurrentHashMap;
-import javax.annotation.PreDestroy;
 import lombok.RequiredArgsConstructor;
 
 /**
@@ -22,13 +16,10 @@ import lombok.RequiredArgsConstructor;
  * @author Oleksandr Havrysh
  */
 @RequiredArgsConstructor
-public class ScriptFileService {
+public class ScriptFileManager implements Disposable {
 
-    private final JSQueryService jsQueryService;
-    private final FileTypeManager fileTypeManager;
-    private final FileEditorManager fileEditorManager;
-    private final FileDocumentManager fileDocumentManager;
-    private final MessageBusConnection messageBusConnection;
+    private final Project project;
+    private final JBCefBrowserWrapper browser;
     private final Map<String, ScriptFile> scriptFiles = new ConcurrentHashMap<>(1);
 
     /**
@@ -38,16 +29,9 @@ public class ScriptFileService {
      * @return The virtual file ID of the created script file
      */
     public String create(String text) {
-        var scriptFile = new ScriptFile(text, fileEditorManager, fileDocumentManager, fileTypeManager);
+        var scriptFile = new ScriptFile(text, project, browser, scriptFiles::remove);
         var virtualFileId = scriptFile.getVirtualFileId();
         scriptFiles.put(virtualFileId, scriptFile);
-
-        var scriptFileListener = new ScriptFileListener(scriptFile, jsQueryService, scriptFiles::remove);
-        Disposer.register(scriptFile, scriptFileListener);
-        messageBusConnection.subscribe(FILE_EDITOR_MANAGER, scriptFileListener);
-
-        scriptFile.setFocus();
-
         return virtualFileId;
     }
 
@@ -60,13 +44,9 @@ public class ScriptFileService {
         Optional.ofNullable(scriptFiles.remove(virtualFileId)).ifPresent(ScriptFile::close);
     }
 
-    /**
-     * Disposes of all managed script files.
-     * This method is called when the ScriptFileService is no longer needed.
-     */
-    @PreDestroy
-    public void destroy() {
-        scriptFiles.values().forEach(ScriptFile::dispose);
+    @Override
+    public void dispose() {
+        scriptFiles.values().forEach(ScriptFile::close);
     }
 
     /**

@@ -1,7 +1,6 @@
 package dev.camunda.bpmn.editor.settings;
 
 import static com.intellij.openapi.application.ApplicationManager.getApplication;
-import static dev.camunda.bpmn.editor.util.Constants.EMPTY;
 import static java.util.Objects.nonNull;
 
 import com.intellij.openapi.components.PersistentStateComponent;
@@ -75,7 +74,7 @@ public final class BpmnEditorSettings implements PersistentStateComponent<BpmnEd
                     .map(BpmnEditorSettings.FileSettings::getEngine)
                     .or(() -> Optional.ofNullable(engine))
                     .map(BpmnEditorSettings.Engine::getValue)
-                    .orElse(EMPTY);
+                    .orElse("");
         }
 
         /**
@@ -102,7 +101,7 @@ public final class BpmnEditorSettings implements PersistentStateComponent<BpmnEd
                     .map(BpmnEditorSettings.FileSettings::getScriptType)
                     .or(() -> Optional.ofNullable(scriptType))
                     .map(BpmnEditorSettings.ScriptType::getValue)
-                    .orElse(EMPTY);
+                    .orElse("");
         }
 
         /**

@@ -6,9 +6,7 @@ import com.intellij.openapi.project.Project;
 import com.intellij.openapi.util.Key;
 import com.intellij.openapi.vfs.VirtualFile;
 import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
-import dev.camunda.bpmn.editor.ui.component.BpmnEditorComponent;
 import dev.camunda.bpmn.editor.ui.component.EngineComponent;
-import dev.camunda.bpmn.editor.util.HashComparator;
 import java.beans.PropertyChangeListener;
 import javax.swing.JComponent;
 import lombok.Getter;
@@ -30,8 +28,7 @@ public class BpmnFileEditor implements FileEditor {
 
     @Getter
     private final JComponent component;
-    private final BpmnFileEditorContext context;
-    private final HashComparator hashComparator;
+    private final BpmnEditorContext context;
 
     /**
      * Constructs a new BPMN file editor.
@@ -41,22 +38,11 @@ public class BpmnFileEditor implements FileEditor {
      */
     public BpmnFileEditor(@NotNull Project project, @NotNull VirtualFile file) {
         this.file = file;
-        this.context = new BpmnFileEditorContext(project, file);
-
-        this.hashComparator = context.getHashComparator();
+        this.context = new BpmnEditorContext(project, file);
         var browserService = context.getJbCefBrowserService();
         var state = BpmnEditorSettings.getInstance().getState();
-        if (state.isEngineSet(file.getPath())) {
-            this.component = browserService.loadBpmn();
-            return;
-        }
-
-        var bpmnEditorComponent = new BpmnEditorComponent();
-        bpmnEditorComponent.put(new EngineComponent(result -> {
-            state.addFileSettings(file.getPath(), result);
-            bpmnEditorComponent.set(browserService.loadBpmn());
-        }));
-        this.component = bpmnEditorComponent;
+        this.component = state.isEngineSet(file.getPath()) ? browserService.loadBpmn() :
+                new EngineComponent(result -> state.addFileSettings(file.getPath(), result), browserService::loadBpmn);
     }
 
     /**
@@ -95,7 +81,7 @@ public class BpmnFileEditor implements FileEditor {
      */
     @Override
     public boolean isModified() {
-        return hashComparator.isModified();
+        return context.getHashComparator().isModified();
     }
 
     /**

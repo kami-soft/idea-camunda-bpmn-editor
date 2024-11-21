@@ -82,10 +82,12 @@ function getScriptFormat(node) {
 
 export function closeVirtualFile(node) {
     const virtualFileId = node.getAttribute('virtual-file-id');
-    try {
-        window.closeScriptExternalFile(virtualFileId);
-    } catch (error) {
-        console.error(error);
+    if (virtualFileId && virtualFileId.length > 0) {
+        try {
+            window.closeScriptExternalFile(virtualFileId);
+        } catch (error) {
+            console.error(error);
+        }
     }
 }
 

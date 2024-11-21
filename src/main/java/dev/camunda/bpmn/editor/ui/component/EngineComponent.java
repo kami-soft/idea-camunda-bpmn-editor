@@ -9,13 +9,16 @@ import static java.util.Arrays.stream;
 
 import com.intellij.openapi.ui.DescriptionLabel;
 import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
+import java.awt.BorderLayout;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Consumer;
+import java.util.function.Supplier;
 import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JComponent;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -36,7 +39,7 @@ public class EngineComponent extends JPanel {
      *
      * @param consumer The consumer to be notified when the save button is clicked
      */
-    public EngineComponent(Consumer<EngineResult> consumer) {
+    public EngineComponent(Consumer<EngineResult> consumer, Supplier<JComponent> panelSupplier) {
         super(new GridBagLayout());
 
         var gbc = new GridBagConstraints();
@@ -70,8 +73,15 @@ public class EngineComponent extends JPanel {
         var saveAsDefaultCheckBox = new JCheckBox("Set as default for next BPMN");
         add(saveAsDefaultCheckBox, gbc);
 
-        saveButton.addActionListener(e ->
-                consumer.accept(new EngineResult(saveAsDefaultCheckBox.isSelected(), engineRef.get())));
+        saveButton.addActionListener(e -> {
+            consumer.accept(new EngineResult(saveAsDefaultCheckBox.isSelected(), engineRef.get()));
+
+            removeAll();
+            setLayout(new BorderLayout());
+            add(panelSupplier.get());
+            revalidate();
+            repaint();
+        });
     }
 
     /**

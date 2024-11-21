@@ -4,6 +4,7 @@ import com.intellij.ui.jcef.JBCefBrowser;
 import com.intellij.ui.jcef.JBCefBrowserBase;
 import com.intellij.ui.jcef.JBCefJSQuery;
 import java.util.function.Function;
+import org.cef.CefApp;
 import org.cef.browser.CefBrowser;
 import org.cef.browser.CefFrame;
 import org.cef.handler.CefLoadHandlerAdapter;
@@ -21,6 +22,9 @@ public class JBCefBrowserWrapper extends JBCefBrowser {
      */
     public JBCefBrowserWrapper() {
         super(JBCefBrowser.createBuilder().setOffScreenRendering(false).setMouseWheelEventEnable(true));
+        CefApp.getInstance().registerSchemeHandlerFactory("bpmn-editor", "",
+                (browser, frame, schemeName, request) ->
+                        new BpmnEditorCefResourceHandler());
     }
 
     /**
@@ -29,7 +33,7 @@ public class JBCefBrowserWrapper extends JBCefBrowser {
      * @param runnable The runnable to be executed on load end
      */
     public void onLoadEnd(Runnable runnable) {
-       myCefClient.addLoadHandler(new CefLoadHandlerAdapter() {
+        myCefClient.addLoadHandler(new CefLoadHandlerAdapter() {
 
             @Override
             public void onLoadEnd(CefBrowser browser, CefFrame frame, int httpStatusCode) {

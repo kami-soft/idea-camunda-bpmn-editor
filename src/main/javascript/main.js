@@ -8,6 +8,8 @@ import {handlePasteAsync} from "./copyPaste";
 
 if (isDarkMode) {
     document.body.classList.add('dark');
+} else {
+    document.body.classList.add('light');
 }
 
 const bpmnModeler = initModeler();
@@ -22,7 +24,7 @@ window.initApp = async function () {
 
 document.addEventListener('DOMContentLoaded', () => {
     enableResizing();
-    initApp().then(r => setupObserver());
+    setupObserver();
 });
 
 bpmnModeler.on('commandStack.changed', async () => {

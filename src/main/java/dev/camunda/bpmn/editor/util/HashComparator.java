@@ -1,7 +1,5 @@
 package dev.camunda.bpmn.editor.util;
 
-import static dev.camunda.bpmn.editor.util.Constants.EMPTY;
-import static dev.camunda.bpmn.editor.util.Constants.SHA_256;
 import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import com.intellij.util.concurrency.annotations.RequiresWriteLock;
@@ -16,6 +14,8 @@ import java.security.NoSuchAlgorithmException;
  */
 public class HashComparator {
 
+    private static final String SHA_256 = "SHA-256";
+
     private final byte[] originHash;
     private volatile byte[] actualHash;
     private final MessageDigest messageDigest;
@@ -28,7 +28,7 @@ public class HashComparator {
      */
     public HashComparator(String originBpmn) {
         this.messageDigest = getMessageDigest();
-        this.originHash = messageDigest.digest((isBlank(originBpmn) ? EMPTY : originBpmn).getBytes());
+        this.originHash = messageDigest.digest((isBlank(originBpmn) ? "" : originBpmn).getBytes());
         this.actualHash = originHash;
     }
 

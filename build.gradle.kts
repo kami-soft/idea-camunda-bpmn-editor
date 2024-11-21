@@ -6,7 +6,7 @@ plugins {
 }
 
 group = "dev.camunda.bpmn"
-version = "1.3.1"
+version = "1.4.0"
 
 repositories {
     mavenCentral()
@@ -35,7 +35,7 @@ tasks {
 
     patchPluginXml {
         sinceBuild.set("232")
-        untilBuild.set("242.*")
+        untilBuild.set("243.*")
     }
 
     val buildNpm = register<com.github.gradle.node.npm.task.NpmTask>("buildNpm") {
@@ -59,5 +59,4 @@ sourceSets {
 dependencies {
     compileOnly("org.projectlombok:lombok:1.18.34")
     annotationProcessor("org.projectlombok:lombok:1.18.34")
-    implementation("org.picocontainer:picocontainer:2.15")
 }

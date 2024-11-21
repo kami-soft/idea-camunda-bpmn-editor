@@ -1,6 +1,5 @@
 package dev.camunda.bpmn.editor.util;
 
-import static dev.camunda.bpmn.editor.util.Constants.EMPTY;
 import static java.util.Base64.getDecoder;
 import static java.util.Base64.getEncoder;
 import static org.apache.commons.lang3.StringUtils.isBlank;
@@ -20,7 +19,7 @@ public class Base64Utils {
      * @return The Base64 encoded string
      */
     public static String encode(String text) {
-        return getEncoder().encodeToString((isBlank(text) ? EMPTY : text).getBytes());
+        return getEncoder().encodeToString((isBlank(text) ? "" : text).getBytes());
     }
 
     /**
