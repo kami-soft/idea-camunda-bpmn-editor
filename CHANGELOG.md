@@ -1,5 +1,11 @@
 # Changelog
 
+## 1.4.1
+
+- Added the Dracula theme
+- Added the Sketchy schema theme (default disabled)
+- Added the disclaimer message to settings
+
 ## 1.4.0
 - Updated JS dependencies version
 - Refactor init JS queries
