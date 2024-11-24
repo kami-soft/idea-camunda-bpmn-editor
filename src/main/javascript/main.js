@@ -3,11 +3,13 @@ import {createNewDiagram, openDiagram} from './diagramHandlers';
 import {enableResizing} from './resizer';
 import {setupObserver} from './observers';
 import './styles';
-import {isDarkMode} from './utils';
+import {isDarkMode, isDraculaMode} from './utils';
 import {handlePasteAsync} from "./copyPaste";
 
 if (isDarkMode) {
-    document.body.classList.add('dark');
+    await import("../resources/ui/themes/dark/style.css");
+} else if (isDraculaMode) {
+    await import("../resources/ui/themes/dracula/style.css");
 } else {
     document.body.classList.add('light');
 }
@@ -20,12 +22,10 @@ window.initApp = async function () {
     } else {
         await createNewDiagram(bpmnModeler);
     }
-}
 
-document.addEventListener('DOMContentLoaded', () => {
     enableResizing();
     setupObserver();
-});
+}
 
 bpmnModeler.on('commandStack.changed', async () => {
     try {

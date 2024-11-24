@@ -1,6 +1,10 @@
 @import url(colors.css);
 
-.dark .djs-container {
+.djs-parent {
+    --shape-drop-not-allowed-fill-color: #510e09;
+}
+
+.djs-container {
     --canvas-fill-color: var(--color-white);
 
     --bendpoint-fill-color: var(--color-blue-205-100-45);
@@ -46,7 +50,7 @@
     --shape-attach-allowed-stroke-color: var(--color-blue-205-100-50);
     --shape-connect-allowed-fill-color: var(--color-grey-225-10-97);
     --shape-drop-allowed-fill-color: var(--color-grey-225-10-97);
-    --shape-drop-not-allowed-fill-color: var(--color-red-360-100-97);
+    --shape-drop-not-allowed-fill-color: #510e09;
     --shape-resize-preview-stroke-color: var(--color-blue-205-100-50);
 
     --snap-line-stroke-color: var(--color-blue-205-100-45-opacity-30);
@@ -58,79 +62,79 @@
     --tooltip-error-color: var(--color-red-360-100-45);
 }
 
-.dark .djs-outline,
-.dark .djs-selection-outline {
+.djs-outline,
+.djs-selection-outline {
     fill: none;
     shape-rendering: geometricPrecision;
     stroke-width: 2px;
 }
 
-.dark .djs-outline {
+.djs-outline {
     visibility: hidden;
 }
 
-.dark .djs-selection-outline {
+.djs-selection-outline {
     stroke: var(--element-selected-outline-stroke-color);
 }
 
-.dark .djs-element.selected .djs-outline {
+.djs-element.selected .djs-outline {
     visibility: visible;
 
     stroke: var(--element-selected-outline-stroke-color);
 }
 
-.dark .djs-multi-select .djs-element.selected .dark .djs-outline {
+.djs-multi-select .djs-element.selected .djs-outline {
     stroke: var(--element-selected-outline-secondary-stroke-color);
 }
 
-.dark .djs-shape.connect-ok .djs-visual > :nth-child(1) {
+.djs-shape.connect-ok .djs-visual > :nth-child(1) {
     fill: var(--shape-connect-allowed-fill-color) !important;
 }
 
-.dark .djs-shape.connect-not-ok .djs-visual > :nth-child(1),
-.dark .djs-shape.drop-not-ok .djs-visual > :nth-child(1) {
+.djs-shape.connect-not-ok .djs-visual > :nth-child(1),
+.djs-shape.drop-not-ok .djs-visual > :nth-child(1) {
     fill: var(--shape-drop-not-allowed-fill-color) !important;
 }
 
-.dark .djs-shape.new-parent .djs-visual > :nth-child(1) {
+.djs-shape.new-parent .djs-visual > :nth-child(1) {
     fill: var(--shape-drop-allowed-fill-color) !important;
 }
 
-.dark svg.drop-not-ok {
+svg.drop-not-ok {
     background: var(--shape-drop-not-allowed-fill-color) !important;
 }
 
-.dark svg.new-parent {
+svg.new-parent {
     background: var(--shape-drop-allowed-fill-color) !important;
 }
 
-.dark .drop-not-ok,
-.dark .connect-not-ok,
-.dark .drop-not-ok *,
-.dark .connect-not-ok * {
+.drop-not-ok,
+.connect-not-ok,
+.drop-not-ok *,
+.connect-not-ok * {
     cursor: not-allowed !important;
 }
 
-.dark .drop-ok,
-.dark .connect-ok,
-.dark .drop-ok *,
-.dark .connect-ok * {
+.drop-ok,
+.connect-ok,
+.drop-ok *,
+.connect-ok * {
     cursor: default !important;
 }
 
-.dark .djs-element.attach-ok .djs-visual > :nth-child(1) {
+.djs-element.attach-ok .djs-visual > :nth-child(1) {
     stroke-width: 5px !important;
     stroke: var(--shape-attach-allowed-stroke-color) !important;
 }
 
-.dark .djs-frame.connect-not-ok .djs-visual > :nth-child(1),
-.dark .djs-frame.drop-not-ok .djs-visual > :nth-child(1) {
+.djs-frame.connect-not-ok .djs-visual > :nth-child(1),
+.djs-frame.drop-not-ok .djs-visual > :nth-child(1) {
     stroke-width: 3px !important;
     stroke: var(--shape-drop-not-allowed-fill-color) !important;
     fill: none !important;
 }
 
-.dark .djs-lasso-overlay {
+.djs-lasso-overlay {
     fill: var(--lasso-fill-color);
     stroke: var(--lasso-stroke-color);
     stroke-width: 2px;
@@ -138,7 +142,7 @@
     pointer-events: none;
 }
 
-.dark .djs-resize-overlay {
+.djs-resize-overlay {
     fill: none;
 
     stroke-dasharray: 5 1 3 1;
@@ -147,159 +151,159 @@
     pointer-events: none;
 }
 
-.dark .djs-resizer-hit {
+.djs-resizer-hit {
     fill: none;
     pointer-events: all;
 }
 
-.dark .djs-resizer-visual {
+.djs-resizer-visual {
     fill: var(--resizer-fill-color);
     stroke-width: 1px;
     stroke: var(--resizer-stroke-color);
     shape-rendering: geometricPrecision;
 }
 
-.dark .djs-resizer:hover .djs-resizer-visual {
+.djs-resizer:hover .djs-resizer-visual {
     stroke: var(--resizer-stroke-color);
     stroke-opacity: 1;
 }
 
-.dark .djs-cursor-resize-ns,
-.dark .djs-resizer-n,
-.dark .djs-resizer-s {
+.djs-cursor-resize-ns,
+.djs-resizer-n,
+.djs-resizer-s {
     cursor: ns-resize;
 }
 
-.dark .djs-cursor-resize-ew,
-.dark .djs-resizer-e,
-.dark .djs-resizer-w {
+.djs-cursor-resize-ew,
+.djs-resizer-e,
+.djs-resizer-w {
     cursor: ew-resize;
 }
 
-.dark .djs-cursor-resize-nwse,
-.dark .djs-resizer-nw,
-.dark .djs-resizer-se {
+.djs-cursor-resize-nwse,
+.djs-resizer-nw,
+.djs-resizer-se {
     cursor: nwse-resize;
 }
 
-.dark .djs-cursor-resize-nesw,
-.dark .djs-resizer-ne,
-.dark .djs-resizer-sw {
+.djs-cursor-resize-nesw,
+.djs-resizer-ne,
+.djs-resizer-sw {
     cursor: nesw-resize;
 }
 
-.dark .djs-shape.djs-resizing > .dark .djs-outline {
+.djs-shape.djs-resizing > .djs-outline {
     visibility: hidden !important;
 }
 
-.dark .djs-shape.djs-resizing > .djs-resizer {
+.djs-shape.djs-resizing > .djs-resizer {
     visibility: hidden;
 }
 
-.dark .djs-dragger > .djs-resizer {
+.djs-dragger > .djs-resizer {
     visibility: hidden;
 }
 
-.dark .djs-dragger * {
+.djs-dragger * {
     fill: none !important;
     stroke: var(--element-dragger-color) !important;
 }
 
-.dark .djs-dragger tspan,
-.dark .djs-dragger text {
+.djs-dragger tspan,
+.djs-dragger text {
     fill: var(--element-dragger-color) !important;
     stroke: none !important;
 }
 
-.dark marker .djs-dragger circle,
-.dark marker .djs-dragger path,
-.dark marker .djs-dragger polygon,
-.dark marker .djs-dragger polyline,
-.dark marker .djs-dragger rect {
+marker .djs-dragger circle,
+marker .djs-dragger path,
+marker .djs-dragger polygon,
+marker .djs-dragger polyline,
+marker .djs-dragger rect {
     fill: var(--element-dragger-color) !important;
     stroke: none !important;
 }
 
-.dark marker .djs-dragger text,
-.dark marker .djs-dragger tspan {
+marker .djs-dragger text,
+marker .djs-dragger tspan {
     fill: none !important;
     stroke: var(--element-dragger-color) !important;
 }
 
-.dark .djs-dragging {
+.djs-dragging {
     opacity: 0.3;
 }
 
-.dark .djs-dragging,
-.dark .djs-dragging > * {
+.djs-dragging,
+.djs-dragging > * {
     pointer-events: none !important;
 }
 
-.dark .djs-dragging .djs-context-pad,
-.dark .djs-dragging .djs-outline {
+.djs-dragging .djs-context-pad,
+.djs-dragging .djs-outline {
     display: none !important;
 }
 
-.dark .djs-visual,
-.dark .djs-outline {
+.djs-visual,
+.djs-outline {
     pointer-events: none;
 }
 
-.dark .djs-element.attach-ok .djs-hit {
+.djs-element.attach-ok .djs-hit {
     stroke-width: 60px !important;
 }
 
-.dark .djs-element > .djs-hit-all,
-.dark .djs-element > .djs-hit-no-move {
+.djs-element > .djs-hit-all,
+.djs-element > .djs-hit-no-move {
     pointer-events: all;
 }
 
-.dark .djs-element > .djs-hit-stroke,
-.dark .djs-element > .djs-hit-click-stroke {
+.djs-element > .djs-hit-stroke,
+.djs-element > .djs-hit-click-stroke {
     pointer-events: stroke;
 }
 
-.dark .djs-connection .djs-visual {
+.djs-connection .djs-visual {
     stroke-width: 2px;
     fill: none;
 }
 
-.dark .djs-cursor-grab {
+.djs-cursor-grab {
     cursor: -webkit-grab;
     cursor: -moz-grab;
     cursor: grab;
 }
 
-.dark .djs-cursor-grabbing {
+.djs-cursor-grabbing {
     cursor: -webkit-grabbing;
     cursor: -moz-grabbing;
     cursor: grabbing;
 }
 
-.dark .djs-cursor-crosshair {
+.djs-cursor-crosshair {
     cursor: crosshair;
 }
 
-.dark .djs-cursor-move {
+.djs-cursor-move {
     cursor: move;
 }
 
-.dark .djs-cursor-resize-ns {
+.djs-cursor-resize-ns {
     cursor: ns-resize;
 }
 
-.dark .djs-cursor-resize-ew {
+.djs-cursor-resize-ew {
     cursor: ew-resize;
 }
 
-.dark .djs-snap-line {
+.djs-snap-line {
     stroke: var(--snap-line-stroke-color);
     stroke-linecap: round;
     stroke-width: 2px;
     pointer-events: none;
 }
 
-.dark .djs-crosshair {
+.djs-crosshair {
     stroke: var(--space-tool-crosshair-stroke-color);
     stroke-linecap: round;
     stroke-width: 1px;
@@ -308,7 +312,7 @@
     stroke-dasharray: 5, 5;
 }
 
-.dark .djs-palette .separator {
+.djs-palette .separator {
     margin: 5px;
     padding-top: 5px;
     border: none;
@@ -316,85 +320,86 @@
     clear: both;
 }
 
-.dark .djs-palette .entry:before {
+.djs-palette .entry:before {
     vertical-align: initial;
 }
 
-.dark .djs-palette .djs-palette-toggle {
+.djs-palette .djs-palette-toggle {
     cursor: pointer;
 }
 
-.dark .djs-palette .entry,
-.dark .djs-palette .djs-palette-toggle {
+.djs-palette .entry,
+.djs-palette .djs-palette-toggle {
     color: var(--palette-entry-color);
     font-size: 30px;
     text-align: center;
 }
 
-.dark .djs-palette .entry {
+.djs-palette .entry {
     float: left;
 }
 
-.dark .djs-palette .entry img {
+.djs-palette .entry img {
     max-width: 100%;
 }
 
-.dark .djs-palette .djs-palette-entries:after {
+.djs-palette .djs-palette-entries:after {
     content: '';
     display: table;
     clear: both;
 }
 
-.dark .djs-palette .djs-palette-toggle:hover {
+.djs-palette .djs-palette-toggle:hover {
     background: var(--palette-toggle-hover-background-color);
 }
 
-.dark .djs-palette .entry:hover {
+.djs-palette .entry:hover {
     color: var(--palette-entry-hover-color);
     background-color: var(--dark-background);
 }
 
-.dark .djs-palette .highlighted-entry {
+.djs-palette .highlighted-entry {
     color: var(--palette-entry-selected-color) !important;
 }
 
-.dark .djs-palette .entry,
-.dark .djs-palette .djs-palette-toggle {
+.djs-palette .entry,
+.djs-palette .djs-palette-toggle {
     width: 46px;
     height: 46px;
     line-height: 46px;
     cursor: default;
 }
 
-.dark .djs-palette.two-column.open {
+.djs-palette.two-column.open {
     width: 94px;
+    border: none;
 }
 
-.dark .djs-palette:not(.open) .djs-palette-entries {
+.djs-palette:not(.open) .djs-palette-entries {
     display: none;
 }
 
-.dark .djs-palette:not(.open) {
+.djs-palette:not(.open) {
     overflow: hidden;
 }
 
-.dark .djs-palette.open .djs-palette-toggle {
+.djs-palette.open .djs-palette-toggle {
     display: none;
 }
 
-.dark .djs-overlay-context-pad {
+.djs-overlay-context-pad {
     width: 72px;
     z-index: 100;
 }
 
-.dark .djs-context-pad {
+.djs-context-pad {
     position: absolute;
     display: none;
     pointer-events: none;
     line-height: 1;
 }
 
-.dark .djs-context-pad .entry {
+.djs-context-pad .entry {
     width: 22px;
     height: 22px;
     text-align: center;
@@ -409,95 +414,95 @@
     vertical-align: middle;
 }
 
-.dark .djs-context-pad .entry:hover {
+.djs-context-pad .entry:hover {
     background-color: var(--context-pad-entry-hover-background-color);
 }
 
-.dark .djs-context-pad.open {
+.djs-context-pad.open {
     display: block;
 }
 
-.dark .djs-popup .entry {
+.djs-popup .entry {
     line-height: 20px;
     white-space: nowrap;
     cursor: default;
 }
 
-.dark .djs-popup .entry:before {
+.djs-popup .entry:before {
     vertical-align: middle;
     font-size: 20px;
 }
 
-.dark .djs-popup .entry > span {
+.djs-popup .entry > span {
     vertical-align: middle;
     font-size: 14px;
 }
 
-.dark .djs-popup .entry:hover,
-.dark .djs-popup .entry.active:hover {
+.djs-popup .entry:hover,
+.djs-popup .entry.active:hover {
     background: var(--popup-header-entry-selected-background-color);
 }
 
-.dark .djs-popup .entry.disabled {
+.djs-popup .entry.disabled {
     background: inherit;
 }
 
-.dark .djs-popup .djs-popup-header .entry {
+.djs-popup .djs-popup-header .entry {
     display: inline-block;
     padding: 2px 3px 2px 3px;
     border: solid 1px transparent;
     border-radius: 3px;
 }
 
-.dark .djs-popup .djs-popup-header .entry.active {
+.djs-popup .djs-popup-header .entry.active {
     color: var(--popup-header-entry-selected-color);
     border: solid 1px var(--popup-header-entry-selected-color);
     background-color: var(--popup-header-entry-selected-background-color);
 }
 
-.dark .djs-popup-body .entry {
+.djs-popup-body .entry {
     padding: 4px 5px;
 }
 
-.dark .djs-popup-body .entry > span {
+.djs-popup-body .entry > span {
     margin-left: 5px;
 }
 
-.dark .djs-popup-body {
+.djs-popup-body {
     background-color: var(--popup-body-background-color);
 }
 
-.dark .djs-popup-header .entry {
+.djs-popup-header .entry {
     margin: 1px 1px 1px 3px;
 }
 
-.dark .djs-popup-header .entry:last-child {
+.djs-popup-header .entry:last-child {
     margin-right: 3px;
 }
 
-.dark .djs-palette {
+.djs-palette {
     background: var(--dark-properties-panel);
     border: solid 1px var(--palette-border-color);
     border-radius: 2px;
 }
 
-.dark .djs-popup {
+.djs-popup {
     background: var(--dark-properties-panel);
     border: solid 1px var(--popup-border-color);
     border-radius: 2px;
 }
 
-.dark .djs-shape,
-.dark .djs-connection {
+.djs-shape,
+.djs-connection {
     touch-action: none;
 }
 
-.dark .djs-segment-dragger,
-.dark .djs-bendpoint {
+.djs-segment-dragger,
+.djs-bendpoint {
     display: none;
 }
 
-.dark .djs-segment-dragger .djs-visual {
+.djs-segment-dragger .djs-visual {
     display: none;
 
     fill: var(--bendpoint-fill-color);
@@ -506,88 +511,88 @@
     stroke-opacity: 1;
 }
 
-.dark .djs-segment-dragger:hover .djs-visual {
+.djs-segment-dragger:hover .djs-visual {
     display: block;
 }
 
-.dark .djs-bendpoint .djs-visual {
+.djs-bendpoint .djs-visual {
     fill: var(--bendpoint-fill-color);
     stroke: var(--bendpoint-stroke-color);
     stroke-width: 1px;
 }
 
-.dark .djs-segment-dragger:hover,
-.dark .djs-bendpoints.hover .djs-segment-dragger,
-.dark .djs-bendpoints.selected .djs-segment-dragger,
-.dark .djs-bendpoint:hover,
-.dark .djs-bendpoints.hover .djs-bendpoint,
-.dark .djs-bendpoints.selected .djs-bendpoint {
+.djs-segment-dragger:hover,
+.djs-bendpoints.hover .djs-segment-dragger,
+.djs-bendpoints.selected .djs-segment-dragger,
+.djs-bendpoint:hover,
+.djs-bendpoints.hover .djs-bendpoint,
+.djs-bendpoints.selected .djs-bendpoint {
     display: block;
 }
 
-.dark .djs-drag-active .djs-bendpoints * {
+.djs-drag-active .djs-bendpoints * {
     display: none;
 }
 
-.dark .djs-bendpoints:not(.hover) .floating {
+.djs-bendpoints:not(.hover) .floating {
     display: none;
 }
 
-.dark .djs-segment-dragger:hover .djs-visual,
-.dark .djs-segment-dragger.djs-dragging .djs-visual,
-.dark .djs-bendpoint:hover .djs-visual,
-.dark .djs-bendpoint.floating .djs-visual {
+.djs-segment-dragger:hover .djs-visual,
+.djs-segment-dragger.djs-dragging .djs-visual,
+.djs-bendpoint:hover .djs-visual,
+.djs-bendpoint.floating .djs-visual {
     fill: var(--bendpoint-fill-color);
     stroke: var(--bendpoint-stroke-color);
     stroke-opacity: 1;
 }
 
-.dark .djs-bendpoint.floating .djs-hit {
+.djs-bendpoint.floating .djs-hit {
     pointer-events: none;
 }
 
-.dark .djs-segment-dragger .djs-hit,
-.dark .djs-bendpoint .djs-hit {
+.djs-segment-dragger .djs-hit,
+.djs-bendpoint .djs-hit {
     fill: none;
     pointer-events: all;
 }
 
-.dark .djs-segment-dragger.horizontal .djs-hit {
+.djs-segment-dragger.horizontal .djs-hit {
     cursor: ns-resize;
 }
 
-.dark .djs-segment-dragger.vertical .djs-hit {
+.djs-segment-dragger.vertical .djs-hit {
     cursor: ew-resize;
 }
 
-.dark .djs-segment-dragger.djs-dragging .djs-hit {
+.djs-segment-dragger.djs-dragging .djs-hit {
     pointer-events: none;
 }
 
-.dark .djs-updating,
-.dark .djs-updating > * {
+.djs-updating,
+.djs-updating > * {
     pointer-events: none !important;
 }
 
-.dark .djs-updating .djs-context-pad,
-.dark .djs-updating .djs-outline,
-.dark .djs-updating .djs-bendpoint,
-.dark .djs-multi-select .djs-bendpoint,
-.dark .djs-multi-select .djs-segment-dragger,
-.dark .connect-ok .djs-bendpoint,
-.dark .connect-not-ok .djs-bendpoint,
-.dark .drop-ok .djs-bendpoint,
-.dark .drop-not-ok .djs-bendpoint {
+.djs-updating .djs-context-pad,
+.djs-updating .djs-outline,
+.djs-updating .djs-bendpoint,
+.djs-multi-select .djs-bendpoint,
+.djs-multi-select .djs-segment-dragger,
+.connect-ok .djs-bendpoint,
+.connect-not-ok .djs-bendpoint,
+.drop-ok .djs-bendpoint,
+.drop-not-ok .djs-bendpoint {
     display: none !important;
 }
 
-.dark .djs-segment-dragger .djs-dragging,
-.dark .djs-bendpoint .djs-dragging {
+.djs-segment-dragger .djs-dragging,
+.djs-bendpoint .djs-dragging {
     display: block;
     opacity: 1.0;
 }
 
-.dark .djs-tooltip-error {
+.djs-tooltip-error {
     width: 160px;
     padding: 6px;
     background: var(--tooltip-error-background-color);
@@ -599,11 +604,11 @@
     opacity: 0.75;
 }
 
-.dark .djs-tooltip-error:hover {
+.djs-tooltip-error:hover {
     opacity: 1;
 }
 
-.dark .djs-search-container {
+.djs-search-container {
     position: absolute;
     top: 20px;
     left: 0;
@@ -622,15 +627,15 @@
     box-shadow: 0 0 0 2px var(--search-container-box-shadow-color), 0 0 0 1px var(--search-container-box-shadow-inset-color) inset;
 }
 
-.dark .djs-search-container:not(.open) {
+.djs-search-container:not(.open) {
     display: none;
 }
 
-.dark .djs-popup-search {
+.djs-popup-search {
     background: var(--dark-background) !important;
 }
 
-.dark .djs-popup-search svg {
+.djs-popup-search svg {
     position: absolute;
     top: 50%;
     -webkit-transform: translateY(-50%);
@@ -640,8 +645,8 @@
     margin: auto;
 }
 
-.dark .djs-popup-search input,
-.dark .djs-search-input input {
+.djs-popup-search input,
+.djs-search-input input {
     font-size: 1.05em;
     width: 100%;
     padding: 6px 30px;
@@ -650,27 +655,27 @@
     background-color: var(--dark-background) !important;
 }
 
-.dark .djs-popup-search input:focus,
-.dark .djs-search-input input:focus {
+.djs-popup-search input:focus,
+.djs-search-input input:focus {
     outline: none;
     border: solid 1px var(--dark-foreground);
 }
 
-.dark .djs-popup-search-icon path {
+.djs-popup-search-icon path {
     fill: var(--dark-foreground);
 }
 
-.dark .djs-search-results {
+.djs-search-results {
     position: relative;
     overflow-y: auto;
     max-height: 200px;
 }
 
-.dark .djs-search-results:hover {
+.djs-search-results:hover {
     cursor: pointer;
 }
 
-.dark .djs-search-result {
+.djs-search-result {
     width: 100%;
     padding: 6px 10px;
     background: white;
@@ -678,44 +683,44 @@
     border-radius: 1px;
 }
 
-.dark .djs-search-highlight {
+.djs-search-highlight {
     color: var(--search-result-highlight-color);
 }
 
-.dark .djs-search-result-primary {
+.djs-search-result-primary {
     margin: 0 0 10px;
 }
 
-.dark .djs-search-result-secondary {
+.djs-search-result-secondary {
     font-family: monospace;
     margin: 0;
 }
 
-.dark .djs-search-result:hover {
+.djs-search-result:hover {
     background: var(--search-result-selected-color);
 }
 
-.dark .djs-search-result-selected {
+.djs-search-result-selected {
     background: var(--search-result-selected-color);
 }
 
-.dark .djs-search-result-selected:hover {
+.djs-search-result-selected:hover {
     background: var(--search-result-selected-color);
 }
 
-.dark .djs-search-overlay {
+.djs-search-overlay {
     background: var(--search-result-selected-color);
 }
 
-.dark .djs-element-hidden,
-.dark .djs-element-hidden .djs-hit,
-.dark .djs-element-hidden .djs-outline,
-.dark .djs-label-hidden .djs-label {
+.djs-element-hidden,
+.djs-element-hidden .djs-hit,
+.djs-element-hidden .djs-outline,
+.djs-label-hidden .djs-label {
     display: none !important;
 }
 
-.dark .djs-element .djs-hit-stroke,
-.dark .djs-element .djs-hit-click-stroke,
-.dark .djs-element .djs-hit-all {
+.djs-element .djs-hit-stroke,
+.djs-element .djs-hit-click-stroke,
+.djs-element .djs-hit-all {
     cursor: move;
 }

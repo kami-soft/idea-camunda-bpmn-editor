@@ -16,6 +16,7 @@ import dev.camunda.bpmn.editor.service.browser.JBCefBrowserService;
 import dev.camunda.bpmn.editor.service.browser.JBCefBrowserWrapper;
 import dev.camunda.bpmn.editor.service.clipboard.ClipboardService;
 import dev.camunda.bpmn.editor.service.script.ScriptFileManager;
+import dev.camunda.bpmn.editor.service.server.HttpServerWrapper;
 import dev.camunda.bpmn.editor.util.HashComparator;
 import java.util.List;
 import lombok.Getter;
@@ -41,13 +42,13 @@ import lombok.Getter;
 @Getter
 public class BpmnEditorContext implements Disposable {
 
-    private final HashComparator hashComparator;
     private final ScriptFileManager scriptFileManager;
+    private final HttpServerWrapper httpServerWrapper;
     private final JBCefBrowserService jbCefBrowserService;
 
     /**
      * Constructs a new BpmnEditorContext with the specified project and file.
-     * This constructor initializes all necessary components and services for the BPMN editor.
+     * This constructor initializes all necessary parts and services for the BPMN editor.
      *
      * @param project the current IntelliJ IDEA project
      * @param file    the virtual file associated with the BPMN diagram being edited
@@ -56,8 +57,8 @@ public class BpmnEditorContext implements Disposable {
         var originBpmn = readText(file);
         var jbCefBrowser = new JBCefBrowserWrapper();
         var clipboardService = new ClipboardService();
-
-        this.hashComparator = new HashComparator(originBpmn);
+        var hashComparator = new HashComparator(originBpmn);
+        this.httpServerWrapper = new HttpServerWrapper();
         this.scriptFileManager = new ScriptFileManager(project, jbCefBrowser);
 
         var initQueries = List.of(
@@ -69,7 +70,7 @@ public class BpmnEditorContext implements Disposable {
                 createSetClipboardJSQuery(jbCefBrowser, clipboardService),
                 createSetFocusScriptFileJSQuery(jbCefBrowser, scriptFileManager)
         );
-        this.jbCefBrowserService = new JBCefBrowserService(file, initQueries, jbCefBrowser);
+        this.jbCefBrowserService = new JBCefBrowserService(file, initQueries, jbCefBrowser, httpServerWrapper);
     }
 
     /**
@@ -81,5 +82,6 @@ public class BpmnEditorContext implements Disposable {
     public void dispose() {
         scriptFileManager.dispose();
         jbCefBrowserService.dispose();
+        httpServerWrapper.destroy();
     }
 }

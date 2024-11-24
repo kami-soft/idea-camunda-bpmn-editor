@@ -4,13 +4,18 @@ import BpmnModeler from 'bpmn-js/lib/Modeler';
 import {CreateAppendElementTemplatesModule} from "bpmn-js-create-append-anything";
 import ElementTemplateChooserModule from "@bpmn-io/element-template-chooser";
 import TokenSimulationModule from 'bpmn-js-token-simulation';
-import {engine, isDarkMode} from './utils';
+import {engine, isDarkMode, isDraculaMode, isSketchyMode} from './utils';
 import $ from "jquery";
 import './styles';
 import {BpmnPropertiesPanelModule, BpmnPropertiesProviderModule} from 'bpmn-js-properties-panel';
+import BpmnJSSketchy from "bpmn-js-sketchy";
 
 export function initModeler() {
-    const commonModules = [TokenSimulationModule, ElementTemplateChooserModule];
+    const commonModules = [
+        TokenSimulationModule,
+        ElementTemplateChooserModule,
+        ...(isSketchyMode ? [BpmnJSSketchy] : [])
+    ];
     let modeler;
     switch (engine) {
         case 'c7': {
@@ -32,7 +37,29 @@ export function initModeler() {
                         defaultFillColor: 'rgba(43,45,48,255)',
                         defaultStrokeColor: '#BCBEC4'
                     }
-                } : {})
+                } : {}),
+
+                ...(isDraculaMode ? {
+                    bpmnRenderer: {
+                        defaultFillColor: '#262936',
+                        defaultStrokeColor: '#f8f8f2'
+                    }
+                } : {}),
+
+                ...(isSketchyMode ? {
+                    textRenderer: {
+                        defaultStyle: {
+                            fontFamily: '"Virgil"',
+                            fontWeight: 'normal',
+                            fontSize: 13,
+                            lineHeight: 0.9
+                        },
+                        externalStyle: {
+                            fontSize: 13,
+                            lineHeight: 0.9
+                        }
+                    }
+                }: {})
             });
             break;
         }
@@ -56,7 +83,29 @@ export function initModeler() {
                         defaultFillColor: 'rgba(43,45,48,255)',
                         defaultStrokeColor: '#BCBEC4'
                     }
-                } : {})
+                } : {}),
+
+                ...(isDraculaMode ? {
+                    bpmnRenderer: {
+                        defaultFillColor: '#262936',
+                        defaultStrokeColor: '#f8f8f2'
+                    }
+                } : {}),
+
+                ...(isSketchyMode ? {
+                    textRenderer: {
+                        defaultStyle: {
+                            fontFamily: '"Virgil"',
+                            fontWeight: 'normal',
+                            fontSize: 13,
+                            lineHeight: 0.9
+                        },
+                        externalStyle: {
+                            fontSize: 13,
+                            lineHeight: 0.9
+                        }
+                    }
+                }: {})
             });
             break;
         }
@@ -84,20 +133,43 @@ export function initModeler() {
                         defaultFillColor: 'rgba(43,45,48,255)',
                         defaultStrokeColor: '#BCBEC4'
                     }
-                } : {})
+                } : {}),
+
+                ...(isDraculaMode ? {
+                    bpmnRenderer: {
+                        defaultFillColor: '#262936',
+                        defaultStrokeColor: '#f8f8f2'
+                    }
+                } : {}),
+
+                ...(isSketchyMode ? {
+                    textRenderer: {
+                        defaultStyle: {
+                            fontFamily: '"Virgil"',
+                            fontWeight: 'normal',
+                            fontSize: 13,
+                            lineHeight: 0.9
+                        },
+                        externalStyle: {
+                            fontSize: 13,
+                            lineHeight: 0.9
+                        }
+                    }
+                }: {})
             });
             break;
         }
-        default: {
-            throw new UnsupportedEngineError(engine);
+        default:
+            {
+                throw new UnsupportedEngineError(engine);
+            }
+        }
+
+            return modeler;
+    }
+
+    export class UnsupportedEngineError extends Error {
+        constructor(engine) {
+            super(`Unsupported engine: ${engine}`);
         }
     }
-
-    return modeler;
-}
-
-export class UnsupportedEngineError extends Error {
-    constructor(engine) {
-        super(`Unsupported engine: ${engine}`);
-    }
-}

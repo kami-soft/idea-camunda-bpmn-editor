@@ -2,7 +2,7 @@
 @import url(codemirror.css);
 @import url(diagram-js.css);
 
-.dark {
+* {
     --dark-current-line: var(--dark-current-line);
     --color-white: var(--dark-background);
     --color-black: var(--dark-foreground);
@@ -22,57 +22,55 @@
     --log-color: var(--dark-foreground);
 }
 
-.dark .bts-toggle-mode,
-.dark .bts-palette,
-.dark .bts-set-animation-speed,
-.dark .bts-notifications {
+.bts-toggle-mode,
+.bts-palette,
+.bts-set-animation-speed,
+.bts-notifications {
     --token-simulation-silver-darken-94: var(--dark-properties-panel);
     --token-simulation-grey-darken-30: var(--dark-foreground);
     border: solid 1px var(--dark-background);
 }
 
-.dark .bts-log {
+.bts-log {
     background-color: var(--dark-properties-panel);
 }
 
-.dark .bts-log .bts-entry {
+.bts-log .bts-entry {
     background: var(--dark-background);
 }
 
-.dark .bts-animation-speed-buttons button {
+.bts-animation-speed-buttons button {
     background-color: var(--dark-current-line);
     color: var(--dark-foreground);
 }
 
-.dark .bts-animation-speed-buttons path,
-.dark .bts-notifications .bts-notification {
+.bts-animation-speed-buttons path,
+.bts-notifications .bts-notification {
     color: var(--dark-foreground) !important;
 }
 
-.dark .bio-properties-panel-group-header,
-.dark .form-group label {
+.bio-properties-panel-group-header,
+.form-group label {
     color: var(--dark-foreground);
 }
 
-.dark input,
-.dark textarea,
-.dark select,
-.dark body,
-.dark .djs-direct-editing-content,
-.dark .djs-direct-editing-parent{
+input,
+textarea,
+select,
+body,
+.djs-direct-editing-content,
+.djs-direct-editing-parent{
     color: var(--dark-foreground) !important;
     background-color: var(--dark-background) !important;
 }
 
-.dark .welcome-card,
-.dark .bio-properties-panel-input:focus,
-.dark .bio-properties-panel-input:focus-within{
-    background-color: var(--dark-current-line) !important;
-    color: var(--dark-foreground) !important;
+.welcome-card,
+.bio-properties-panel-input:focus,
+.bio-properties-panel-input:focus-within {
     border: solid 1px var(--dark-foreground);
 }
 
-.dark .bio-properties-panel {
+.bio-properties-panel {
     --color-grey-225-10-97: var(--dark-properties-panel);
 
     --color-white: var(--dark-properties-panel);
@@ -95,7 +93,7 @@
     --header-bottom-border-color: var(--color-grey-225-10-75);
 
     --group-background-color: var(--color-white);
-    --group-bottom-border-color: var(--color-grey-225-10-75);
+    --group-bottom-border-color: var(--group-bottom-border-color);
 
     --sticky-group-background-color: var(--color-grey-225-10-95);
     --sticky-group-bottom-border-color: var(--color-grey-225-10-75);
@@ -155,20 +153,21 @@
     --feel-indicator-background-color: var(--color-grey-225-10-90);
 }
 
-.dark .bio-properties-panel {
+.bio-properties-panel {
     border-bottom: solid 1px var(--group-bottom-border-color);
 }
 
-.dark .properties-panel-parent {
+.properties-panel-parent {
     border-left: 1px solid var(--dark-background);
+    border-bottom: 1px solid var(--dark-background);
 }
 
-.dark .align-elements img,
-.dark .djs-context-pad img {
+.align-elements img,
+.djs-context-pad img {
     filter: invert(1) !important;
 }
 
-.dark .djs-container {
+.djs-container {
 
     --color-grey-225-10-97: var(--dark-properties-panel);
 
@@ -197,33 +196,33 @@
     --token-simulation-green-base-44: #09512e;
 }
 
-.dark .modal-dialog,
-.dark .btn-primary {
+.modal-dialog,
+.btn-primary {
     color: var(--dark-foreground);
 }
 
-.dark .controls button {
+.controls button {
     color: var(--dark-foreground);
 }
 
-.dark .djs-container .djs-minimap {
+.djs-container .djs-minimap {
     background-color: var(--dark-properties-panel);
     border: solid 1px var(--dark-background);
 }
 
-.dark .bio-properties-panel-description,
-.dark .bio-properties-panel-description p,
-.dark .bio-properties-panel-description span,
-.dark .bio-properties-panel-description div {
+.bio-properties-panel-description,
+.bio-properties-panel-description p,
+.bio-properties-panel-description span,
+.bio-properties-panel-description div {
     color: var(--dark-purple);
     background-color: var(--dark-properties-panel);
 }
 
-.dark .djs-popup .entry:hover {
+.djs-popup .entry:hover {
     color: var(--dark-purple);
 }
 
-.dark .djs-context-pad {
+.djs-context-pad {
     position: absolute;
     display: none;
     pointer-events: none;
@@ -234,11 +233,11 @@
     width: 42px !important;
 }
 
-.dark .djs-context-pad .group:not(:last-child) {
+.djs-context-pad .group:not(:last-child) {
     border-bottom: 1px solid var(--dark-comment);
 }
 
-.dark .djs-context-pad .entry {
+.djs-context-pad .entry {
     border-radius: 0 !important;
     padding: 0;
     background-color: var(--context-pad-entry-background-color);
@@ -250,24 +249,24 @@
     margin: 5px 0 5px 0;
 }
 
-.dark .djs-context-pad .entry:hover {
+.djs-context-pad .entry:hover {
     background: var(--dark-background);
     color: var(--dark-purple);
 }
 
-.dark .djs-context-pad.open {
+.djs-context-pad.open {
     display: block;
 }
 
-.dark .djs-element.selected .djs-outline,
-.dark .djs-selection-outline {
+.djs-element.selected .djs-outline,
+.djs-selection-outline {
     stroke-dasharray: 2;
     stroke-dashoffset: 500;
     animation: dash 80s linear infinite;
     stroke: var(--element-selected-outline-stroke-color);
 }
 
-.dark .layer-selectionOutline .djs-selection-outline {
+.layer-selectionOutline .djs-selection-outline {
     stroke: none;
 }
 
@@ -279,59 +278,68 @@
     }
 }
 
-.dark .tabs .primary {
+.tabs .primary {
     background-color: var(--dark-background) !important;
     color: var(--dark-foreground) !important;
 }
 
-.dark .tabs .active {
+.tabs .active {
     background-color: var(--dark-current-line) !important;
     color: var(--dark-foreground) !important;
 }
 
-.dark .content {
+.content {
     background-color: var(--dark-background) !important;
 }
 
-.dark * {
+* {
     color: var(--dark-foreground) !important;
 }
 
-.dark #js-properties-panel {
+#js-properties-panel {
     background-color: var(--dark-properties-panel);
     color: var(--dark-foreground);
 }
 
-.dark .edit-script-external-file-button {
+.edit-script-external-file-button {
     border-color: var(--dark-background);
     background-color: var(--dark-background);
+    cursor: pointer;
 }
 
-.dark .bjs-breadcrumbs li:not(:first-child)::before {
+.bjs-breadcrumbs li:not(:first-child)::before {
     content: url("data:image/svg+xml;utf8,<svg xmlns=\"http://www.w3.org/2000/svg\" width=\"17\" height=\"17\" viewBox=\"0 0 24 24\"><path d=\"M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z\" fill=\"%23BCBEC4\"/><path d=\"M0 0h24v24H0z\" fill=\"none\" /></svg>");
 }
 
-.dark .bjs-container.simulation .djs-visual circle,
-.dark .bjs-container.simulation .djs-visual rect {
+.bjs-container.simulation .djs-visual circle,
+.bjs-container.simulation .djs-visual rect {
     fill: var(--dark-properties-panel) !important;
     stroke: var(--dark-foreground) !important;
 }
 
-.dark .bjs-container.simulation .djs-visual path {
+.bjs-container.simulation .djs-visual path {
     stroke: var(--dark-foreground) !important;
 }
 
-.dark .bjs-container.simulation .djs-visual text {
+.bjs-container.simulation .djs-visual text {
     fill: var(--dark-foreground) !important;
 }
 
-.dark .bjs-container .djs-drag-active.hover.drop-not-ok {
+.bjs-container .djs-drag-active.hover.drop-not-ok {
     background: #510e09 !important;
 }
 
-.dark .bio-properties-panel-scroll-container {
+.bio-properties-panel-scroll-container {
     scrollbar-color: var(--dark-background) transparent;
 }
-.dark .code-editor-container {
+.code-editor-container {
     scrollbar-color: var(--dark-properties-panel) transparent;
+}
+
+pattern[id^="djs-grid-pattern"] circle {
+    fill: #4d4d4e !important;
+}
+
+.bio-properties-panel-list-badge {
+    background: var(--dark-background);
 }

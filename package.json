@@ -34,6 +34,7 @@
     "bpmn-js": "^18.0.0",
     "bpmn-js-create-append-anything": "^0.5.2",
     "bpmn-js-properties-panel": "^5.28.0",
+    "bpmn-js-sketchy": "^0.7.2",
     "bpmn-js-token-simulation": "^0.36.0",
     "camunda-bpmn-js": "^5.2.1",
     "camunda-bpmn-js-behaviors": "^1.6.1",

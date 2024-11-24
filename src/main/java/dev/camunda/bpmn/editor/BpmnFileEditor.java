@@ -81,7 +81,7 @@ public class BpmnFileEditor implements FileEditor {
      */
     @Override
     public boolean isModified() {
-        return context.getHashComparator().isModified();
+        return false;
     }
 
     /**

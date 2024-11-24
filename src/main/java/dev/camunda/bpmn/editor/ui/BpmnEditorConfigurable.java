@@ -69,6 +69,7 @@ public class BpmnEditorConfigurable implements Configurable {
         var state = BpmnEditorSettings.getInstance().getState();
         return Optional.ofNullable(bpmnEditorSettingsComponent)
                 .map(component -> component.getColorThemeValue() != state.getColorTheme()
+                        || component.getSchemaThemeValue() != state.getSchemaTheme()
                         || component.getScriptTypeValue() != state.getScriptType()
                         || component.getEngineValue() != state.getEngine()
                         || !component.getFileSettings().equals(state.getFileSettings()))
@@ -83,6 +84,7 @@ public class BpmnEditorConfigurable implements Configurable {
         var state = BpmnEditorSettings.getInstance().getState();
         Optional.ofNullable(bpmnEditorSettingsComponent).ifPresent(component -> {
             state.setColorTheme(component.getColorThemeValue());
+            state.setSchemaTheme(component.getSchemaThemeValue());
             state.setScriptType(component.getScriptTypeValue());
             state.setEngine(component.getEngineValue());
             state.setFileSettings(component.getFileSettings());
@@ -97,6 +99,7 @@ public class BpmnEditorConfigurable implements Configurable {
         var state = BpmnEditorSettings.getInstance().getState();
         Optional.ofNullable(bpmnEditorSettingsComponent).ifPresent(component -> {
             component.setColorThemeValue(state.getColorTheme());
+            component.setSchemaThemeValue(state.getSchemaTheme());
             component.setScriptTypeValue(state.getScriptType());
             component.setEngineValue(state.getEngine());
             component.setFileSettings(state.getFileSettings());

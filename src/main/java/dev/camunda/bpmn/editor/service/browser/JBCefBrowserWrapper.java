@@ -4,7 +4,6 @@ import com.intellij.ui.jcef.JBCefBrowser;
 import com.intellij.ui.jcef.JBCefBrowserBase;
 import com.intellij.ui.jcef.JBCefJSQuery;
 import java.util.function.Function;
-import org.cef.CefApp;
 import org.cef.browser.CefBrowser;
 import org.cef.browser.CefFrame;
 import org.cef.handler.CefLoadHandlerAdapter;
@@ -21,10 +20,7 @@ public class JBCefBrowserWrapper extends JBCefBrowser {
      * Constructs a new JBCefBrowserWrapper instance with specific configurations.
      */
     public JBCefBrowserWrapper() {
-        super(JBCefBrowser.createBuilder().setOffScreenRendering(false).setMouseWheelEventEnable(true));
-        CefApp.getInstance().registerSchemeHandlerFactory("bpmn-editor", "",
-                (browser, frame, schemeName, request) ->
-                        new BpmnEditorCefResourceHandler());
+        super(JBCefBrowser.createBuilder().setOffScreenRendering(false).setMouseWheelEventEnable(true).setEnableOpenDevToolsMenuItem(true));
     }
 
     /**

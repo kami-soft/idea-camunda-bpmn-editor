@@ -27,9 +27,14 @@ public class BpmnSettingsTableModel extends AbstractTableModel {
     @Getter
     private final Map<String, BpmnEditorSettings.FileSettings> fileSettings = new ConcurrentHashMap<>();
 
-    private final String[] columnNames = {"Path", "Engine", "Color Theme", "Script Type"};
-    private final Class<?>[] columnClasses = {String.class, BpmnEditorSettings.Engine.class,
-            BpmnEditorSettings.ColorTheme.class, BpmnEditorSettings.ScriptType.class};
+    private final String[] columnNames = {"Path", "Engine", "Color Theme", "Scheme Theme", "Script Type"};
+    private final Class<?>[] columnClasses = {
+            String.class,
+            BpmnEditorSettings.Engine.class,
+            BpmnEditorSettings.ColorTheme.class,
+            BpmnEditorSettings.SchemaTheme.class,
+            BpmnEditorSettings.ScriptType.class
+    };
 
     /**
      * Sets the file settings in the table model.
@@ -101,7 +106,8 @@ public class BpmnSettingsTableModel extends AbstractTableModel {
             case 0 -> path;
             case 1 -> settings.getEngine();
             case 2 -> settings.getColorTheme();
-            case 3 -> settings.getScriptType();
+            case 3 -> settings.getSchemaTheme();
+            case 4 -> settings.getScriptType();
             default -> null;
         };
     }
@@ -141,6 +147,9 @@ public class BpmnSettingsTableModel extends AbstractTableModel {
                 settings.setColorTheme((BpmnEditorSettings.ColorTheme) aValue);
                 break;
             case 3:
+                settings.setSchemaTheme((BpmnEditorSettings.SchemaTheme) aValue);
+                break;
+            case 4:
                 settings.setScriptType((BpmnEditorSettings.ScriptType) aValue);
                 break;
         }

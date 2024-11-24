@@ -24,7 +24,6 @@
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
     <depends>com.intellij.modules.platform</depends>
-    <depends>com.intellij.modules.java</depends>
 
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
@@ -41,6 +40,14 @@
 
     <change-notes>
         <![CDATA[
+          <p>
+            <b>1.4.1</b>
+            <ul>
+              <li>Added the Dracula theme</li>
+              <li>Added the Sketchy schema theme (default disabled)</li>
+              <li>Added the disclaimer message to settings</li>
+            </ul>
+          </p>
           <p>
             <b>1.4.0</b>
             <ul>
@@ -73,14 +80,14 @@
             <b>1.2.0</b>
             <ul>
               <li>Migrated from Spring context to PicoContainer</li>
-              <li>Some fixes styles on Dark theme</li>
+              <li>Some fix styles on Dark theme</li>
             </ul>
           </p>
           <p>
             <b>1.1.0</b>
             <ul>
-              <li>Added support token simulation</li>
-              <li>Some fixes styles on Dark theme</li>
+              <li>Added support for token simulation</li>
+              <li>Some fix styles on Dark theme</li>
             </ul>
           </p>
         ]]>

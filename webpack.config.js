@@ -40,6 +40,13 @@ module.exports = {
                 use: {
                     loader: 'babel-loader'
                 }
+            },
+            {
+                test: /\.(woff|woff2|ttf|otf|eot)$/i,
+                type: 'asset/resource',
+                generator: {
+                    filename: 'font/[name][ext][query]',
+                }
             }
         ]
     },

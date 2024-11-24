@@ -41,6 +41,7 @@ public final class BpmnEditorSettings implements PersistentStateComponent<BpmnEd
 
         private Engine engine;
         private ScriptType scriptType;
+        private SchemaTheme schemaTheme = SchemaTheme.DEFAULT;
 
         @NotNull
         private Map<String, FileSettings> fileSettings = new HashMap<>();
@@ -104,6 +105,14 @@ public final class BpmnEditorSettings implements PersistentStateComponent<BpmnEd
                     .orElse("");
         }
 
+        public @NotNull String getSchemaTheme(String path) {
+            return Optional.ofNullable(fileSettings.get(path))
+                    .map(BpmnEditorSettings.FileSettings::getSchemaTheme)
+                    .or(() -> Optional.ofNullable(schemaTheme))
+                    .map(BpmnEditorSettings.SchemaTheme::name)
+                    .orElse("");
+        }
+
         /**
          * Checks if the engine is set in the BPMN editor settings.
          *
@@ -146,7 +155,8 @@ public final class BpmnEditorSettings implements PersistentStateComponent<BpmnEd
     public enum ColorTheme {
 
         LIGHT("Light"),
-        DARK("Dark");
+        DARK("Dark"),
+        DRACULA("Dracula");
 
         private final String name;
 
@@ -195,6 +205,21 @@ public final class BpmnEditorSettings implements PersistentStateComponent<BpmnEd
         }
     }
 
+    @Getter
+    @AllArgsConstructor
+    public enum SchemaTheme {
+
+        DEFAULT("Default"),
+        SKETCHY("Sketchy");
+
+        private final String name;
+
+        @Override
+        public String toString() {
+            return name;
+        }
+    }
+
     /**
      * A class representing the file settings for the BPMN Editor.
      */
@@ -203,5 +228,6 @@ public final class BpmnEditorSettings implements PersistentStateComponent<BpmnEd
         private Engine engine;
         private ColorTheme colorTheme;
         private ScriptType scriptType;
+        private SchemaTheme schemaTheme;
     }
 }

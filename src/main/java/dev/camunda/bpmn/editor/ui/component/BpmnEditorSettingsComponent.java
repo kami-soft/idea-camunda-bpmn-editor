@@ -22,11 +22,21 @@ import javax.swing.JPanel;
 import org.jetbrains.annotations.NotNull;
 
 /**
- * A UI component for configuring the BPMN Editor settings. This class provides a form with combo boxes
- * to select the color theme, default script type, and default engine of the BPMN Editor.
+ * A UI component for configuring the BPMN Editor settings.
+ * This class provides a comprehensive form with combo boxes and a table
+ * to manage both global and file-specific settings of the BPMN Editor.
  *
- * <p>The component is built using IntelliJ's UI components and is intended to be used within the settings
- * panel of the BPMN Editor.</p>
+ * <p>The component includes options for:</p>
+ * <ul>
+ *   <li>Global color theme selection</li>
+ *   <li>Global schema theme selection</li>
+ *   <li>Default script type selection</li>
+ *   <li>Default engine selection</li>
+ *   <li>File-specific settings management through a table</li>
+ * </ul>
+ *
+ * <p>This component is designed to be used within the settings panel of the BPMN Editor
+ * in the IntelliJ IDEA environment.</p>
  *
  * @author Oleksandr Havrysh
  */
@@ -36,6 +46,7 @@ public class BpmnEditorSettingsComponent extends JPanel implements Disposable {
     private final JComboBox<BpmnEditorSettings.Engine> engineComboBox;
     private final JComboBox<BpmnEditorSettings.ScriptType> scriptTypeComboBox;
     private final JComboBox<BpmnEditorSettings.ColorTheme> colorThemeComboBox;
+    private final JComboBox<BpmnEditorSettings.SchemaTheme> schemeThemeComboBox;
 
     /**
      * Constructs a new BpmnEditorSettingsComponent.
@@ -46,11 +57,29 @@ public class BpmnEditorSettingsComponent extends JPanel implements Disposable {
 
         this.bpmnSettingsTable = new BpmnSettingsTable();
         this.colorThemeComboBox = new ComboBox<>(BpmnEditorSettings.ColorTheme.values());
+        this.schemeThemeComboBox = new ComboBox<>(BpmnEditorSettings.SchemaTheme.values());
         this.engineComboBox = createNullableComboBox(BpmnEditorSettings.Engine.values());
         this.scriptTypeComboBox = createNullableComboBox(BpmnEditorSettings.ScriptType.values());
 
+        addDisclaimerComponents();
         addGlobalSettingComponents();
         addDiagramSettingsComponents();
+    }
+
+    /**
+     * Adds disclaimer components to the settings panel.
+     *
+     * <p>This method adds three JLabel components to the panel, providing instructions
+     * to the user about applying updated settings to currently opened BPMN files.
+     * The disclaimer informs users that they need to close and reopen their BPMN files
+     * to ensure that new configurations are properly loaded and applied to the diagrams.</p>
+     *
+     * <p>The disclaimer text is split into three lines for better readability in the UI.</p>
+     */
+    private void addDisclaimerComponents() {
+        add(new JLabel("    To apply the updated settings to your currently opened BPMN files,"));
+        add(new JLabel("    please close the files and reopen them. This ensures that the new"));
+        add(new JLabel("    configuration is properly loaded and applied to the diagrams, reflecting the latest changes."));
     }
 
     /**
@@ -59,6 +88,7 @@ public class BpmnEditorSettingsComponent extends JPanel implements Disposable {
     private void addGlobalSettingComponents() {
         add(new TitledSeparator("Global Settings"));
         add(createColorThemePanel());
+        add(createSchemaThemePanel());
         add(createScriptTypePanel());
         add(createEnginePanel());
     }
@@ -77,9 +107,19 @@ public class BpmnEditorSettingsComponent extends JPanel implements Disposable {
     }
 
     /**
-     * Creates the panel for selecting the color theme.
+     * Creates and returns a panel for selecting the color theme of the BPMN editor.
      *
-     * @return The panel for selecting the color theme
+     * <p>This panel contains:
+     * <ul>
+     *   <li>A label indicating the purpose of the combo box</li>
+     *   <li>A combo box ({@link #colorThemeComboBox}) for selecting the color theme</li>
+     * </ul>
+     * </p>
+     *
+     * <p>The panel uses a {@link FlowLayout} with left alignment to arrange its components.
+     * This ensures a consistent layout with other setting panels in the component.</p>
+     *
+     * @return A {@link JPanel} containing the color theme selection components
      */
     private @NotNull JPanel createColorThemePanel() {
         var colorThemePanel = new JPanel(new FlowLayout(LEFT));
@@ -87,6 +127,28 @@ public class BpmnEditorSettingsComponent extends JPanel implements Disposable {
         colorThemePanel.add(colorThemeComboBox);
 
         return colorThemePanel;
+    }
+
+    /**
+     * Creates and returns a panel for selecting the schema theme.
+     *
+     * <p>This panel contains:
+     * <ul>
+     *   <li>A label indicating the purpose of the combo box</li>
+     *   <li>A combo box ({@link #schemeThemeComboBox}) for selecting the schema theme</li>
+     * </ul>
+     * </p>
+     *
+     * <p>The panel uses a {@link FlowLayout} with left alignment to arrange its components.</p>
+     *
+     * @return A {@link JPanel} containing the schema theme selection components
+     */
+    private @NotNull JPanel createSchemaThemePanel() {
+        var schemeThemePanel = new JPanel(new FlowLayout(LEFT));
+        schemeThemePanel.add(new JBLabel("   Scheme theme:"));
+        schemeThemePanel.add(schemeThemeComboBox);
+
+        return schemeThemePanel;
     }
 
     /**
@@ -170,6 +232,24 @@ public class BpmnEditorSettingsComponent extends JPanel implements Disposable {
     }
 
     /**
+     * Retrieves the currently selected schema theme.
+     *
+     * @return The currently selected {@link BpmnEditorSettings.SchemaTheme}
+     */
+    public BpmnEditorSettings.SchemaTheme getSchemaThemeValue() {
+        return (BpmnEditorSettings.SchemaTheme) schemeThemeComboBox.getSelectedItem();
+    }
+
+    /**
+     * Sets the selected schema theme in the combo box.
+     *
+     * @param schemaTheme The {@link BpmnEditorSettings.SchemaTheme} to be selected
+     */
+    public void setSchemaThemeValue(BpmnEditorSettings.SchemaTheme schemaTheme) {
+        schemeThemeComboBox.setSelectedItem(schemaTheme);
+    }
+
+    /**
      * Returns the currently selected script type.
      *
      * @return The currently selected script type
@@ -232,5 +312,6 @@ public class BpmnEditorSettingsComponent extends JPanel implements Disposable {
         scriptTypeComboBox.removeAll();
         colorThemeComboBox.removeAll();
         engineComboBox.removeAll();
+        schemeThemeComboBox.removeAll();
     }
 }

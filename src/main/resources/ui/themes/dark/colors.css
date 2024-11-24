@@ -1,6 +1,6 @@
-.dark * {
+* {
     --dark-background: rgba(30, 32, 34, 255);
-    --dark-current-line: rgba(30, 32, 34, 255);
+    --dark-current-line: var(--dark-background);
     --dark-foreground: #BCBEC4;
     --dark-comment: var(--dark-background);;
     --dark-cyan: hsl(191, 97%, 77%);
@@ -12,6 +12,24 @@
     --dark-yellow: hsl(65, 92%, 76%);
     --dark-properties-panel: rgba(43, 45, 48, 255);
     --palette-background-color: rgba(43, 45, 48, 255);
+    --palette-border-color: var(--dark-properties-panel);
+    --palette-separator-color: var(--dark-background);
+    --popup-header-entry-selected-background-color: var(--dark-background);
+    --header-icon-fill-color: var(--dark-foreground);
+    --group-bottom-border-color: var(--dark-background);
+    --header-bottom-border-color: var(--dark-background);
+    --dot-color: var(--dark-foreground);
+    --input-border-color: var(--dark-background);
+    --input-background-color: var(--dark-background);
+    --add-entry-fill-color: var(--dark-foreground);
+    --add-entry-label-color: var(--dark-background);
+    --add-entry-hover-background-color: var(--dark-background);
+    --add-entry-hover-fill-color: var(--dark-foreground);
+    --popup-entry-hover-color: var(--dark-background);
+    --arrow-fill-color: var(--dark-foreground);
+    --arrow-hover-background-color: var(--dark-background);
+    --sticky-group-background-color: var(--dark-properties-panel);
+    --sticky-group-bottom-border-color: var(--dark-background);
 
     --color-grey-225-10-15: var(--dark-foreground); /* text */
     --color-grey-225-10-35: rgb(207, 205, 205);  /* icons */

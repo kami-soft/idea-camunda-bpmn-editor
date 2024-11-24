@@ -49,7 +49,8 @@ public class BpmnSettingsTable extends JBTable {
 
         setComboBoxEditor(1, new ComboBox<>(BpmnEditorSettings.Engine.values()));
         setComboBoxEditor(2, createNullableComboBox(BpmnEditorSettings.ColorTheme.values()));
-        setComboBoxEditor(3, createNullableComboBox(BpmnEditorSettings.ScriptType.values()));
+        setComboBoxEditor(3, createNullableComboBox(BpmnEditorSettings.SchemaTheme.values()));
+        setComboBoxEditor(4, createNullableComboBox(BpmnEditorSettings.ScriptType.values()));
 
         getModel().addTableModelListener(e -> ColumnsAutoSizer.sizeColumnsToFit(this));
     }

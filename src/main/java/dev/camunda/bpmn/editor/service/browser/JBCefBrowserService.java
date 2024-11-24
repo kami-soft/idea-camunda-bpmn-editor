@@ -3,6 +3,7 @@ package dev.camunda.bpmn.editor.service.browser;
 import com.intellij.openapi.Disposable;
 import com.intellij.openapi.vfs.VirtualFile;
 import dev.camunda.bpmn.editor.service.jsquery.JSQuery;
+import dev.camunda.bpmn.editor.service.server.HttpServerWrapper;
 import dev.camunda.bpmn.editor.settings.BpmnEditorSettings;
 import java.util.List;
 import javax.swing.JComponent;
@@ -26,7 +27,7 @@ public class JBCefBrowserService implements Disposable {
     /**
      * The URL template for the BPMN editor, including placeholders for settings.
      */
-    private static final String BPMN_EDITOR_URL = "bpmn-editor://editor/index.html?colorTheme=%s&engine=%s&scriptFormat=%s";
+    private static final String BPMN_EDITOR_URL = "http://localhost:%s/index.html?colorTheme=%s&engine=%s&scriptFormat=%s&schemaTheme=%s";
 
     /**
      * The path of the BPMN file being edited.
@@ -44,16 +45,26 @@ public class JBCefBrowserService implements Disposable {
     private final JBCefBrowserWrapper browser;
 
     /**
+     * The port number of the HTTP server.
+     */
+    private final int port;
+
+    /**
      * Constructs a new JBCefBrowserService.
      *
-     * @param file        The VirtualFile representing the BPMN file being edited
-     * @param initQueries A list of JSQuery objects to be executed upon browser load completion
-     * @param browser     The JBCefBrowserWrapper instance for browser interactions
+     * @param file              The VirtualFile representing the BPMN file being edited
+     * @param initQueries       A list of JSQuery objects to be executed upon browser load completion
+     * @param browser           The JBCefBrowserWrapper instance for browser interactions
+     * @param httpServerWrapper The HttpServerWrapper instance for managing the HTTP server
      */
-    public JBCefBrowserService(VirtualFile file, List<JSQuery> initQueries, JBCefBrowserWrapper browser) {
+    public JBCefBrowserService(VirtualFile file,
+                               List<JSQuery> initQueries,
+                               JBCefBrowserWrapper browser,
+                               HttpServerWrapper httpServerWrapper) {
         this.browser = browser;
         this.path = file.getPath();
         this.initQueries = initQueries;
+        this.port = httpServerWrapper.getPort();
 
         browser.onLoadEnd(() -> initQueries.forEach(JSQuery::executeQuery));
     }
@@ -70,8 +81,9 @@ public class JBCefBrowserService implements Disposable {
         var engine = state.getEngine(path);
         var colorTheme = state.getColorTheme(path);
         var scriptType = state.getScriptType(path);
+        var schemaTheme = state.getSchemaTheme(path);
 
-        browser.loadURL(BPMN_EDITOR_URL.formatted(colorTheme, engine, scriptType));
+        browser.loadURL(BPMN_EDITOR_URL.formatted(port, colorTheme, engine, scriptType, schemaTheme));
         return browser.getComponent();
     }
 
