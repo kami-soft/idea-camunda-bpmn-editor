@@ -2,7 +2,10 @@ package dev.camunda.bpmn.editor.util;
 
 import static java.util.Base64.getDecoder;
 import static java.util.Base64.getEncoder;
+import static lombok.AccessLevel.PRIVATE;
 import static org.apache.commons.lang3.StringUtils.isBlank;
+
+import lombok.NoArgsConstructor;
 
 /**
  * Utility class for Base64 encoding and decoding operations.
@@ -10,7 +13,8 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
  *
  * @author Oleksandr Havrysh
  */
-public class Base64Utils {
+@NoArgsConstructor(access = PRIVATE)
+public final class Base64Utils {
 
     /**
      * Encodes the given text to a Base64 string.

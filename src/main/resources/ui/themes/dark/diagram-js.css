@@ -724,3 +724,7 @@ marker .djs-dragger tspan {
 .djs-element .djs-hit-all {
     cursor: move;
 }
+
+.bjsl-id-hint {
+    background-color: var(--dark-background) !important;
+}

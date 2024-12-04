@@ -45,8 +45,12 @@ module.exports = {
                 test: /\.(woff|woff2|ttf|otf|eot)$/i,
                 type: 'asset/resource',
                 generator: {
-                    filename: 'font/[name][ext][query]',
+                    filename: 'font/[name][ext][query]'
                 }
+            },
+            {
+                test: /\.bpmnlintrc$/i,
+                use: 'bpmnlint-loader',
             }
         ]
     },

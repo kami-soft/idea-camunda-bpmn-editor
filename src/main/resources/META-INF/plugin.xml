@@ -14,12 +14,93 @@
          Simple HTML elements (text formatting, paragraphs, and lists) can be added inside of <![CDATA[ ]]> tag.
          Guidelines: https://plugins.jetbrains.com/docs/marketplace/plugin-overview-page.html#plugin-description -->
     <description><![CDATA[
-    View and edit Camunda BPMN diagrams.
-    Supported *.bpmn and *.bpmn20.xml files.
-    Supported Classic BPMN Modeler, Camunda 7 and Camunda 8.
-    Try new DARK theme (can switch in settings).
-    For Camunda 7 added working with 'inline script' in external script editor.
-  ]]></description>
+    <p>View and edit Camunda BPMN diagrams.</p>
+    <ul>
+    <li>Supported *.bpmn and *.bpmn20.xml files.</li>
+    <li>Supported Classic BPMN Modeler, Camunda 7 and Camunda 8.</li>
+    <li>Try DARK or DRACULA themes (can switch in settings).</li>
+    <li>For Camunda 7 added working with 'inline script' in external script editor.</li>
+    </ul>
+
+    <h3>SUPPORTED BPMN LINTER</h3>
+
+    <p>The Camunda BPMN Editor Plugin includes a linter to help you maintain high-quality BPMN diagrams. Here's how to set it up and use it:</p>
+
+    <ol>
+    <li>
+        <strong>Enable the linter:</strong>
+        <ul>
+            <li>Go to 'File > Settings...' (or 'IntelliJ IDEA > Preferences...' on macOS).</li>
+            <li>Navigate to 'Tools > Camunda BPMN Editor Settings'.</li>
+            <li>Check the box to enable the linter.</li>
+        </ul>
+    </li>
+
+    <li>
+        <strong>Configure linter rules:</strong>
+        <ul>
+            <li>In your project root directory, create a file named '.bpmnlintrc'.</li>
+            <li>This file should contain your linter configuration in JSON format. For example:</li>
+        </ul>
+        <pre>{
+            "extends": [
+                "bpmnlint:recommended"
+                ],
+            "rules": {
+                "label-required": "error",
+                "no-implicit-split": "warn"
+            }
+        }</pre>
+    </li>
+
+    <li>
+        <strong>Using custom linter plugins:</strong>
+        <p>If you want to use custom linter plugins, you have two options:</p>
+
+        <ol type="a">
+            <li>
+                <strong>Add the plugin source code to your project:</strong>
+                <ul>
+                    <li>Create a folder in your project named 'bpmnlint-plugin-{custom_plugin_name}'.</li>
+                    <li>Place the plugin source code in this folder.</li>
+                </ul>
+            </li>
+
+            <li>
+                <strong>Use npm to manage plugin dependencies:</strong>
+                <ul>
+                    <li>Add a 'package.json' file to your project root.</li>
+                    <li>Add the custom plugins as dependencies. For example:</li>
+                </ul>
+                <pre>{
+                    "dependencies": {
+                        "bpmnlint-plugin-custom": "^1.0.0"
+                    }
+                }</pre>
+                <ul>
+                    <li>Run 'npm install' in your project root to install the plugins.</li>
+                </ul>
+            </li>
+        </ol>
+    </li>
+
+    <li>
+        <strong>Applying linter rules:</strong>
+        <ul>
+            <li>The linter will automatically run when you open or modify a BPMN file.</li>
+            <li>Linter warnings and errors will be displayed in the editor.</li>
+        </ul>
+    </li>
+    </ol>
+
+    <h3>Support the Project</h3>
+    <p>If you find this plugin useful, consider supporting its development:</p>
+    <p>
+    <a href="https://revolut.me/hvrs"><img src="https://img.shields.io/badge/Donate-Revolut-black.svg" alt="Donate via Revolut" /></a>
+    <a href="https://www.paypal.com/donate/?hosted_button_id=3WQ7S7VZPCV8G"><img src="https://img.shields.io/badge/Donate-PayPal-blue.svg" alt="Donate via PayPal" /></a>
+    <a href="https://send.monobank.ua/jar/AeA9gT2Ynn"><img src="https://img.shields.io/badge/Donate-Monobank-black.svg" alt="Donate via Monobank" /></a>
+    </p>
+    ]]></description>
 
     <!-- Product and plugin compatibility requirements.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-compatibility.html -->
@@ -28,18 +109,28 @@
     <!-- Extension points defined by the plugin.
          Read more: https://plugins.jetbrains.com/docs/intellij/plugin-extension-points.html -->
     <extensions defaultExtensionNs="com.intellij">
-        <fileEditorProvider implementation="dev.camunda.bpmn.editor.BpmnFileEditorProvider"/>
+        <fileEditorProvider implementation="dev.camunda.bpmn.editor.fileEditor.BpmnFileEditorProvider"/>
         <applicationService
                 serviceImplementation="dev.camunda.bpmn.editor.settings.BpmnEditorSettings"/>
         <applicationConfigurable
                 parentId="tools"
-                instance="dev.camunda.bpmn.editor.ui.BpmnEditorConfigurable"
-                id="dev.camunda.bpmn.editor.ui.BpmnEditorConfigurable"
+                instance="dev.camunda.bpmn.editor.ui.SettingsConfigurable"
+                id="dev.camunda.bpmn.editor.ui.SettingsConfigurable"
                 displayName="Camunda BPMN Editor Settings"/>
+        <notificationGroup
+                id="dev.camunda.bpmn.editor.notification"
+                displayType="BALLOON"/>
     </extensions>
 
     <change-notes>
         <![CDATA[
+          <p>
+            <b>1.4.2</b>
+            <ul>
+              <li>Added the BPMN Linter</li>
+              <li>Fix copy/paste elements with different diagrams</li>
+            </ul>
+          </p>
           <p>
             <b>1.4.1</b>
             <ul>

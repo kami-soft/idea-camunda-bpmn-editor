@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.2
+
+- Added the BPMN Linter
+- Fix copy/paste elements with different diagrams
+
 ## 1.4.1
 
 - Added the Dracula theme

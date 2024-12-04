@@ -5,7 +5,8 @@
 
 # Camunda BPMN Editor Plugin for IntelliJ IDEA
 
-This project is a BPMN Editor plugin for IntelliJ IDEA. It provides a custom editor for BPMN files with features such as Camunda BPMN Modeler UI, validation, and integration with the system clipboard.
+This project is a BPMN Editor plugin for IntelliJ IDEA. It provides a custom editor for BPMN files with features such as
+Camunda BPMN Modeler UI, validation, and integration with the system clipboard.
 
 ## Features
 
@@ -53,7 +54,8 @@ To build the project, follow these steps:
 
 #### Installing the Plugin from Marketplace
 
-To install the plugin from the IntelliJ IDEA Marketplace, follow this link: [Camunda BPMN Editor](https://plugins.jetbrains.com/plugin/25710-camunda-bpmn-editor)
+To install the plugin from the IntelliJ IDEA Marketplace, follow this
+link: [Camunda BPMN Editor](https://plugins.jetbrains.com/plugin/25710-camunda-bpmn-editor)
 
 #### Installing the Plugin Manually
 
@@ -90,6 +92,54 @@ Once the plugin is installed, you can use it to open and edit BPMN files:
     - Select `Tools > Camunda BPMN Editor Settings` from the left-hand menu.
     - Configure the color theme and other settings as desired.
 
+## Linter
+
+The Camunda BPMN Editor Plugin includes a linter to help you maintain high-quality BPMN diagrams. Here's how to set it
+up and use it:
+
+1. **Enable the linter:**
+    - Go to `File > Settings...` (or `IntelliJ IDEA > Preferences...` on macOS).
+    - Navigate to `Tools > Camunda BPMN Editor Settings`.
+    - Check the box to enable the linter.
+
+2. **Configure linter rules:**
+    - In your project root directory, create a file named `.bpmnlintrc`.
+    - This file should contain your linter configuration in JSON format. For example:
+      ```json
+      {
+         "extends": [
+           "bpmnlint:recommended"
+        ],
+        "rules": {
+          "label-required": "error",
+          "no-implicit-split": "warn"
+        }
+      }
+      ```
+
+3. **Using custom linter plugins:**
+    - If you want to use custom linter plugins, you have two options:
+
+      a. Add the plugin source code to your project:
+        - Create a folder in your project named `bpmnlint-plugin-{custom_plugin_name}`.
+        - Place the plugin source code in this folder.
+
+      b. Use npm to manage plugin dependencies:
+        - Add a `package.json` file to your project root.
+        - Add the custom plugins as dependencies. For example:
+          ```json
+          {
+            "dependencies": {
+              "bpmnlint-plugin-custom": "^1.0.0"
+            }
+          }
+          ```
+        - Run `npm install` in your project root to install the plugins.
+
+4. **Applying linter rules:**
+    - The linter will automatically run when you open or modify a BPMN file.
+    - Linter warnings and errors will be displayed in the editor.
+
 ## Contributing
 
 Contributions are welcome! Please fork the repository and submit a pull request with your changes.
@@ -114,3 +164,4 @@ If you find this project useful, you can support its development by making a don
 
 - [IntelliJ Platform SDK](https://plugins.jetbrains.com/docs/intellij/welcome.html)
 - [Camunda BPMN Modeler](https://github.com/camunda/camunda-modeler)
+- [BPMN Lint](https://github.com/bpmn-io/bpmnlint)

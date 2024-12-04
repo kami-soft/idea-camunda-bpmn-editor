@@ -1,7 +1,10 @@
 package dev.camunda.bpmn.editor.util;
 
+import static lombok.AccessLevel.PRIVATE;
+
 import com.intellij.openapi.ui.ComboBox;
 import javax.swing.JComboBox;
+import lombok.NoArgsConstructor;
 
 /**
  * Utility class for creating UI components.
@@ -11,7 +14,8 @@ import javax.swing.JComboBox;
  *
  * @author Oleksandr Havrysh
  */
-public class ComponentUtils {
+@NoArgsConstructor(access = PRIVATE)
+public final class ComponentUtils {
 
     /**
      * Creates a JComboBox that allows null selection.

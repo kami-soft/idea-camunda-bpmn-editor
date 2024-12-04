@@ -46,6 +46,8 @@ public final class BpmnEditorSettings implements PersistentStateComponent<BpmnEd
         @NotNull
         private Map<String, FileSettings> fileSettings = new HashMap<>();
 
+        private Boolean useBpmnLinter = true;
+
         /**
          * Adds file settings for a specific file.
          *
