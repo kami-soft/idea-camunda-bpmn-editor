@@ -7,6 +7,8 @@ import static org.apache.commons.lang3.StringUtils.isBlank;
 
 import lombok.NoArgsConstructor;
 
+import java.nio.charset.StandardCharsets;
+
 /**
  * Utility class for Base64 encoding and decoding operations.
  * This class provides methods to encode and decode strings and byte arrays using Base64.
@@ -23,7 +25,9 @@ public final class Base64Utils {
      * @return The Base64 encoded string
      */
     public static String encode(String text) {
-        return getEncoder().encodeToString((isBlank(text) ? "" : text).getBytes());
+        return getEncoder().encodeToString(
+                (isBlank(text) ? "" : text).getBytes(StandardCharsets.UTF_8)
+        );
     }
 
     /**
@@ -33,7 +37,11 @@ public final class Base64Utils {
      * @return The decoded text
      */
     public static String decode(String text) {
-        return new String(getDecoder().decode(text));
+        try {
+            return new String(decodeBytes(text), StandardCharsets.UTF_8);
+        } catch (Exception e) {
+            return new String(decodeBytes(text));
+        }
     }
 
     /**
